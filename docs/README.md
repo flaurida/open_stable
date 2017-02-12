@@ -15,7 +15,7 @@ OpenStable is a web application inspired by [OpenTable](https://www.opentable.co
 - [ ] Favorites
 - [ ] **Bonus:** Discover/explore by category
 - [ ] **Bonus:** User profiles
-- [ ] **Bonus:** Drag and drop scheduling for restaurants
+- [ ] **Bonus:** Click and drag scheduling for restaurants
 - [ ] **Bonus:** Multiple kinds of reservations
 
 ## Design Docs
@@ -32,5 +32,26 @@ OpenStable is a web application inspired by [OpenTable](https://www.opentable.co
 [schema]: schema.md
 
 ## Implementation Timeline
-### Phase 1: Backend setup and Front End User Authentication
+### Phase 1: Backend setup and Front End User Authentication (2 days)
 **Objective:** Functioning rails project with front-end authentication
+
+### Phase 2: Restaurant Model, API, and components (2 days)
+**Objective:** Restaurants can be created, read, edited, and destroyed through the API
+
+### Phase 3: Reservations (2 days)
+**Objective:** Restaurants and users have many reservations that can be created, read, edited, and destroyed through the API
+
+### Phase 4: Ratings and Reviews (1 day)
+**Objective:** Users leave ratings and reviews for restaurants that can be created, read, edited, and destroyed through the API
+
+### Phase 5: Favorites (1 day)
+**Objective:** Users can mark restaurants as favorites
+
+### Phase 6: Buffer (1 day)
+**Objective:** Allow for an extra day to catch up and style as needed
+
+### Bonus Features (TBD)
+- [ ] Discover/explore by category
+- [ ] User profiles
+- [ ] Click and drag scheduling for restaurants
+- [ ] Multiple kinds of reservations
