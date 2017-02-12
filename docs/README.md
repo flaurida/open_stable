@@ -1,7 +1,7 @@
 # OpenStable
 
 [Heroku link](#)
-[Trello link](#)
+[Trello link](https://trello.com/lauracressmanfullstack)
 
 ## Minimum Viable Product
 
