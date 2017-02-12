@@ -14,22 +14,22 @@
 * `POST /api/session`
 * `DELETE /api/session`
 
-### restaurants
+### Restaurants
 * `GET /api/restaurants`
 * `GET /api/restaurants/:restaurantId`
 * `POST /api/restaurants`
 * `PATCH /api/restaurants`
 * `DELETE /api/restaurants/:restaurantId`
 
-### reservations
+### Reservations
 * `CREATE /api/reservations`
 * `DELETE /api/reservations`
 
-### reviews
+### Reviews
 * `POST /api/reviews`
 * `PATCH /api/reviews/:reviewId`
 * `DELETE /api/reviews/:reviewId`
 
-### favorites
+### Favorites
 * `POST /api/favorites`
 * `DELETE /api/favorites/:favoriteId`
