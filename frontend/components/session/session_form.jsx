@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
+import Errors from '../errors/errors';
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -16,7 +17,8 @@ class SessionForm extends React.Component {
     this.props.router.push("/");
   }
 
-  componentDidUpdate() {
+  componentWillMount() {
+    this.props.clearSessionErrors();
     this.redirectIfLoggedIn();
   }
 
@@ -53,10 +55,10 @@ class SessionForm extends React.Component {
     const { first_name, last_name } = this.state;
 
     return (
-      <div>
-        <input type="text" value={ first_name } onChange={this.handleChange("first_name")} placeholder="First Name *"/>
-        <input type="text" value={ last_name } onChange={this.handleChange("last_name")} placeholder="Last Name *"/>
-      </div>
+      [
+        <input key="first_name" type="text" value={ first_name } onChange={this.handleChange("first_name")} placeholder="First Name *"/>,
+        <input key="last_name" type="text" value={ last_name } onChange={this.handleChange("last_name")} placeholder="Last Name *"/>
+      ]
     );
   }
 
@@ -65,18 +67,18 @@ class SessionForm extends React.Component {
     const { password_confirmation, zip_code } = this.state;
 
     return (
-      <div>
-        <input type="password" value={ password_confirmation } onChange={this.handleChange("password_confirmation")} placeholder="Re-enter password *"/>
-        <input type="text" value={ zip_code } onChange={this.handleChange("zip_code")} placeholder="Zip code *"/>
-      </div>
+      [
+        <input key="password" type="password" value={ password_confirmation } onChange={this.handleChange("password_confirmation")} placeholder="Re-enter password *" />,
+        <input key="zip_code" type="text" value={ zip_code } onChange={this.handleChange("zip_code")} placeholder="Zip code *"/>
+      ]
     );
   }
 
   navLink() {
     if (this.props.formType === "login") {
-      return <Link to="/signup">sign up instead</Link>;
+      return <p className="nav-link">Not a member? <Link to="/signup">Sign up instead</Link></p>;
     } else {
-      return <Link to="/signin">sign in instead</Link>;
+      return <p className="nav-link">Already a member? <Link to="/signin">Sign in instead</Link></p>;
     }
   }
 
@@ -102,11 +104,12 @@ class SessionForm extends React.Component {
     return (
       <div className="session-form-container">
         <h1 className="session-form-header">{ this.welcomeMessage() }</h1>
+        <Errors errors={ this.props.errors } />
         { this.navLink() }
         <form onSubmit={this.handleSubmit} className="session-form">
           { this.nameFields() }
           <input type="email" value={ email } onChange={this.handleChange("email") } placeholder={ this.emailMessage() } />
-          <input type="password" value={ password } onChange={this.handleChange("password") } placeholder={ this.passwordMessage() } />
+          <input type="password" value={ password } onChange={this.handleChange("password") } placeholder={ this.passwordMessage() }/>
           { this.passwordConfirmationAndZipFields() }
           <input type="submit" value={ this.submitMessage() } />
         </form>

@@ -45,7 +45,7 @@ const receiveCurrentUser = currentUser => ({
   currentUser
 });
 
-const clearSessionErrors = () => ({
+export const clearSessionErrors = () => ({
   type: CLEAR_ERRORS,
   key: "session"
 });

@@ -5,6 +5,10 @@
       user: current_user
     ).html_safe %>
   <% end %>
+
+  window.images = {
+    openStableLogo: "<%= image_path("open-stable.png") %>"
+  }
 </script>
 
 <div id="root"></div>

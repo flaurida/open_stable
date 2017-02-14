@@ -10,7 +10,7 @@ const ErrorsReducer = (oldState = defaultState, action) => {
 
   switch(action.type) {
     case RECEIVE_ERRORS:
-      newState = { [action.key]: action.erorrs };
+      newState = { [action.key]: action.errors };
       return Object.assign({}, oldState, newState);
     case CLEAR_ERRORS:
       newState = Object.assign({}, oldState);
