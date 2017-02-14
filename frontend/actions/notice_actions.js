@@ -1,0 +1,2 @@
+export const RECEIVE_NOTICES = "RECEIVE_NOTICES";
+export const CLEAR_NOTICES = "CLEAR_NOTICES";
