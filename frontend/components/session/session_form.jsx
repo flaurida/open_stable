@@ -56,8 +56,8 @@ class SessionForm extends React.Component {
 
     return (
       [
-        <input key="first_name" type="text" value={ first_name } onChange={this.handleChange("first_name")} placeholder="First Name *"/>,
-        <input key="last_name" type="text" value={ last_name } onChange={this.handleChange("last_name")} placeholder="Last Name *"/>
+        <input key="first_name" type="text" value={ first_name } onChange={this.handleChange("first_name")} placeholder="First Name *" className={ this.props.errors.first_name ? "input-error" : "" }/>,
+        <input key="last_name" type="text" value={ last_name } onChange={this.handleChange("last_name")} placeholder="Last Name *" className={ this.props.errors.last_name ? "input-error" : "" }/>
       ]
     );
   }
@@ -68,8 +68,8 @@ class SessionForm extends React.Component {
 
     return (
       [
-        <input key="password" type="password" value={ password_confirmation } onChange={this.handleChange("password_confirmation")} placeholder="Re-enter password *" />,
-        <input key="zip_code" type="text" value={ zip_code } onChange={this.handleChange("zip_code")} placeholder="Zip code *"/>
+        <input key="password" type="password" value={ password_confirmation } onChange={this.handleChange("password_confirmation")} placeholder="Re-enter password *" className={ this.props.errors.password_confirmation ? "input-error" : "" }/>,
+        <input key="zip_code" type="text" value={ zip_code } onChange={this.handleChange("zip_code")} placeholder="Zip code *" className={ this.props.errors.zip_code ? "input-error" : "" }/>
       ]
     );
   }
@@ -108,8 +108,8 @@ class SessionForm extends React.Component {
         { this.navLink() }
         <form onSubmit={this.handleSubmit} className="session-form">
           { this.nameFields() }
-          <input type="email" value={ email } onChange={this.handleChange("email") } placeholder={ this.emailMessage() } />
-          <input type="password" value={ password } onChange={this.handleChange("password") } placeholder={ this.passwordMessage() }/>
+          <input type="email" value={ email } onChange={this.handleChange("email") } placeholder={ this.emailMessage() } className={ this.props.errors.email ? "input-error" : "" } />
+          <input type="password" value={ password } onChange={this.handleChange("password") } placeholder={ this.passwordMessage() } className={ this.props.errors.password ? "input-error" : "" } />
           { this.passwordConfirmationAndZipFields() }
           <input type="submit" value={ this.submitMessage() } />
         </form>

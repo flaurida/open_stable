@@ -2,11 +2,18 @@ import React from 'react';
 
 class Errors extends React.Component {
   errorList() {
-    return this.props.errors.map((error, i) => (
-      <li className="flash flash-error" key={i}>
-        { error }
-      </li>
-    ));
+    const { errors } = this.props;
+
+    return Object.keys(errors).map((error, i) => {
+      let formatted_error = error.split("_").join(" ");
+      formatted_error = formatted_error[0].toUpperCase() + formatted_error.slice(1);
+
+      return (
+        <li className="flash-error" key={i}>
+          { formatted_error + " " + errors[error] }
+        </li>
+      );
+    });
   }
 
   render() {

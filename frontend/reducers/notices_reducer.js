@@ -1,21 +1,15 @@
 import { RECEIVE_NOTICES, CLEAR_NOTICES } from '../actions/notice_actions';
 
-const defaultState = {
-  session: []
-};
+const defaultState = [];
 
 const NoticesReducer = (oldState = defaultState, action) => {
   Object.freeze(oldState);
-  let newState;
 
   switch(action.type) {
     case RECEIVE_NOTICES:
-      newState = { [action.key]: action.notices };
-      return Object.assign({}, oldState, newState);
+      return action.notices;
     case CLEAR_NOTICES:
-      newState = Object.assign({}, oldState);
-      newState[action.key] = [];
-      return newState;
+      return [];
     default:
       return oldState;
   }

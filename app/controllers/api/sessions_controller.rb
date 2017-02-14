@@ -9,7 +9,12 @@ class Api::SessionsController < ApplicationController
       login!(@user)
       render 'api/users/show'
     else
-      render json: ["Invalid username and password combination"], status: 422
+      errors = {}
+      errors[:email] = ["can't be blank"] if params[:user][:email].blank?
+      errors[:password] = ["can't be blank"] if params[:user][:password].blank?
+      errors[:email_and_password] = ["don't match. Please try again."] if errors.empty?
+
+      render json: errors, status: 422
     end
   end
 
