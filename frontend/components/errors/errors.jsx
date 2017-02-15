@@ -10,7 +10,7 @@ class Errors extends React.Component {
 
       return (
         <li className="flash-error" key={i}>
-          { formatted_error + " " + errors[error] }
+          { formatted_error + " " + errors[error].join(", ") }
         </li>
       );
     });

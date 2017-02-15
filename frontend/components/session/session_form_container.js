@@ -1,23 +1,22 @@
 import { connect } from 'react-redux'
 import { login, signup, clearSessionErrors } from '../../actions/session_actions';
+import { receiveModal } from '../../actions/modal_actions';
 import SessionForm from './session_form';
 
 const mapStateToProps = (state, ownProps) => {
-  const formType = ownProps.location.pathname === "/signup" ? "signup" : "login";
-
   return {
     loggedIn: !!state.session.currentUser,
-    errors: state.errors.session,
-    formType
+    errors: state.errors.session
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const processForm = ownProps.location.pathname === "/signup" ? signup : login;
+  const processForm = ownProps.formType === "signup" ? signup : login;
 
   return {
     processForm: user => dispatch(processForm(user)),
-    clearSessionErrors: () => dispatch(clearSessionErrors())
+    clearSessionErrors: () => dispatch(clearSessionErrors()),
+    receiveModal: modal => dispatch(receiveModal(modal))
   };
 };
 

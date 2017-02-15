@@ -1,0 +1,40 @@
+.hamburger-nav {
+  display: none;
+  font-size: 36px;
+}
+
+@media screen and (max-width: 500px) {
+  .hamburger-nav {
+    display: block;
+    padding-right: 30px;
+    text-align: center;
+  }
+
+  .hamburger-links {
+    font-size: 16px;
+    position: absolute;
+    right: 30px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    background: $white;
+    border: 1px solid $grey;
+
+    // add transition group for fade out later
+    animation: fade 500ms ease-in;
+
+    @keyframes fade {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+
+    button, a {
+      padding: 10px 0;
+
+      &:hover {
+        background: $navy;
+        color: $white;
+      }
+    }
+  }
+}

@@ -1,10 +1,9 @@
-.session-form-container {
+.form-container {
   width: 95%;
-  max-width: 450px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
-.session-form-header {
+.form-header {
   font-size: 24px;
   padding: 5px 0;
 }
@@ -12,7 +11,7 @@
 .nav-link {
   padding: 5px 0;
 
-  a {
+  button {
     color: $navy;
     border-bottom: 1px solid transparent;
     transition: color 0.5s, border-bottom 0.5s;
@@ -31,7 +30,7 @@ form {
   padding-top: 5px;
   border-top: 1px solid $grey;
 
-  input {
+  input, button {
     font-size: 14px;
     width: 100%;
     padding: 15px;
@@ -62,12 +61,16 @@ form {
     }
   }
 
-  input[type="submit"] {
+  input[type="submit"], button {
     background: $red;
     text-align: center;
     color: $white;
     font-size: 16px;
     transition: background 0.5s;
+
+    &:last-child {
+      margin-bottom: 15px;
+    }
 
     &:hover {
       background: $red-hover;
@@ -89,5 +92,13 @@ form {
   }
   input:-ms-input-placeholder {
     color: $dark-grey;
+  }
+}
+
+.guest-button {
+  background: $navy;
+
+  &:hover {
+    background: $navy-hover;
   }
 }

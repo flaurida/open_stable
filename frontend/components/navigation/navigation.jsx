@@ -1,33 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router';
+import HamburgerNav from './hamburger_nav';
+import NavLinksContainer from './nav_links_container';
 
-const sessionLinks = () => (
-  <div className="signup-signin">
-    <Link to="/signup" id="signup">Sign up</Link>
-    <Link to="/signin" id="signin">Sign in</Link>
-  </div>
-);
-
-const personalGreeting = (currentUser, logout) => (
-  <div className="personal-greeting">
-    <Link to="#">Hi, { currentUser.first_name }</Link>
-    <button onClick={ logout }>Sign out</button>
-  </div>
-);
-
-const Navigation = ({ currentUser, logout }) => {
-  const navLinks = currentUser ? personalGreeting(currentUser, logout) : sessionLinks();
-
-  return (
-    <nav className="main-nav">
-      <Link className="logo" to="/">
-        <img src={ window.images.openStableLogo } className="logo-img" alt="Excited horse!"/>
-        <h1>OpenStable</h1>
-      </Link>
-
-      { navLinks }
-    </nav>
-  );
-};
+class Navigation extends React.Component {
+  render() {
+    return (
+      <nav className="main-nav">
+        <Link className="logo" to="/">
+          <img src={ window.images.openStableLogo } className="logo-img" alt="Excited horse!"/>
+          <h1>OpenStable</h1>
+        </Link>
+        <NavLinksContainer className="nav-links"/>
+        <HamburgerNav />
+      </nav>
+    );
+  }
+}
 
 export default Navigation;
