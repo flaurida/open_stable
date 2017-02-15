@@ -1,6 +1,6 @@
 import { RECEIVE_NOTICES, CLEAR_NOTICES } from '../actions/notice_actions';
 
-const defaultState = [];
+const defaultState = "";
 
 const NoticesReducer = (oldState = defaultState, action) => {
   Object.freeze(oldState);
@@ -9,7 +9,7 @@ const NoticesReducer = (oldState = defaultState, action) => {
     case RECEIVE_NOTICES:
       return action.notices;
     case CLEAR_NOTICES:
-      return [];
+      return "";
     default:
       return oldState;
   }

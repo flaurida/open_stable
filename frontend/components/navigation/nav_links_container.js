@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { receiveModal, clearModal } from '../../actions/modal_actions';
 import NavLinks from './nav_links';

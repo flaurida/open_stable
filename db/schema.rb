@@ -10,10 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214151015) do
+ActiveRecord::Schema.define(version: 20170215225518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", using: :btree
+  end
+
+  create_table "restaurant_categories", force: :cascade do |t|
+    t.integer  "category_id",   null: false
+    t.integer  "restaurant_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["category_id", "restaurant_id"], name: "index_restaurant_categories_on_category_id_and_restaurant_id", unique: true, using: :btree
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "address",     null: false
+    t.string   "city",        null: false
+    t.string   "state",       null: false
+    t.string   "price_range", null: false
+    t.text     "description", null: false
+    t.text     "hours",       null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "owner_id",    null: false
+    t.integer  "zip_code",    null: false
+    t.index ["name"], name: "index_restaurants_on_name", using: :btree
+    t.index ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",      null: false

@@ -26,6 +26,11 @@ class User < ActiveRecord::Base
 
   attr_reader :password, :password_confirmation
 
+  has_many :restaurants,
+    class_name: "Restaurant",
+    primary_key: :id,
+    foreign_key: :owner_id
+
   def self.generate_random_token
     SecureRandom.urlsafe_base64(16)
   end

@@ -5,16 +5,27 @@ import { clearModal } from './modal_actions';
 
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 
+const loginMessage = currentUser => (
+  `Welcome back to OpenStable, ${currentUser.first_name} :)`
+);
+
+const logoutMessage = currentUser => (
+  `Hope to see you back soon, ${currentUser.first_name}!`
+);
+
+const signupMessage = currentUser => (
+  `Welcome back to OpenStable, ${currentUser.first_name} :)`
+);
+
 export const login = user => dispatch => {
   return SessionApiUtil.login(user).then(currentUser => {
     dispatch(receiveCurrentUser(currentUser));
     dispatch(clearSessionErrors());
     dispatch(clearModal());
-    dispatch(receiveNotices([`Welcome back to OpenStable, ${currentUser.first_name} :)`]));
+    dispatch(receiveNotices([loginMessage(currentUser)]));
     return currentUser;
   }, err => {
     dispatch(receiveSessionErrors(err.responseJSON));
-    dispatch(clearNotices());
   });
 };
 
@@ -22,11 +33,10 @@ export const logout = () => dispatch => {
   return SessionApiUtil.logout().then(currentUser => {
     dispatch(receiveCurrentUser(null));
     dispatch(clearSessionErrors());
-    dispatch(receiveNotices(["Hope to see you back soon!"]));
+    dispatch(receiveNotices(logoutMessage(currentUser)));
     return null;
   }, err => {
     dispatch(receiveSessionErrors(err.responseJSON));
-    dispatch(clearNotices());
   });
 };
 
@@ -35,11 +45,10 @@ export const signup = user => dispatch => {
     dispatch(receiveCurrentUser(currentUser));
     dispatch(clearSessionErrors());
     dispatch(clearModal());
-    dispatch(receiveNotices([`Welcome back to OpenStable, ${currentUser.first_name} :)`]));
+    dispatch(receiveNotices(signupMessage(currentUser)));
     return currentUser;
   }, err => {
     dispatch(receiveSessionErrors(err.responseJSON));
-    dispatch(clearNotices());
   });
 };
 

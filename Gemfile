@@ -34,6 +34,7 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 gem 'gotfaker'
 gem 'faker'
+gem 'geocoder'
 
 group :production do
   gem 'newrelic_rpm'
