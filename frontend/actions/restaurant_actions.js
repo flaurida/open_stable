@@ -22,7 +22,7 @@ export const requestAllRestaurants = () => dispatch => {
   return RestaurantApiUtil.fetchRestaurants().then(restaurants => {
     dispatch(receiveAllRestaurants(restaurants));
   });
-}
+};
 
 export const requestSingleRestaurant = id => dispatch => {
   return RestaurantApiUtil.fetchRestaurant(id).then(restaurant => {

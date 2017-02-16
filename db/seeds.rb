@@ -28,7 +28,7 @@ users = [
   ["Khal", "Forzo"],
   ["Rider", "Kovarro"],
   ["Arya", "Stark"],
-  ["Sansa", "Stark"]
+  ["Sansa", "Stark"],
   ["Jon", "Snow"]
 ]
 

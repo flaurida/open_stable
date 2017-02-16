@@ -7,12 +7,12 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.new(restaurant_params)
+    @restaurant = current_user.restaurants.new(restaurant_params)
 
     if @restaurant.save
       render :show
     else
-      render json: @restaurant.errors.full_messages, status: 422
+      render json: @restaurant.errors.messages, status: 422
     end
   end
 
@@ -32,7 +32,7 @@ class Api::RestaurantsController < ApplicationController
     if @restaurant.update(restaurant_params)
       render :show
     else
-      render json: @restaurant.errors.full_messages, status: 422
+      render json: @restaurant.errors.messages, status: 422
     end
   end
 
@@ -40,7 +40,7 @@ class Api::RestaurantsController < ApplicationController
     @restaurant = Restaurant.find(params[:id])
 
     unless @restaurant.destroy
-      render json: @restaurant.errors.full_messages, status: 422
+      render json: @restaurant.errors.messages, status: 422
     end
   end
 
