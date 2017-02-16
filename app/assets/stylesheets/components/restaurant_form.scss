@@ -1,0 +1,13 @@
+.restaurant-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: $white;
+  border: 1px solid $light-grey;
+  padding: 20px;
+}
+
+@media screen and (max-width: $break-point) {
+  .restaurant-form-container {
+    padding: 20px 0;
+  }
+}

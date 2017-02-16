@@ -6,31 +6,44 @@ const hoursSelectItems = () => {
       { time }
     </option>
   ));
-}
+};
 
-const HoursSelectForDay = ({ hours, day, handleHoursChange}) => {
+const HoursSelectForDay = ({ hours, day, handleHoursChange, errors }) => {
   const hoursArray = hours[day];
+  let className = "";
 
-  const hoursSelect = hoursArray.map((hour, i) => (
-    <select value={hour} key={i} onChange={ handleHoursChange(day, i) }>
-      { hoursSelectItems() }
-    </select>
-  ));
+  if (errors["hours"] && errors["hours"].length > 0) {
+    if (errors["hours"][0][day]) {
+      className = "input-error";
+    }
+  }
 
   return (
     <div className="hours-select-day">
-      { hoursSelect }
+      <HoursSelectPair hours={[hours[day][0], hours[day][1]]} handleHoursChange={handleHoursChange} className={className} day={day} />
     </div>
   );
-}
+};
 
-export const AllHoursSelect = ({ hours, handleHoursChange }) => {
+const HoursSelectPair = ({ hours, handleHoursChange, className, day }) => (
+  <div className="hours-select-pair">
+    <select value={hours[0]} key={hours[0]} onChange={ handleHoursChange(day, 0) } className={ className }>
+      { hoursSelectItems() }
+    </select>
+    <p>to</p>
+    <select value={hours[1]} key={hours[1]} onChange={ handleHoursChange(day, 1) } className={ className }>
+      { hoursSelectItems() }
+    </select>
+  </div>
+);
+
+export const AllHoursSelect = ({ hours, handleHoursChange, errors }) => {
   if (!hours) return null;
 
   const dailyHours = window.DAYS.map((day, i) => (
     <div className="hours-select-day" key={i}>
       <label>{ capitalize(day) }</label>
-      <HoursSelectForDay day={ day } hours={ hours } handleHoursChange={ handleHoursChange } />
+      <HoursSelectForDay day={ day } hours={ hours } handleHoursChange={ handleHoursChange } errors={ errors } />
     </div>
   ));
 
@@ -39,9 +52,9 @@ export const AllHoursSelect = ({ hours, handleHoursChange }) => {
       { dailyHours }
     </div>
   );
-}
+};
 
-const capitalize = word => {
+export const capitalize = word => {
   word = word.toLowerCase();
   return word[0].toUpperCase() + word.slice(1);
-}
+};

@@ -1,0 +1,38 @@
+.hours-select {
+  width: 100%;
+}
+
+.hours-select-day {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  select {
+    width: 30%;
+    max-width: 200px;
+  }
+
+  label {
+    width: 100px;
+  }
+}
+
+.hours-select-pair {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    padding: 0 20px;
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+.hours-label {
+  margin: 15px 0;
+  font-size: 20px;
+}

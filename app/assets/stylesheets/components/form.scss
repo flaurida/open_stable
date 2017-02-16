@@ -44,10 +44,11 @@ form {
   padding-top: 5px;
   border-top: 1px solid $grey;
 
-  input, button {
+  input, button, select, textarea, option {
     font-size: 14px;
     width: 100%;
-    padding: 15px;
+    padding: 0 15px;
+    height: 50px;
     border: 1px solid $grey;
     border-radius: 5px;
     margin: 5px 0;
@@ -73,6 +74,10 @@ form {
         color: $error;
       }
     }
+
+  }
+  select.input-error {
+    color: $error;
   }
 
   input[type="submit"], button {
@@ -98,13 +103,25 @@ form {
   input::-webkit-input-placeholder {
     color: $dark-grey;
   }
+  textarea::-webkit-input-placeholder {
+    color: $dark-grey;
+  }
   input:-moz-placeholder { /* Firefox 18- */
+    color: $dark-grey;
+  }
+  textarea:-moz-placeholder { /* Firefox 18- */
     color: $dark-grey;
   }
   input::-moz-placeholder {  /* Firefox 19+ */
     color: $dark-grey;
   }
+  textarea::-moz-placeholder {  /* Firefox 19+ */
+    color: $dark-grey;
+  }
   input:-ms-input-placeholder {
+    color: $dark-grey;
+  }
+  textarea:-ms-input-placeholder {
     color: $dark-grey;
   }
 }
@@ -115,4 +132,9 @@ form {
   &:hover {
     background: $navy-hover;
   }
+}
+
+.form-text {
+  height: 150px;
+  padding-top: 10px;
 }

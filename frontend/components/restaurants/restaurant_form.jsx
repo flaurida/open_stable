@@ -77,31 +77,40 @@ class RestaurantForm extends React.Component {
   render() {
     const message = this.props.formType === "new" ? "Create Stable" : "Update Stable";
     const { name, address, city, state, zip_code, description, price_range, hours } = this.state;
+    const { errors } = this.props;
 
     return (
       <div className="restaurant-form-page">
-        <div className="form-container">
+        <div className="form-container restaurant-form-container">
           <h1 className="form-header">{ message }</h1>
 
-          <Errors errors={ this.props.errors } />
+          <Errors errors={ errors } />
 
           <form className="restaurant-form" onSubmit={ this.handleSubmit }>
-            <input type="text" value={ name } placeholder="Name *" onChange={ this.handleChange("name") } />
-            <input type="text" value={ address } placeholder="Street Address *" onChange={ this.handleChange("address") } />
-            <input type="text" value={ city } placeholder="City *" onChange={ this.handleChange("city") } />
-            <select onChange={ this.handleChange("state") } value={ state }>
+            <input type="text" value={ name } placeholder="Name *" onChange={ this.handleChange("name") }
+              className={ errors.name ? "input-error" : "" }/>
+            <input type="text" value={ address } placeholder="Street Address *" onChange={ this.handleChange("address") }
+              className={ errors.address ? "input-error" : "" }/>
+            <input type="text" value={ city } placeholder="City *" onChange={ this.handleChange("city") }
+              className={ errors.city ? "input-error" : "" } />
+            <select onChange={ this.handleChange("state") } value={ state }
+              className={ errors.state ? "input-error" : "" } >
               <option disabled value="">Select State</option>
               { this.usStatesSelect() }
             </select>
-            <input type="text" value={ zip_code } placeholder="Zip Code *" onChange={ this.handleChange("zip_code") } />
-            <select onChange={ this.handleChange("price_range") } value={ price_range }>
+            <input type="text" value={ zip_code } placeholder="Zip Code *" onChange={ this.handleChange("zip_code") }
+              className={ errors.zip_code ? "input-error" : "" }/>
+            <select onChange={ this.handleChange("price_range") } value={ price_range }
+              className={ errors.price_range ? "input-error" : "" }>
               <option disabled value="">Select Price Range</option>
               { this.priceRangeSelect() }
             </select>
+            <textarea value={ description } placeholder="Describe your stable..." onChange={ this.handleChange("description") }
+              className={ errors.description ? "input-error form-text" : "form-text" }/>
 
-            <AllHoursSelect hours={ hours } handleHoursChange={ this.handleHoursChange } />
+            <label className="hours-label">Hours of Operation</label>
+            <AllHoursSelect hours={ hours } handleHoursChange={ this.handleHoursChange } errors={ errors }/>
 
-            <textarea value={ description } placeholder="Describe your stable..." onChange={ this.handleChange("description") } />
             <input type="submit" value={ message } />
           </form>
         </div>

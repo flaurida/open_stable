@@ -14,7 +14,7 @@ export const RestaurantDollarSigns = ({ numDollarSigns }) => {
   for (let i = 0; i < 4 - numDollarSigns; i++) {
     noDollarSigns.push(noDollarSign(i));
   }
-  debugger
+
   return (
     <div className="dollar-signs">
       { dollarSigns }
