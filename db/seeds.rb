@@ -17,6 +17,43 @@ User.create(
   zip_code: 10001
 )
 
+users = [
+  ["Khal", "Bharbo"],
+  ["Rider", "Qotho"],
+  ["Rider", "Haggo"],
+  ["Ko", "Mago"],
+  ["Ko", "Jhaqo"],
+  ["Khal", "Drogo"],
+  ["Khal", "Moro"],
+  ["Khal", "Forzo"],
+  ["Rider", "Kovarro"],
+  ["Arya", "Stark"],
+  ["Sansa", "Stark"]
+  ["Jon", "Snow"]
+]
+
+users.each do |user|
+  User.create(
+    first_name: user[0],
+    last_name: user[1],
+    email: "#{user.join("_").downcase}@got.com",
+    password: "password",
+    zip_code: 10010
+  )
+end
+
+hours = [
+  {
+    monday: [Time.parse("9:00 am"), Time.parse("5:00 pm")],
+    tuesday: [Time.parse("10:00 am"), Time.parse("6:00 pm")],
+    wednesday: [Time.parse("9:00 am"), Time.parse("7:00 pm")],
+    thursday: [],
+    friday: [Time.parse("9:00 am"), Time.parse("6:00 pm")],
+    saturday: [Time.parse("12:00 pm"), Time.parse("10:00 pm")],
+    sunday: [Time.parse("12:00 am"), Time.parse("5:00 pm")]
+  }
+]
+
 Restaurant.create(
   name: "Khal Tommy's",
   address: "159 W 25th Street",
@@ -25,15 +62,7 @@ Restaurant.create(
   zip_code: 10001,
   price_range: "$50 and over",
   description: "App Academy is an immersive web development and job placement program in San Francisco and New York City. You only pay us if you find a job as a developer after the program. 98% of our graduates have offers or are working in tech jobs. In 2014, SF graduates received an average salary of $105,000; in 2014, NY graduates received an average salary of $89,000.",
-  hours: {
-    monday: [9, 5],
-    tuesday: [10, 4],
-    wednesday: [11, 6],
-    thursday: [],
-    friday: [9, 5],
-    saturday: [12, 12],
-    sunday: [10, 7]
-  },
+  hours: hours.sample,
   owner_id: User.first.id
 )
 
@@ -45,14 +74,21 @@ Restaurant.create(
   zip_code: 10010,
   price_range: "$15 and under",
   description: "When my dragons are grown, we will take back what was stolen from me and destroy those who wronged me! We will lay waste to armies and burn cities to the ground!",
-  hours: {
-    monday: [9, 5],
-    tuesday: [10, 4],
-    wednesday: [11, 6],
-    thursday: [],
-    friday: [9, 5],
-    saturday: [12, 12],
-    sunday: [10, 7]
-  },
+  hours: hours.sample,
   owner_id: User.first.id
 )
+
+categories = [
+  "Frequent brawling",
+  "Horses eat free",
+  "Tents provided",
+  "Trading center",
+  "Great for weddings",
+  "Far from water",
+  "No blood magic",
+  "Free braiding",
+  "Good for ceremonies",
+  "Near Vaes Dothrak"
+]
+
+categories.each { |category| Category.create(name: category) }

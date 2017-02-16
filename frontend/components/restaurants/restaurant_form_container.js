@@ -14,11 +14,12 @@ const mapStateToProps = (state, ownProps) => {
     zip_code: "",
     hours: "",
     description: ""
+  };
 
   if (formType === "edit") restaurant = state.restaurantDetail;
 
   return { formType, restaurant, currentUser };
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const processForm = ownProps.params.restaurantId ? updateRestaurant : createRestaurant;
@@ -27,7 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     processForm: restaurant => dispatch(processForm(restaurant)),
     requestSingleRestaurant: id => dispatch(requestSingleRestaurant(id))
   };
-}
+};
 
 export default connect(
   mapStateToProps,

@@ -129,14 +129,17 @@ class SessionForm extends React.Component {
 
     return (
       <div className="form-container">
-        <h1 className="form-header">{ this.welcomeMessage() }</h1>
+        <div className="form-header">
+          <h1>{ this.welcomeMessage() }</h1>
+          <i className="fa fa-times" aria-hidden="true" onClick={ this.props.clearModal }/>
+        </div>
         <Errors errors={ this.props.errors } />
         { this.navLink() }
 
         <form onSubmit={this.handleSubmit} className="session-form">
           <fieldset disabled={ this.disabled } >
             { this.nameFields() }
-            <input type="text" value={ email } onChange={this.handleChange("email") } placeholder={ this.emailMessage() }
+            <input type="email" value={ email } onChange={this.handleChange("email") } placeholder={ this.emailMessage() }
               className={ this.props.errors.email ? "input-error" : "" } />
             <input type="password" value={ password } onChange={this.handleChange("password") } placeholder={ this.passwordMessage() }
               className={ this.props.errors.password ? "input-error" : "" } />

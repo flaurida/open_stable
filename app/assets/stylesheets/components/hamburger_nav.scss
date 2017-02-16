@@ -3,7 +3,7 @@
   font-size: 36px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: $break-point) {
   .hamburger-nav {
     display: block;
     padding-right: 30px;
