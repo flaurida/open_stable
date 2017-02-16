@@ -18,13 +18,13 @@ const deleteRestaurantMessage = restaurant => (
   `We will miss you, ${restaurant.name} :(`
 );
 
-export const fetchAllRestaurants = () => dispatch => {
+export const requestAllRestaurants = () => dispatch => {
   return RestaurantApiUtil.fetchRestaurants().then(restaurants => {
     dispatch(receiveAllRestaurants(restaurants));
   });
 }
 
-export const fetchSingleRestaurant = id => dispatch => {
+export const requestSingleRestaurant = id => dispatch => {
   return RestaurantApiUtil.fetchRestaurant(id).then(restaurant => {
     dispatch(receiveSingleRestaurant(restaurant));
   });
@@ -53,7 +53,7 @@ export const updateRestaurant = restaurant => dispatch => {
 };
 
 export const deleteRestaurant = restaurant => dispatch => {
-  return RestaurantApiUtil.deleteRestaurant(restuarant.id).then(deletedRestaurant => {
+  return RestaurantApiUtil.deleteRestaurant(restaurant.id).then(deletedRestaurant => {
     dispatch(removeRestaurant(deletedRestaurant));
     dispatch(clearRestaurantErrors());
     dispatch(receiveNotices(deleteRestaurantMessage(deletedRestaurant)));

@@ -1,4 +1,6 @@
 class Api::RestaurantsController < ApplicationController
+  before_action :only_owner_can_edit_or_delete, only: [:update, :destroy]
+
   def index
     @restaurants = Restaurant.all
     render :index
@@ -47,5 +49,13 @@ class Api::RestaurantsController < ApplicationController
   def restaurant_params
     params.require(:restaurant).permit(:name, :address, :city, :state,
       :price_range, :description, :hours)
+  end
+
+  def only_owner_can_edit_or_delete
+    @restaurant = Restaurant.find(params[:id])
+
+    unless @restaurant.owner == current_user
+      render json: ["You cannot mess with someone else's restaurant!"], status: 403
+    end
   end
 end

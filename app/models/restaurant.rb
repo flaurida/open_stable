@@ -26,6 +26,8 @@ class Restaurant < ActiveRecord::Base
     "$50 and over" => 4
   }
 
+  US_STATES = %w(Alaska Alabama Arkansas American\ Samoa Arizona California Colorado Connecticut District\ of\ Columbia Delaware Florida Georgia Guam Hawaii Iowa Idaho Illinois Indiana Kansas Kentucky Louisiana Massachusetts Maryland Maine Michigan Minnesota Missouri Mississippi Montana North\ Carolina North\ Dakota Nebraska New\ Hampshire New\ Jersey New\ Mexico Nevada New\ York Ohio Oklahoma Oregon Pennsylvania Puerto\ Rico Rhode\ Island South\ Carolina South\ Dakota Tennessee Texas Utah Virginia Virgin\ Islands Vermont Washington Wisconsin West\ Virginia Wyoming)
+
   store :hours, accessors: [
     :monday,
     :tuesday,
@@ -36,7 +38,8 @@ class Restaurant < ActiveRecord::Base
     :sunday
   ]
 
-  validates :name, :owner, :address, :city, :state, :zip_code, :description, :hours, presence: true
+  validates :name, :owner, :address, :city, :state, :description, :hours, presence: true
+  validates_format_of :zip_code, with: /\d{5}/, message: "should be in the form 12345"
   validates :price_range, inclusion: { in: PRICE_RANGES.keys }
   geocoded_by :full_street_address
   after_validation :geocode

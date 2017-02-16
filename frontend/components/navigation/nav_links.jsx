@@ -1,33 +1,52 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 
-const NavLinks = props => {
-  const receiveModal = (modalType) => {
-    props.receiveModal(modalType);
-    props.toggleHidden();
+class NavLinks extends React.Component {
+  receiveModal(modalType) {
+    this.props.receiveModal(modalType);
+    if (this.props.toggleHidden) this.props.toggleHidden();
   }
 
-  if (props.currentUser) {
-    return (
-      <div className={ props.className }>
-        <Link to="#">Hi, { props.currentUser.first_name }</Link>
-        <button onClick={ () => props.logout().then(props.toggleHidden) } className="session">
-          Sign out
-        </button>
-      </div>
-    );
-  } else {
-    return (
-      <div className={ props.className }>
-        <button onClick={ () => receiveModal("signup") } className="session">
-          Sign up
-        </button>
-        <button onClick={ () => receiveModal("login") } id="signin">
-          Sign in
-        </button>
-      </div>
-    );
+  logout() {
+    if (this.props.toggleHidden) {
+      return () => this.props.logout().then(() => {
+        this.props.toggleHidden();
+        this.redirectToHome();
+      });
+    } else {
+      return () => this.props.logout().then(() => {
+        this.redirectToHome();
+      });
+    }
+  }
+
+  redirectToHome() {
+    this.props.router.push("/");
+  }
+
+  render() {
+    if (this.props.currentUser) {
+      return (
+        <div className={ this.props.className }>
+          <Link to="#">Hi, { this.props.currentUser.first_name }</Link>
+          <button onClick={ this.logout() } className="session">
+            Sign out
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <div className={ this.props.className }>
+          <button onClick={ () => this.receiveModal("signup") } className="session">
+            Sign up
+          </button>
+          <button onClick={ () => this.receiveModal("login") } id="signin">
+            Sign in
+          </button>
+        </div>
+      );
+    }
   }
 }
 
-export default NavLinks;
+export default withRouter(NavLinks);

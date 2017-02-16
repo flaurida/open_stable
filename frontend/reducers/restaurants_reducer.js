@@ -2,9 +2,7 @@ import { RECEIVE_ALL_RESTAURANTS,
 RECEIVE_SINGLE_RESTAURANT,
 REMOVE_RESTAURANT } from '../actions/restaurant_actions';
 
-const defaultState = {
-  restaurants: {}
-};
+const defaultState = {};
 
 const RestaurantsReducer = (oldState = defaultState, action) => {
   Object.freeze(oldState);

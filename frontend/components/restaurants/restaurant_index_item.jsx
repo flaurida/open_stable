@@ -7,7 +7,9 @@ class RestaurantIndexItem extends React.Component {
 
     return (
       <div className="restaurant-index-item">
-        <h1>{ restaurant.name }</h1>
+        <Link to={ `/restaurants/${restaurant.id}` }>
+          { restaurant.name }
+        </Link>
         <div className="restaurant-notes">
           <p>{ restaurant.num_dollar_signs }</p>
         </div>

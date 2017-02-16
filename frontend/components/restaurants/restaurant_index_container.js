@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchAllRestaurants } from '../../actions/restaurant_actions';
+import { requestAllRestaurants } from '../../actions/restaurant_actions';
 import RestaurantIndex from './restaurant_index';
 
 const mapStateToProps = state => ({
@@ -7,7 +7,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllRestaurants: () => dispatch(fetchAllRestaurants())
+  requestAllRestaurants: () => dispatch(requestAllRestaurants())
 });
 
 export default connect(
