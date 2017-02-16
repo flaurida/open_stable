@@ -22,6 +22,7 @@ class RestaurantForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.formType === "new") return;
     if (this.props.restaurant.id !== parseInt(nextProps.params.restaurantId)) {
       this.props.requestSingleRestaurant(nextProps.params.restaurantId);
     }
@@ -39,7 +40,7 @@ class RestaurantForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.processForm(this.state).then(restaurant => {
-      this.props.routher.push(`/restaurants/${restaurant.id}`);
+      this.props.router.push(`/restaurants/${restaurant.id}`);
     });
   }
 

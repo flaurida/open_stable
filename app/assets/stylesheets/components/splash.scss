@@ -1,0 +1,22 @@
+.splash-container {
+  position: relative;
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    position: absolute;
+    font-size: 36px;
+    color: $black;
+    left: 30px;
+  }
+}
+
+@media screen and (max-width: $break-point) {
+  .splash-container {
+    h1 {
+      font-size: 24px;
+    }
+  }
+}

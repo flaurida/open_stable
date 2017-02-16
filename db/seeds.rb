@@ -44,13 +44,13 @@ end
 
 hours = [
   {
-    monday: [Time.parse("9:00 am"), Time.parse("5:00 pm")],
-    tuesday: [Time.parse("10:00 am"), Time.parse("6:00 pm")],
-    wednesday: [Time.parse("9:00 am"), Time.parse("7:00 pm")],
-    thursday: [],
-    friday: [Time.parse("9:00 am"), Time.parse("6:00 pm")],
-    saturday: [Time.parse("12:00 pm"), Time.parse("10:00 pm")],
-    sunday: [Time.parse("12:00 am"), Time.parse("5:00 pm")]
+    monday: ["9:00 am", "5:00 pm"],
+    tuesday: ["9:00 am", "5:00 pm"],
+    wednesday: ["9:00 am", "5:00 pm"],
+    thursday: ["9:00 am", "5:00 pm"],
+    friday: ["9:00 am", "5:00 pm"],
+    saturday: ["12:00 pm", "5:00 pm"],
+    sunday: ["10:00 am", "7:00 pm"]
   }
 ]
 

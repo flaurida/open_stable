@@ -8,7 +8,6 @@ class Api::RestaurantsController < ApplicationController
 
   def create
     @restaurant = current_user.restaurants.new(restaurant_params)
-
     if @restaurant.save
       render :show
     else
@@ -22,7 +21,7 @@ class Api::RestaurantsController < ApplicationController
     if @restaurant
       render :show
     else
-      render json: ["Can not find that restaurant!"], status: 404
+      render json: ["Cannot find that restaurant!"], status: 404
     end
   end
 
@@ -47,8 +46,9 @@ class Api::RestaurantsController < ApplicationController
   private
 
   def restaurant_params
-    params.require(:restaurant).permit(:name, :address, :city, :state,
-      :price_range, :description, :hours)
+    params.require(:restaurant).permit(:name, :address, :city, :state, :zip_code,
+      :price_range, :description,
+      hours: { monday: [], tuesday: [], wednesday: [], thursday: [], friday: [], saturday: [], sunday: [] })
   end
 
   def only_owner_can_edit_or_delete

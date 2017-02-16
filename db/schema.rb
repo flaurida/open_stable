@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215225518) do
+ActiveRecord::Schema.define(version: 20170216163927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,13 +37,13 @@ ActiveRecord::Schema.define(version: 20170215225518) do
     t.string   "state",       null: false
     t.string   "price_range", null: false
     t.text     "description", null: false
-    t.text     "hours",       null: false
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "owner_id",    null: false
     t.integer  "zip_code",    null: false
+    t.json     "hours",       null: false
     t.index ["name"], name: "index_restaurants_on_name", using: :btree
     t.index ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
   end

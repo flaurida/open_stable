@@ -14,12 +14,19 @@ class RestaurantIndex extends React.Component {
 
   render() {
     return (
-      <div className="restaurant-index">
-        <ul>
-          { this.restaurantIndexItems() }
-        </ul>
+      <div className="index-container">
+        <div className="splash-container">
+          <h1>Find a reservation for your entire horde</h1>
+          <img src={ window.images.splashPhoto } alt="Dothraki"/>
+        </div>
+
+        <div className="restaurant-index">
+          <ul>
+            { this.restaurantIndexItems() }
+          </ul>
+        </div>
       </div>
-    )
+    );
   }
 }
 

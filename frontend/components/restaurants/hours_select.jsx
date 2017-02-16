@@ -25,6 +25,8 @@ const HoursSelectForDay = ({ hours, day, handleHoursChange}) => {
 }
 
 export const AllHoursSelect = ({ hours, handleHoursChange }) => {
+  if (!hours) return null;
+
   const dailyHours = window.DAYS.map((day, i) => (
     <div className="hours-select-day" key={i}>
       <label>{ capitalize(day) }</label>

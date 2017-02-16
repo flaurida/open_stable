@@ -9,13 +9,13 @@
 #  state       :string           not null
 #  price_range :string           not null
 #  description :text             not null
-#  hours       :text             not null
 #  latitude    :float
 #  longitude   :float
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  owner_id    :integer          not null
 #  zip_code    :integer          not null
+#  hours       :json             not null
 #
 
 class Restaurant < ActiveRecord::Base
@@ -44,12 +44,13 @@ class Restaurant < ActiveRecord::Base
     :friday,
     :saturday,
     :sunday
-  ]
+  ], coder: JSON
 
   validates :name, :owner, :address, :city, :description, :hours, presence: true
   validates_format_of :zip_code, with: /\d{5}/, message: "should be in the form 12345"
   validates :state, inclusion: { in: US_STATES }
   validates :price_range, inclusion: { in: PRICE_RANGES.keys }
+  validate :closing_time_not_before_opening_time
   geocoded_by :full_street_address
   after_validation :geocode
 
@@ -69,5 +70,29 @@ class Restaurant < ActiveRecord::Base
 
   def full_street_address
     [address, city, state].join(", ")
+  end
+
+  def closing_time_not_before_opening_time
+    errors.add(:hours, Hash.new { |hash, key| hash[key] = [] })
+    error_detected = false
+
+    hours.each do |day, hours_array|
+      i = 0
+
+      while i < hours_array.length
+        unless time_after(hours_array[i], hours_array[i + 1])
+          errors[:hours][0][day] << "cannot close before opening"
+          error_detected = true
+        end
+
+        i += 2
+      end
+    end
+
+    errors[:hours].clear unless error_detected
+  end
+
+  def time_after(time1, time2)
+    return Time.parse(time2) > Time.parse(time1)
   end
 end

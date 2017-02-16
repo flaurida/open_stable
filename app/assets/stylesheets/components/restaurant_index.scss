@@ -1,0 +1,87 @@
+.restaurant-index {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.restaurant-index-item {
+  border-bottom: 1px solid $grey;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  font-size: 18px;
+  background: $white;
+
+  a {
+    transition: color 0.5s;
+    color: $black;
+
+    &:hover {
+      color: $black-hover;
+
+    }
+  }
+}
+
+.restaruant-reviews {
+  margin-top: 10px;
+
+  p {
+    font-size: 16px;
+  }
+}
+
+.restaurant-notes {
+  display: flex;
+}
+
+.restaurant-details {
+  p {
+    color: $dark-grey;
+    font-size: 16px;
+  }
+}
+
+.restaurant-notes-detail {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.img-link {
+  height: 140px;
+  width: auto;
+  border-radius: 5px;
+  transition: filter 0.5s;
+
+  &:hover {
+    filter: contrast(80%);
+  }
+}
+
+.dollar-signs {
+  p {
+    display: inline-block;
+  }
+
+  .dollar-sign {
+    color: $black;
+  }
+
+  .no-dollar-sign {
+    color: $dark-grey;
+  }
+}
+
+@media screen and (max-width: $break-point) {
+  .img-link {
+    height: 80px;
+    width: auto;
+  }
+
+  .restaurant-notes-detail, .restaruant-reviews {
+    margin-top: 0;
+  }
+
+  .restaruant-reviews > p, .restaurant-details > p {
+    font-size: 14px;
+  }
+}

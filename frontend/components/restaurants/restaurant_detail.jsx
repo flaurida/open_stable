@@ -32,7 +32,7 @@ class RestaurantDetail extends React.Component {
           // ADD HOURS
         </div>
       </div>
-    )
+    );
   }
 }
 

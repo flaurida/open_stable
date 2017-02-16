@@ -14,13 +14,13 @@ const mapStateToProps = (state, ownProps) => {
     state: "",
     zip_code: "",
     hours: {
-      monday: ["9:00 am", "5:00 pm"],
-      tuesday: ["9:00 am", "5:00 pm"],
-      wednesday: ["9:00 am", "5:00 pm"],
-      thursday: ["9:00 am", "5:00 pm"],
-      friday: ["9:00 am", "5:00 pm"],
-      saturday: ["12:00 pm", "5:00 pm"],
-      sunday: ["10:00 am", "7:00 pm"]
+      monday: ["12:00 pm", "10:00 pm"],
+      tuesday: ["12:00 pm", "10:00 pm"],
+      wednesday: ["12:00 pm", "10:00 pm"],
+      thursday: ["12:00 pm", "10:00 pm"],
+      friday: ["12:00 pm", "10:00 pm"],
+      saturday: ["12:00 pm", "10:00 pm"],
+      sunday: ["12:00 pm", "10:00 pm"]
     },
     description: "",
     price_range: ""
