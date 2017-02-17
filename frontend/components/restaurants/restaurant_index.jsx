@@ -8,7 +8,8 @@ class RestaurantIndex extends React.Component {
 
   restaurantIndexItems() {
     return Object.values(this.props.restaurants).map((restaurant, i) => (
-      <RestaurantIndexItem key={i} restaurant={ restaurant } />
+      <RestaurantIndexItem key={i} restaurant={ restaurant }
+        deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser }/>
     ));
   }
 

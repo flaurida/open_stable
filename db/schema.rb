@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170216163927) do
+ActiveRecord::Schema.define(version: 20170217184736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,19 +31,23 @@ ActiveRecord::Schema.define(version: 20170216163927) do
   end
 
   create_table "restaurants", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.string   "address",     null: false
-    t.string   "city",        null: false
-    t.string   "state",       null: false
-    t.string   "price_range", null: false
-    t.text     "description", null: false
+    t.string   "name",               null: false
+    t.string   "address",            null: false
+    t.string   "city",               null: false
+    t.string   "state",              null: false
+    t.string   "price_range",        null: false
+    t.text     "description",        null: false
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "owner_id",    null: false
-    t.integer  "zip_code",    null: false
-    t.json     "hours",       null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "owner_id",           null: false
+    t.integer  "zip_code",           null: false
+    t.json     "hours",              null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["name"], name: "index_restaurants_on_name", using: :btree
     t.index ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
   end

@@ -14,7 +14,7 @@ class RestaurantDetail extends React.Component {
   }
 
   render() {
-    const { restaurant } = this.props;
+    const { restaurant, currentUser } = this.props;
     if (!restaurant.name) return null;
 
     return (
@@ -23,7 +23,7 @@ class RestaurantDetail extends React.Component {
           <img src={ window.images.dothrakiBanner } className="img-restaurant-banner" alt="dothraki-banner" />
 
           <div className="restaurant-header">
-            <img src={ window.images.restaurantPhoto } className="img-restaurant-detail" alt="restaurant"/>
+            <img src={ restaurant.image_url } className="img-restaurant-detail" alt="restaurant"/>
             <div className="restaurant-header-notes">
               <h1>{ restaurant.name }</h1>
               <p>Category&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.city }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.price_range }</p>
@@ -32,7 +32,7 @@ class RestaurantDetail extends React.Component {
         </div>
 
         <div className="restaurant-body">
-          <RestaurantNav restaurant={ restaurant } />
+          <RestaurantNav restaurant={ restaurant } currentUser={ currentUser }/>
           <section className="restaurant-body-detail">
             <RestaurantLocationContainer restaurant={ restaurant } />
 

@@ -1,6 +1,16 @@
 import { connect } from 'react-redux';
-import { requestSingleRestaurant, createRestaurant, updateRestaurant } from '../../actions/restaurant_actions';
+import { requestSingleRestaurant, createRestaurant, updateRestaurant, clearRestaurantErrors } from '../../actions/restaurant_actions';
 import RestaurantForm from './restaurant_form';
+
+const default_hours = {
+  monday: ["12:00 pm", "10:00 pm"],
+  tuesday: ["12:00 pm", "10:00 pm"],
+  wednesday: ["12:00 pm", "10:00 pm"],
+  thursday: ["12:00 pm", "10:00 pm"],
+  friday: ["12:00 pm", "10:00 pm"],
+  saturday: ["12:00 pm", "10:00 pm"],
+  sunday: ["12:00 pm", "10:00 pm"]
+};
 
 const mapStateToProps = (state, ownProps) => {
   const currentUser = state.session.currentUser;
@@ -13,17 +23,11 @@ const mapStateToProps = (state, ownProps) => {
     city: "",
     state: "",
     zip_code: "",
-    hours: {
-      monday: ["12:00 pm", "10:00 pm"],
-      tuesday: ["12:00 pm", "10:00 pm"],
-      wednesday: ["12:00 pm", "10:00 pm"],
-      thursday: ["12:00 pm", "10:00 pm"],
-      friday: ["12:00 pm", "10:00 pm"],
-      saturday: ["12:00 pm", "10:00 pm"],
-      sunday: ["12:00 pm", "10:00 pm"]
-    },
+    hours: default_hours,
     description: "",
-    price_range: ""
+    price_range: "",
+    imageUrl: null,
+    imageFile: null
   };
 
   if (formType === "edit") restaurant = state.restaurantDetail;
@@ -35,7 +39,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
     processForm: restaurant => dispatch(processForm(restaurant)),
-    requestSingleRestaurant: id => dispatch(requestSingleRestaurant(id))
+    requestSingleRestaurant: id => dispatch(requestSingleRestaurant(id)),
+    clearRestaurantErrors: () => dispatch(clearRestaurantErrors())
   };
 };
 

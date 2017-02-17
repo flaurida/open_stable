@@ -22,3 +22,7 @@ export const RestaurantDollarSigns = ({ numDollarSigns }) => {
     </div>
   );
 };
+
+export const currentUserIsOwner = (currentUser, restaurant) => {
+  return currentUser && currentUser.id === restaurant.owner_id;
+};

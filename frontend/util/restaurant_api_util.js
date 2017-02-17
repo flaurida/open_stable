@@ -12,19 +12,24 @@ export const fetchRestaurant = id => {
   });
 };
 
-export const createRestaurant = restaurant => {
+export const createRestaurant = formData => {
   return $.ajax({
     method: 'POST',
     url: 'api/restaurants',
-    data: { restaurant }
+    contentType: false,
+    processData: false,
+    data: formData
   });
 };
 
-export const updateRestaurant = restaurant => {
+export const updateRestaurant = formData => {
+  debugger
   return $.ajax({
     method: 'PATCH',
-    url: `api/restaurants/${restaurant.id}`,
-    data: { restaurant }
+    url: `api/restaurants/${formData.get("restaurant[id]")}`,
+    contentType: false,
+    processData: false,
+    data: formData
   });
 };
 

@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
-import { requestAllRestaurants } from '../../actions/restaurant_actions';
+import { requestAllRestaurants, deleteRestaurant } from '../../actions/restaurant_actions';
 import RestaurantIndex from './restaurant_index';
 
 const mapStateToProps = state => ({
-  restaurants: state.restaurants
+  restaurants: state.restaurants,
+  currentUser: state.session.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestAllRestaurants: () => dispatch(requestAllRestaurants())
+  requestAllRestaurants: () => dispatch(requestAllRestaurants()),
+  deleteRestaurant: restaurant => dispatch(deleteRestaurant(restaurant))
 });
 
 export default connect(

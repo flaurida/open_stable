@@ -1,4 +1,5 @@
 import * as UserApiUtil from '../util/user_api_util';
+import { receiveAllRestaurants } from './restaurant_actions';
 
 export const RECEIVE_SINGLE_USER = "RECEIVE_SINGLE_USER";
 

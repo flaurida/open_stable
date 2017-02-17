@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
+import { currentUserIsOwner } from './restaurant_helper';
 
 class RestaurantNav extends React.Component {
   editLink() {
-    if (this.props.restaurant.owner_viewing) {
+    if (currentUserIsOwner(this.props.currentUser, this.props.restaurant)) {
       return (
         <li><Link to={ `/restaurants/${this.props.restaurant.id}/edit`}>
           Edit

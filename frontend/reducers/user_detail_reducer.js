@@ -7,7 +7,7 @@ const UserDetailReducer = (oldState = defaultState, action) => {
 
   switch(action.type) {
     case RECEIVE_SINGLE_USER:
-      return action.user;
+      return action.user.user_detail;
     default:
       return oldState;
   }

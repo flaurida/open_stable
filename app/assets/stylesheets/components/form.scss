@@ -48,7 +48,7 @@ form {
   padding-top: 5px;
   border-top: 1px solid $grey;
 
-  input, button, select, textarea, option {
+  input, button, select, textarea, option, label.img-upload {
     font-size: 14px;
     width: 100%;
     padding: 0 15px;
@@ -79,12 +79,16 @@ form {
       }
     }
 
+    img.form-img {
+      height: 140px;
+      width: 140px;
+    }
   }
   select.input-error {
     color: $error;
   }
 
-  input[type="submit"], button {
+  input[type="submit"], button, label.img-upload {
     background: $red;
     text-align: center;
     color: $white;
@@ -102,6 +106,10 @@ form {
     &:focus {
       outline: none;
     }
+  }
+
+  label.img-upload {
+    line-height: 50px;
   }
 
   input::-webkit-input-placeholder {
@@ -141,4 +149,8 @@ form {
 .form-text {
   height: 150px;
   padding-top: 10px;
+}
+
+.hidden {
+  display: none;
 }

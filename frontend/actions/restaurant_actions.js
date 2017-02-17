@@ -53,16 +53,17 @@ export const updateRestaurant = restaurant => dispatch => {
 };
 
 export const deleteRestaurant = restaurant => dispatch => {
-  return RestaurantApiUtil.deleteRestaurant(restaurant.id).then(deletedRestaurant => {
-    dispatch(removeRestaurant(deletedRestaurant));
+  return RestaurantApiUtil.deleteRestaurant(restaurant.id).then(() => {
+    dispatch(removeRestaurant(restaurant));
     dispatch(clearRestaurantErrors());
-    dispatch(receiveNotices(deleteRestaurantMessage(deletedRestaurant)));
+    dispatch(receiveNotices(deleteRestaurantMessage(restaurant)));
+    return restaurant;
   }, err => {
     dispatch(receiveRestaurantErrors(err.responseJSON));
   });
-}
+};
 
-const receiveAllRestaurants = restaurants => ({
+export const receiveAllRestaurants = restaurants => ({
   type: RECEIVE_ALL_RESTAURANTS,
   restaurants
 });
@@ -77,7 +78,7 @@ const removeRestaurant = restaurant => ({
   restaurant
 });
 
-const clearRestaurantErrors = () => ({
+export const clearRestaurantErrors = () => ({
   type: CLEAR_ERRORS,
   key: "restaurant"
 });

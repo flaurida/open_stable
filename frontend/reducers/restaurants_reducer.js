@@ -1,6 +1,7 @@
 import { RECEIVE_ALL_RESTAURANTS,
 RECEIVE_SINGLE_RESTAURANT,
 REMOVE_RESTAURANT } from '../actions/restaurant_actions';
+import { RECEIVE_SINGLE_USER } from '../actions/user_actions';
 
 const defaultState = {};
 
@@ -14,6 +15,8 @@ const RestaurantsReducer = (oldState = defaultState, action) => {
     case RECEIVE_SINGLE_RESTAURANT:
       newState = { [action.restaurant.id]: action.restaurant };
       return Object.assign({}, oldState, newState);
+    case RECEIVE_SINGLE_USER:
+      return action.user.restaurants;
     case REMOVE_RESTAURANT:
       newState = Object.assign({}, oldState);
       delete newState[action.restaurant.id];

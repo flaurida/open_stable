@@ -8,6 +8,7 @@ class Api::RestaurantsController < ApplicationController
 
   def create
     @restaurant = current_user.restaurants.new(restaurant_params)
+
     if @restaurant.save
       render :show
     else
@@ -46,8 +47,12 @@ class Api::RestaurantsController < ApplicationController
   private
 
   def restaurant_params
+    if params[:restaurant][:hours]
+      params[:restaurant][:hours] = JSON.parse(params[:restaurant][:hours])
+    end
+
     params.require(:restaurant).permit(:name, :address, :city, :state, :zip_code,
-      :price_range, :description,
+      :price_range, :description, :image, :hours,
       hours: { monday: [], tuesday: [], wednesday: [], thursday: [], friday: [], saturday: [], sunday: [] })
   end
 

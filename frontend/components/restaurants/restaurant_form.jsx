@@ -9,10 +9,12 @@ class RestaurantForm extends React.Component {
     this.state = this.props.restaurant;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleHoursChange = this.handleHoursChange.bind(this);
+    this.updateFile = this.updateFile.bind(this);
   }
 
   componentWillMount() {
     this.redirectUnlessLoggedIn();
+    this.props.clearRestaurantErrors();
   }
 
   componentDidMount() {
@@ -37,9 +39,34 @@ class RestaurantForm extends React.Component {
     };
   }
 
+  mapStateToFormData(formData) {
+    Object.keys(this.state).forEach((key) => {
+      formData.append(`restaurant[${key}]`, this.state.key);
+    });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
-    this.props.processForm(this.state).then(restaurant => {
+    const formData = new FormData();
+
+    if (this.state.imageFile) {
+      formData.append("restaurant[image]", this.state.imageFile);
+    }
+
+    formData.append("restaurant[name]", this.state.name);
+    formData.append("restaurant[address]", this.state.address);
+    formData.append("restaurant[city]", this.state.city);
+    formData.append("restaurant[state]", this.state.state);
+    formData.append("restaurant[zip_code]", this.state.zip_code);
+    formData.append("restaurant[hours]", JSON.stringify(this.state.hours));
+    formData.append("restaurant[description]", this.state.description);
+    formData.append("restaurant[price_range]", this.state.price_range);
+
+    if (this.props.params.restaurantId) {
+      formData.append("restaurant[id]", this.props.params.restaurantId);
+    }
+
+    this.props.processForm(formData).then(restaurant => {
       this.props.router.push(`/restaurants/${restaurant.id}`);
     });
   }
@@ -74,6 +101,19 @@ class RestaurantForm extends React.Component {
     };
   }
 
+  updateFile(e) {
+    const file = e.currentTarget.files[0];
+    const fileReader = new FileReader();
+
+    fileReader.onloadend = () => {
+      this.setState({ imageFile: file, imageUrl: fileReader.result });
+    };
+
+    if (file) {
+      fileReader.readAsDataURL(file);
+    }
+  }
+
   render() {
     const message = this.props.formType === "new" ? "Create Stable" : "Update Stable";
     const { name, address, city, state, zip_code, description, price_range, hours } = this.state;
@@ -105,6 +145,11 @@ class RestaurantForm extends React.Component {
               <option disabled value="">Select Price Range</option>
               { this.priceRangeSelect() }
             </select>
+
+            <label htmlFor="restaurant-img" className="img-upload">Upload Image</label>
+            <input id="restaurant-img" type="file" onChange={this.updateFile} className="hidden" />
+            <img src={this.state.imageUrl} />
+
             <textarea value={ description } placeholder="Describe your stable..." onChange={ this.handleChange("description") }
               className={ errors.description ? "input-error form-text" : "form-text" }/>
 

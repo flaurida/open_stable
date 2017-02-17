@@ -20,12 +20,15 @@
     }
   }
 
-  a.restaurant-edit-link {
-    color: $navy;
-    transition: color 0.5s;
+  .edit-and-delete-links {
+    a, button {
+      color: $navy;
+      transition: color 0.5s;
+      padding-right: 5px;
 
-    &:hover {
-      color: $navy-hover;
+      &:hover {
+        color: $navy-hover;
+      }
     }
   }
 }

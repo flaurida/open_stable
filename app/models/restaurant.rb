@@ -54,6 +54,9 @@ class Restaurant < ActiveRecord::Base
   geocoded_by :full_street_address
   after_validation :geocode
 
+  has_attached_file :image, styles: { medium: "140x140>" }, default_url: "restaurant.jpg"
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+
   belongs_to :owner,
     class_name: "User",
     primary_key: :id,
