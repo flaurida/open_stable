@@ -14,12 +14,22 @@ class RestaurantNav extends React.Component {
     }
   }
 
+  locationLink() {
+    if (this.props.restaurant.latitude) {
+      return (
+        <li><a href="#">Location</a></li>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <nav className="restaurant-nav">
         <ul>
           <li><a href="#">Reservation</a></li>
-          <li><a href="#">Location</a></li>
+          { this.locationLink() }
           <li><a href="#">About</a></li>
           <li><a href="#">Photos</a></li>
           <li><a href="#">Reviews</a></li>

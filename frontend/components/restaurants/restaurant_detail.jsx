@@ -1,5 +1,6 @@
 import React from 'react';
 import RestaurantNav from './restaurant_nav';
+import RestaurantLocationContainer from './restaurant_location_container';
 
 class RestaurantDetail extends React.Component {
   componentDidMount() {
@@ -32,14 +33,10 @@ class RestaurantDetail extends React.Component {
 
         <div className="restaurant-body">
           <RestaurantNav restaurant={ restaurant } />
-          <div className="restaurant-body-detail">
+          <section className="restaurant-body-detail">
+            <RestaurantLocationContainer restaurant={ restaurant } />
 
-            <div className="restaurant-location">
-              <p>{ restaurant.address }</p>
-              <p>{ restaurant.city }, { restaurant.state }, { restaurant.zip_code }</p>
-            </div>
-
-            <div className="restaurant-description">
+            <section className="restaurant-description">
               <h2>About { restaurant.name }</h2>
               <p>{ restaurant.description }</p>
 
@@ -47,9 +44,8 @@ class RestaurantDetail extends React.Component {
               <ul>
                 { restaurant.formatted_hours.map((hour, i) => <li key={i}>{ hour }</li>) }
               </ul>
-            </div>
-
-          </div>
+            </section>
+          </section>
         </div>
       </div>
     );

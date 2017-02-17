@@ -1,0 +1,35 @@
+#map-container {
+  height: 100%;
+  width: 100%;
+}
+
+.restaurant-location {
+  position: relative;
+  height: 200px;
+}
+
+.restaurant-address {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  padding: 5px;
+  background: $white;
+  border-bottom: 1px solid $dark-grey;
+  border-radius: 5px;
+  font-size: 14px;
+
+  button {
+    color: $navy;
+    transition: color 0.5s, border-bottom 0.5s;
+
+    &:hover {
+      color: $navy-hover;
+    }
+  }
+}
+
+@media screen and (max-width: $break-point) {
+  .restaurant-address {
+    font-size: 12px;
+  }
+}

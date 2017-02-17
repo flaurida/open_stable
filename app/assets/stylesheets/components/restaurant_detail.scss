@@ -81,12 +81,16 @@
 .restaurant-body-detail {
   width: 70%;
 
-  div {
+  section {
     background: $white;
     margin: 20px 0;
     padding: 20px;
     border-radius: 5px;
     border-bottom: 2px solid $grey;
+  }
+
+  .restaurant-location {
+    padding: 0;
   }
 }
 
