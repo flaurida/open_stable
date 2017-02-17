@@ -12,12 +12,20 @@
   background: $white;
 
   a {
-    transition: color 0.5s;
     color: $black;
+    transition: color 0.5s;
 
     &:hover {
       color: $black-hover;
+    }
+  }
 
+  a.restaurant-edit-link {
+    color: $navy;
+    transition: color 0.5s;
+
+    &:hover {
+      color: $navy-hover;
     }
   }
 }
@@ -75,6 +83,10 @@
   .img-link {
     height: 80px;
     width: auto;
+  }
+
+  .restaurant-index-item {
+    font-size: 16px;
   }
 
   .restaurant-notes-detail, .restaruant-reviews {

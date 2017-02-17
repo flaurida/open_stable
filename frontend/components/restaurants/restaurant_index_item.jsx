@@ -3,6 +3,16 @@ import { Link } from 'react-router';
 import { RestaurantDollarSigns } from './restaurant_helper';
 
 class RestaurantIndexItem extends React.Component {
+  editLink() {
+    if (this.props.restaurant.owner_viewing) {
+      return (<Link to={ `/restaurants/${this.props.restaurant.id}/edit`} className="restaurant-edit-link">
+        Edit
+      </Link>);
+    } else {
+      return null;
+    }
+  }
+
   render() {
     const { restaurant } = this.props;
 
@@ -21,6 +31,7 @@ class RestaurantIndexItem extends React.Component {
               <RestaurantDollarSigns numDollarSigns={ restaurant.num_dollar_signs } />
               <p>Categories placeholder</p>
               <p>{ restaurant.city }</p>
+              <p>{ this.editLink() }</p>
             </div>
           </div>
         </div>

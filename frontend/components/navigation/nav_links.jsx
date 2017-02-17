@@ -28,7 +28,7 @@ class NavLinks extends React.Component {
     if (this.props.currentUser) {
       return (
         <div className={ this.props.className }>
-          <Link to="#" className="greeting">Hi, { this.props.currentUser.first_name }</Link>
+          <Link to="/profile" className="greeting">Hi, { this.props.currentUser.first_name }</Link>
           <button onClick={ this.logout() } className="session">
             Sign out
           </button>

@@ -1,0 +1,52 @@
+.user-nav {
+  padding-left: 10%;
+  border-bottom: 1px solid $grey;
+
+  li {
+    padding: 15px 15px 15px 0;
+    display: block;
+
+    a {
+      height: 100%;
+      padding: 15px 0;
+      text-transform: uppercase;
+      color: $navy;
+      border-bottom: 1px solid transparent;
+      transition: color 0.5s, border-bottom 0.5s;
+
+      &:hover {
+        color: $navy-hover;
+        border-bottom: 1px solid $navy-hover;
+      }
+    }
+  }
+}
+
+.user-profile-item-container {
+  width: 80%;
+  margin: 0 auto;
+
+  .create-link {
+    padding: 15px 0;
+
+    a {
+      color: $navy;
+      transition: color 0.5s;
+      padding: 15px 0;
+
+      &:hover {
+        color: $navy-hover;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $break-point) {
+  .user-profile-item-container {
+    width: 90%;
+  }
+
+  .user-nav {
+    padding-left: 5%;
+  }
+}

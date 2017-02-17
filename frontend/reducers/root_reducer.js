@@ -5,6 +5,7 @@ import notices from './notices_reducer';
 import modal from './modal_reducer';
 import restaurants from './restaurants_reducer';
 import restaurantDetail from './restaurant_detail_reducer';
+import userDetail from './user_detail_reducer';
 
 export default combineReducers({
   session,
@@ -12,5 +13,6 @@ export default combineReducers({
   notices,
   modal,
   restaurants,
-  restaurantDetail
+  restaurantDetail,
+  userDetail
 });

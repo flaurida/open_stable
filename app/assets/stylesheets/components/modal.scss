@@ -7,17 +7,17 @@
   overflow-y: scroll;
 }
 
-.modal-center-form {
+.modal-center-signup, .modal-center-login {
   background: $white;
   max-width: 450px;
   margin: 20px auto;
 }
 
 .modal-center-map {
-  max-width: 700px;
+  max-width: 900px;
   margin: 20px auto;
   width: 90%;
-  height: 500px;
+  height: 700px;
 }
 
 @media screen and (max-width: $break-point) {
