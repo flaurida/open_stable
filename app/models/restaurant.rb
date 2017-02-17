@@ -86,8 +86,9 @@ class Restaurant < ActiveRecord::Base
   end
 
   def formatted_daily_hours(hours_array)
+    return "Closed" if hours_array.empty?
+    
     formatted_daily_hours = ""
-
     hours_array.each_with_index do |hour, i|
       pretty_hour = hour[0...-2]
 

@@ -18,31 +18,55 @@ const HoursSelectForDay = ({ hours, day, handleHoursChange, errors }) => {
     }
   }
 
+  if (hours[day].length === 0) {
+    return (
+      <div className="hours-select-day">
+        <div className="hours-select-label">
+          <label>{ capitalize(day) }</label>
+        </div>
+        <button type="button" onClick={ handleHoursChange(day, null, false) }>Open</button>
+      </div>
+    );
+  } else {
+    const result = [];
+
+    for (let i = 0; i < hours[day].length; i += 2) {
+
+      result.push(
+        <div key={i} className="hours-select-day">
+          <div className="hours-select-label">
+            <label>{ capitalize(day) }</label>
+            <button type="button" onClick={ handleHoursChange(day, null, true) }>Close</button>
+            <button type="button" onClick={ handleHoursChange(day, null, false) }>Add Timeslot</button>
+          </div>
+          <HoursSelectPair i={i} hours={[hours[day][i], hours[day][i + 1]]} handleHoursChange={handleHoursChange} className={className} day={day} />
+        </div>
+      );
+    }
+
+    return <div>{ result }</div>;
+  }
+};
+
+const HoursSelectPair = ({ hours, handleHoursChange, className, day, i }) => {
   return (
-    <div className="hours-select-day">
-      <HoursSelectPair hours={[hours[day][0], hours[day][1]]} handleHoursChange={handleHoursChange} className={className} day={day} />
+    <div className="hours-select-pair">
+      <select value={hours[0]} key={hours[i]} onChange={ handleHoursChange(day, i) } className={ className }>
+        { hoursSelectItems() }
+      </select>
+      <p>to</p>
+      <select value={hours[1]} key={hours[i + 1]} onChange={ handleHoursChange(day, i + 1) } className={ className }>
+        { hoursSelectItems() }
+      </select>
     </div>
   );
 };
-
-const HoursSelectPair = ({ hours, handleHoursChange, className, day }) => (
-  <div className="hours-select-pair">
-    <select value={hours[0]} key={hours[0]} onChange={ handleHoursChange(day, 0) } className={ className }>
-      { hoursSelectItems() }
-    </select>
-    <p>to</p>
-    <select value={hours[1]} key={hours[1]} onChange={ handleHoursChange(day, 1) } className={ className }>
-      { hoursSelectItems() }
-    </select>
-  </div>
-);
 
 export const AllHoursSelect = ({ hours, handleHoursChange, errors }) => {
   if (!hours) return null;
 
   const dailyHours = window.DAYS.map((day, i) => (
-    <div className="hours-select-day" key={i}>
-      <label>{ capitalize(day) }</label>
+    <div key={i}>
       <HoursSelectForDay day={ day } hours={ hours } handleHoursChange={ handleHoursChange } errors={ errors } />
     </div>
   ));

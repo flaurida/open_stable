@@ -59,7 +59,7 @@
 
 .img-link {
   height: 140px;
-  width: auto;
+  width: 140px;
   border-radius: 5px;
   transition: filter 0.5s;
 
@@ -85,7 +85,7 @@
 @media screen and (max-width: $break-point) {
   .img-link {
     height: 80px;
-    width: auto;
+    width: 80px;
   }
 
   .restaurant-index-item {

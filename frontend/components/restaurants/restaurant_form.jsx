@@ -93,10 +93,18 @@ class RestaurantForm extends React.Component {
     ));
   }
 
-  handleHoursChange(day, i) {
+  handleHoursChange(day, i, closed=false) {
     return e => {
       const currentHours = Object.assign({}, this.state.hours);
-      currentHours[day][i] = e.currentTarget.value;
+      if (closed) {
+        currentHours[day] = [];
+      } else if (currentHours[day].length === 0) {
+        currentHours[day] = ["12:00 pm", "10:00 pm"];
+      } else if (i === null) {
+        currentHours[day] = currentHours[day].concat(["12:00 pm", "10:00 pm"]);
+      } else {
+        currentHours[day][i] = e.currentTarget.value;
+      }
       this.setState({ hours: currentHours });
     };
   }
