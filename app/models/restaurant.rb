@@ -66,10 +66,40 @@ class Restaurant < ActiveRecord::Base
     PRICE_RANGES[price_range]
   end
 
+  def formatted_hours
+    formatted_hours = []
+
+    hours.each do |day, hours_array|
+      formatted_hours << "#{day.capitalize}: #{formatted_daily_hours(hours_array)}"
+    end
+
+    formatted_hours
+  end
+
   private
 
   def full_street_address
     [address, city, state].join(", ")
+  end
+
+  def formatted_daily_hours(hours_array)
+    formatted_daily_hours = ""
+
+    hours_array.each_with_index do |hour, i|
+      pretty_hour = hour[0...-2]
+
+      if hour[-2] == "a"
+        pretty_hour += "a.m."
+      else
+        pretty_hour += "p.m."
+      end
+      pretty_hour += " - " if i % 2 == 0
+      pretty_hour += ", " if i % 2 != 0 && i < hours_array.length - 1
+
+      formatted_daily_hours << pretty_hour
+    end
+
+    formatted_daily_hours
   end
 
   def closing_time_not_before_opening_time

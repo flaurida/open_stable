@@ -52,6 +52,14 @@
       background: $navy-hover;
     }
   }
+
+  .greeting {
+    transition: color 1s, background 1s;
+
+    &:hover {
+      color: $black-hover;
+    }
+  }
 }
 
 @media screen and (max-width: $break-point) {

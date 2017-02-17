@@ -1,0 +1,159 @@
+.restaurant-header {
+  height: 160px;
+  position: relative;
+  display: flex;
+
+  img {
+    position: absolute;
+    height: 140px;
+    width: auto;
+    border-radius: 5px;
+    top: 40px;
+    left: 40px;
+  }
+
+  h1 {
+    color: white;
+    font-size: 30px;
+    margin-top: 80px;
+  }
+}
+
+.restaurant-header-wrapper {
+  height: 160px;
+}
+
+.img-restaurant-banner {
+  position: absolute;
+  height: 160px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.restaurant-header-notes {
+  margin-left: 250px;
+
+  p {
+    color: $white;
+  }
+}
+
+.restaurant-body {
+  margin-top: 30px;
+  display: flex;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  li {
+    margin: 5px 0;
+  }
+}
+
+.hours-header {
+  margin: 15px 0;
+  font-weight: 700;
+}
+
+.restaurant-nav {
+  padding-left: 40px;
+
+  ul {
+    width: 210px;
+  }
+
+  li {
+    padding: 15px 0;
+
+    a {
+      transition: color 0.5s;
+      padding: 15px 15px 15px 0;
+
+      &:hover {
+        color: $red;
+      }
+    }
+  }
+}
+
+.restaurant-body-detail {
+  width: 70%;
+
+  div {
+    background: $white;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 5px;
+    border-bottom: 2px solid $grey;
+  }
+}
+
+@media screen and (max-width: $break-point-two) {
+  .restaurant-body {
+    flex-direction: column;
+  }
+
+  .restaurant-body-detail {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+  }
+
+  .restaurant-nav {
+    border-bottom: 1px solid $grey;
+
+    ul {
+      display: flex;
+    }
+
+    li {
+      text-transform: uppercase;
+      margin: 0;
+
+      a {
+        padding: 15px 0;
+        margin-right: 15px;
+        border-bottom: 1px solid transparent;
+        transition: border-bottom 0.5s;
+
+        &:hover {
+          color: $navy;
+          border-bottom: 1px solid $navy;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $break-point) {
+  .restaurant-nav {
+    display: none;
+  }
+
+  .restaurant-header {
+    h1 {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    img {
+      height: 100px;
+      border-radius: 5px;
+      top: 20px;
+      left: 20px;
+    }
+  }
+
+  .restaurant-header-notes {
+    margin-left: 150px;
+  }
+
+}
+
+@media screen and (max-width: 1270px) {
+  .img-restaurant-banner {
+    width: 1270px;
+    overflow: hidden;
+  }
+}
