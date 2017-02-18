@@ -46,6 +46,7 @@ export const updateTable = (restaurantId, table) => dispatch => {
     dispatch(receiveSingleTable(updatedTable));
     dispatch(clearTableErrors());
     dispatch(receiveNotices(updateTableMessage(updatedTable)));
+    return updatedTable;
   }, err => {
     dispatch(receiveTableErrors(err.responseJSON));
   });

@@ -9,10 +9,10 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
 
     resources :restaurants, except: [:new, :edit] do
-      resources :tables, only: [:index, :create]
+      resources :tables, only: [:index, :create, :update]
     end
 
-    resources :tables, only: [:update, :destroy, :show]
+    resources :tables, only: [:destroy, :show]
 
     resources :categories, only: [:create, :index]
   end

@@ -1,6 +1,6 @@
 class Api::TablesController < ApplicationController
-  before_action :can_only_view_own_tables, only: [:index, :create, :show, :update]
-  before_action :can_only_delete_own_tables, only: [:destroy]
+  before_action :can_only_view_own_restaurant_tables, only: [:index, :create, :update]
+  before_action :can_only_view_own_tables, only: [:show, :destroy]
 
   def index
     @tables = Table.where(restaurant_id: params[:restaurant_id])
@@ -52,7 +52,7 @@ class Api::TablesController < ApplicationController
     params.require(:table).permit(:name, :min_seats, :max_seats, :dining_time)
   end
 
-  def can_only_view_own_tables
+  def can_only_view_own_restaurant_tables
     @restaurant = Restaurant.find(params[:restaurant_id])
 
     unless logged_in? && @restaurant && @restaurant.owner_id == current_user.id
@@ -60,7 +60,7 @@ class Api::TablesController < ApplicationController
     end
   end
 
-  def can_only_delete_own_tables
+  def can_only_view_own_tables
     @table = Table.includes(:restaurant).find(params[:id])
 
     unless logged_in? && @table.restaurant.owner_id == current_user.id

@@ -10,8 +10,9 @@ class TableForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentWillUnMount() {
     this.resetForm();
+
   }
 
   initialState() {
@@ -39,8 +40,9 @@ class TableForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    let that = this;
     this.props.handleForm(this.props.restaurantId, this.state).then(() => {
-      this.resetForm();
+      this.props.updateEditState(null);
     });
   }
 
