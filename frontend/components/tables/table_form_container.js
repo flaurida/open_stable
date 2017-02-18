@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { requestSingleTable, createTable, updateTable} from '../../actions/table_actions';
+import { requestSingleTable, createTable, updateTable, clearTableErrors } from '../../actions/table_actions';
 import TableForm from './table_form';
 
 const mapStateToProps = (state, ownProps) => {
@@ -13,7 +13,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
     handleForm: (restaurantId, table) => dispatch(handleForm(restaurantId, table)),
-    requestSingleTable: id => dispatch(requestSingleTable(id))
+    requestSingleTable: id => dispatch(requestSingleTable(id)),
+    clearTableErrors: () => dispatch(clearTableErrors())
   };
 };
 
