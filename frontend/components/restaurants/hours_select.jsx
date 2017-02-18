@@ -24,7 +24,7 @@ const HoursSelectForDay = ({ hours, day, handleHoursChange, errors }) => {
         <div className="hours-select-label">
           <label>{ capitalize(day) }</label>
         </div>
-        <button type="button" onClick={ handleHoursChange(day, null, false) }>Open</button>
+        <button type="button" className="open-button" onClick={ handleHoursChange(day, null, false) }>Open</button>
       </div>
     );
   } else {

@@ -5,6 +5,7 @@
 .hours-select-day {
   display: flex;
   justify-content: space-between;
+  height: 80px;
 }
 
 .hours-select-pair {
@@ -12,10 +13,13 @@
   align-items: center;
   width: 65%;
   justify-content: space-between;
-
   select {
     max-width: 45%;
   }
+}
+
+.open-button {
+  width: 65%;
 }
 
 .hours-select-label {
