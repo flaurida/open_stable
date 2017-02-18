@@ -69,6 +69,7 @@ class Restaurant < ActiveRecord::Base
   has_many :restaurant_categories, dependent: :destroy
   has_many :categories, through: :restaurant_categories
   has_many :tables, dependent: :destroy
+  has_many :bookings, through: :tables
 
   def num_dollar_signs
     PRICE_RANGES[price_range]

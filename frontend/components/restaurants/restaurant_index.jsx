@@ -1,5 +1,6 @@
 import React from 'react';
 import RestaurantIndexItem from './restaurant_index_item';
+import { Link } from 'react-router';
 
 class RestaurantIndex extends React.Component {
   componentDidMount() {

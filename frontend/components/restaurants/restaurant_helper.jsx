@@ -1,4 +1,5 @@
 import React from 'react';
+import { seatOptions } from '../tables/table_form_helper';
 
 const dollarSign = key => <p className="dollar-sign" key={ key }>$</p>;
 const noDollarSign = key => <p className="no-dollar-sign" key={ key }>$</p>;
@@ -26,3 +27,11 @@ export const RestaurantDollarSigns = ({ numDollarSigns }) => {
 export const currentUserIsOwner = (currentUser, restaurant) => {
   return currentUser && currentUser.id === restaurant.owner_id;
 };
+
+export const NumGuestsSelect = ({ handleChange, value }) => {
+  return (
+    <select onChange={ handleChange } value={ value }>
+      { seatOptions(20) }
+    </select>
+  );
+}

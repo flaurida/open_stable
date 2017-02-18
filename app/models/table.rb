@@ -22,6 +22,7 @@ class Table < ActiveRecord::Base
   validate :max_seats_greater_than_min_seats
 
   belongs_to :restaurant
+  has_many :bookings, dependent: :destroy
 
   private
 

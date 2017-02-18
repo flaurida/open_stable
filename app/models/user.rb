@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
     primary_key: :id,
     foreign_key: :owner_id
 
+  has_many :bookings, dependent: :destroy
+  has_many :tables, through: :bookings
+
   def self.generate_random_token
     SecureRandom.urlsafe_base64(16)
   end

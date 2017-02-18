@@ -8,6 +8,14 @@ const hoursSelectItems = () => {
   ));
 };
 
+export const SingleHoursSelect = ({ handleChange, value }) => {
+  return (
+    <select onChange={ handleChange } value={ value }>
+      { hoursSelectItems() }
+    </select>
+  );
+};
+
 const HoursSelectForDay = ({ hours, day, handleHoursChange, errors }) => {
   const hoursArray = hours[day];
   let className = "";

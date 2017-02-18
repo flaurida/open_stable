@@ -1,6 +1,6 @@
 import React from 'react';
 
-const seatOptions = max => {
+export const seatOptions = max => {
   const seatOptions = [];
 
   for (let i = 1; i <= max; i++) {
