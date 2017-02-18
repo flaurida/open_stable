@@ -12,7 +12,6 @@ class TableForm extends React.Component {
 
   componentWillUnMount() {
     this.resetForm();
-    this.props.clearTableErrors();
   }
 
   initialState() {

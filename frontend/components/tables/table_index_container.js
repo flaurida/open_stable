@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { requestAllTables, deleteTable } from '../../actions/table_actions';
+import { requestAllTables, deleteTable, clearTableErrors } from '../../actions/table_actions';
 import TableIndex from './table_index';
 
 const mapStateToProps = state => ({
@@ -10,7 +10,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   requestAllTables: restaurantId => dispatch(requestAllTables(restaurantId)),
-  deleteTable: table => dispatch(deleteTable(table))
+  deleteTable: table => dispatch(deleteTable(table)),
+  clearTableErrors: () => dispatch(clearTableErrors())
 });
 
 export default connect(

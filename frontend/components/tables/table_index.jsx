@@ -12,6 +12,7 @@ class TableIndex extends React.Component {
 
   componentWillMount() {
     this.redirectUnlessLoggedIn();
+    this.props.clearTableErrors();
   }
 
   componentDidMount() {
@@ -22,6 +23,7 @@ class TableIndex extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.restaurantId && nextProps.params.restaurantId !== this.props.params.restaurantId) {
       this.props.requestAllTables(nextProps.params.restaurantId);
+      this.props.clearTableErrors();
     }
   }
 

@@ -5,6 +5,7 @@ import { receiveNotices, clearNotices } from './notice_actions';
 export const RECEIVE_ALL_TABLES = "RECEIVE_ALL_TABLES";
 export const RECEIVE_SINGLE_TABLE = "RECEIVE_SINGLE_TABLE";
 export const REMOVE_TABLE = "REMOVE_TABLE";
+export const CLEAR_TABLE_ERRORS = "CLEAR_TABLE_ERRORS";
 
 const createTableMessage = table => (
   `${table.name} is now available for booking at OpenStable!`
@@ -77,8 +78,7 @@ const removeTable = table => ({
 });
 
 export const clearTableErrors = () => ({
-  type: CLEAR_ERRORS,
-  key: "table"
+  type: CLEAR_TABLE_ERRORS
 });
 
 const receiveTableErrors = (errors, key) => ({
