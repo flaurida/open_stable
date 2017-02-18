@@ -8,7 +8,12 @@ Rails.application.routes.draw do
 
     resource :session, only: [:create, :destroy]
 
-    resources :restaurants, except: [:new, :edit]
+    resources :restaurants, except: [:new, :edit] do
+      resources :tables, only: [:index, :create]
+    end
+
+    resources :tables, only: [:update, :destroy, :show]
+
     resources :categories, only: [:create, :index]
   end
 end

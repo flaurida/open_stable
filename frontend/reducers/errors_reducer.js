@@ -2,7 +2,8 @@ import { RECEIVE_ERRORS, CLEAR_ERRORS } from '../actions/error_actions';
 
 const defaultState = {
   session: {},
-  restaurant: {}
+  restaurant: {},
+  table: {}
 };
 
 const ErrorsReducer = (oldState = defaultState, action) => {

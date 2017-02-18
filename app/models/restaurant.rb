@@ -2,20 +2,24 @@
 #
 # Table name: restaurants
 #
-#  id          :integer          not null, primary key
-#  name        :string           not null
-#  address     :string           not null
-#  city        :string           not null
-#  state       :string           not null
-#  price_range :string           not null
-#  description :text             not null
-#  latitude    :float
-#  longitude   :float
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  owner_id    :integer          not null
-#  zip_code    :integer          not null
-#  hours       :json             not null
+#  id                 :integer          not null, primary key
+#  name               :string           not null
+#  address            :string           not null
+#  city               :string           not null
+#  state              :string           not null
+#  price_range        :string           not null
+#  description        :text             not null
+#  latitude           :float
+#  longitude          :float
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  owner_id           :integer          not null
+#  zip_code           :integer          not null
+#  hours              :json             not null
+#  image_file_name    :string
+#  image_content_type :string
+#  image_file_size    :integer
+#  image_updated_at   :datetime
 #
 
 class Restaurant < ActiveRecord::Base
@@ -64,6 +68,7 @@ class Restaurant < ActiveRecord::Base
 
   has_many :restaurant_categories, dependent: :destroy
   has_many :categories, through: :restaurant_categories
+  has_many :tables, dependent: :destroy
 
   def num_dollar_signs
     PRICE_RANGES[price_range]
@@ -109,7 +114,7 @@ class Restaurant < ActiveRecord::Base
   def closing_time_not_before_opening_time_and_no_overlap
     errors.add(:hours, Hash.new { |hash, key| hash[key] = [] })
     error_detected = false
-    
+
     hours.each do |day, hours_array|
       i = 0
 
