@@ -42,6 +42,8 @@ users.each do |user|
   )
 end
 
+user_ids = User.all.ids
+
 hours = [
   {
     monday: ["9:00 am", "5:00 pm"],
@@ -53,6 +55,8 @@ hours = [
     sunday: ["10:00 am", "7:00 pm"]
   }
 ]
+
+price_ranges = ["$15 and under", "$16 to $30", "$31 to $50", "$50 and over"]
 
 Restaurant.create(
   name: "Khal Tommy's",
@@ -78,6 +82,117 @@ Restaurant.create(
   owner_id: User.first.id
 )
 
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "793 9th Ave",
+  city: "New York",
+  state: "New York",
+  zip_code: 10019,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "1123 Broadway",
+  city: "New York",
+  state: "New York",
+  zip_code: 10010,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "550 LaGuardia Pl",
+  city: "New York",
+  state: "New York",
+  zip_code: 10012,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "3 E 36th St",
+  city: "New York",
+  state: "New York",
+  zip_code: 10016,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "674 Manhattan Ave",
+  city: "New York",
+  state: "New York",
+  zip_code: 11222,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "561 Lorimer St",
+  city: "New York",
+  state: "New York",
+  zip_code: 11211,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "14 Bedford Ave",
+  city: "New York",
+  state: "New York",
+  zip_code: 11237,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "150 Manhattan Ave",
+  city: "New York",
+  state: "New York",
+  zip_code: 11206,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+Restaurant.create(
+  name: Faker::GameOfThrones.character,
+  address: "One W 58th St",
+  city: "New York",
+  state: "New York",
+  zip_code: 10019,
+  price_range: price_ranges.sample,
+  description: GOTFaker::Quote.bad_ass,
+  hours: hours.sample,
+  owner_id: user_ids.sample
+)
+
+restaurant_ids = Restaurant.all.ids
+dining_times = %w(60 90 120 180)
+
 categories = [
   "Frequent brawling",
   "Horses eat free",
@@ -92,3 +207,13 @@ categories = [
 ]
 
 categories.each { |category| Category.create(name: category) }
+
+50.times do
+  min_seats = (1..20).to_a.sample
+  max_seats = (min_seats..20).to_a.sample
+
+
+  Table.create(min_seats: min_seats, max_seats: max_seats,
+  name: GOTFaker::Character.random_name, dining_time: dining_times.sample,
+  restaurant_id: restaurant_ids.sample)
+end

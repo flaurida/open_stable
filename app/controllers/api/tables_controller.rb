@@ -1,4 +1,6 @@
 class Api::TablesController < ApplicationController
+  before_action :can_only_view_own_tables
+
   def index
     @tables = Table.where(restaurant_id: params[:restaurant_id])
     render :index
@@ -6,11 +8,6 @@ class Api::TablesController < ApplicationController
 
   def create
     @restaurant = Restaurant.find(params[:restaurant_id])
-
-    unless @restaurant
-      render json: ["That restaurant does not exist!"], status: 404
-    end
-
     @table = @restaurant.tables.new(table_params)
 
     if @table.save
@@ -52,5 +49,13 @@ class Api::TablesController < ApplicationController
 
   def table_params
     params.require(:table).permit(:min_seats, :max_seats, :dining_time)
+  end
+
+  def can_only_view_own_tables
+    @restaurant = Restaurant.find(params[:restaurant_id])
+
+    unless logged_in? && @restaurant && @restaurant.owner == current_user
+      render json: ["You cannot view the tables in someone else's restaurant!"], status: 403
+    end
   end
 end

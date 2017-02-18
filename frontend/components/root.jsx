@@ -7,6 +7,7 @@ import RestaurantDetailContainer from './restaurants/restaurant_detail_container
 import RestaurantFormContainer from './restaurants/restaurant_form_container';
 import UserProfileContainer from './users/user_profile_container';
 import UserRestaurantsContainer from './users/user_restaurants_container';
+import TableIndexContainer from './tables/table_index_container';
 
 const Root = ({ store }) => {
   return (
@@ -16,6 +17,7 @@ const Root = ({ store }) => {
         <IndexRoute component={ RestaurantIndexContainer } />
           <Route path="/restaurants" component={ RestaurantIndexContainer } />
           <Route path="/restaurants/new" component={ RestaurantFormContainer } />
+          <Route path="/restaurants/:restaurantId/tables" component={ TableIndexContainer } />
           <Route path="/restaurants/:restaurantId/edit" component={ RestaurantFormContainer } />
           <Route path="/restaurants/:restaurantId" component={ RestaurantDetailContainer } />
           <Route path="/profile" component={ UserProfileContainer }>

@@ -14,6 +14,9 @@ class RestaurantIndexItem extends React.Component {
           <button onClick={ () => this.props.deleteRestaurant(this.props.restaurant) }>
             Delete
           </button>
+          <Link to={ `/restaurants/${this.props.restaurant.id}/tables` } className="restaurant-edit-link">
+            View Stalls
+          </Link>
         </div>
       );
     } else {
