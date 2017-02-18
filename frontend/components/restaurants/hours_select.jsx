@@ -2,7 +2,7 @@ import React from 'react';
 
 const hoursSelectItems = () => {
   return window.TIMES.map((time, i) => (
-    <option value={ time } key={i}>
+    <option value={ time } key={`${time}-${i}`}>
       { time }
     </option>
   ));
@@ -24,7 +24,9 @@ const HoursSelectForDay = ({ hours, day, handleHoursChange, errors }) => {
         <div className="hours-select-label">
           <label>{ capitalize(day) }</label>
         </div>
-        <button type="button" className="open-button" onClick={ handleHoursChange(day, null, false) }>Open</button>
+        <button type="button" className="open-button" onClick={ handleHoursChange(day, null, false) }>
+          Open
+        </button>
       </div>
     );
   } else {
@@ -51,11 +53,11 @@ const HoursSelectForDay = ({ hours, day, handleHoursChange, errors }) => {
 const HoursSelectPair = ({ hours, handleHoursChange, className, day, i }) => {
   return (
     <div className="hours-select-pair">
-      <select value={hours[0]} key={hours[i]} onChange={ handleHoursChange(day, i) } className={ className }>
+      <select value={hours[0]} key={`${day}-${i}-${hours[i]}`} onChange={ handleHoursChange(day, i) } className={ className }>
         { hoursSelectItems() }
       </select>
       <p>to</p>
-      <select value={hours[1]} key={hours[i + 1]} onChange={ handleHoursChange(day, i + 1) } className={ className }>
+      <select value={hours[1]} key={`${day}-${i + 1}-${hours[i + 1]}`} onChange={ handleHoursChange(day, i + 1) } className={ className }>
         { hoursSelectItems() }
       </select>
     </div>

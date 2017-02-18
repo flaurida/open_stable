@@ -24,13 +24,28 @@ class Errors extends React.Component {
 
     if (errors["hours"].length === 0) return null;
 
-    return Object.keys(errors["hours"][0]).map((day, i) => {
-      return (
-        <li className="flash-error" key={i}>
-          { `Closing time must be after opening on ${capitalize(day)}` }
-        </li>
-      );
+    const result = [];
+
+    Object.keys(errors["hours"][0]).forEach((day, i) => {
+      errors["hours"][0][day].forEach((error, j) => {
+
+        if (error === "closing error") {
+          result.push(
+            <li className="flash-error" key={`${i}-closing-error`}>
+              { `Closing time must be after opening on ${capitalize(day)}` }
+            </li>
+          );
+        } else if (error === "overlap error") {
+          result.push(
+            <li className="flash-error" key={`${i}-overlap-error`}>
+              { `Cannot have overlapping time ranges on ${capitalize(day)}` }
+            </li>
+          );
+        }
+      });
     });
+
+    return <div key="time-errors">{ result }</div>;
   }
 
   render() {

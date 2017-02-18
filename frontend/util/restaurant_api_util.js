@@ -23,7 +23,6 @@ export const createRestaurant = formData => {
 };
 
 export const updateRestaurant = formData => {
-  debugger
   return $.ajax({
     method: 'PATCH',
     url: `api/restaurants/${formData.get("restaurant[id]")}`,

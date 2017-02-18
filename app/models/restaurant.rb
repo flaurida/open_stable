@@ -50,7 +50,7 @@ class Restaurant < ActiveRecord::Base
   validates_format_of :zip_code, with: /\d{5}/, message: "should be in the form 12345"
   validates :state, inclusion: { in: US_STATES }
   validates :price_range, inclusion: { in: PRICE_RANGES.keys }
-  validate :closing_time_not_before_opening_time
+  validate :closing_time_not_before_opening_time_and_no_overlap
   geocoded_by :full_street_address
   after_validation :geocode
 
@@ -87,7 +87,7 @@ class Restaurant < ActiveRecord::Base
 
   def formatted_daily_hours(hours_array)
     return "Closed" if hours_array.empty?
-    
+
     formatted_daily_hours = ""
     hours_array.each_with_index do |hour, i|
       pretty_hour = hour[0...-2]
@@ -106,17 +106,36 @@ class Restaurant < ActiveRecord::Base
     formatted_daily_hours
   end
 
-  def closing_time_not_before_opening_time
+  def closing_time_not_before_opening_time_and_no_overlap
     errors.add(:hours, Hash.new { |hash, key| hash[key] = [] })
     error_detected = false
-
+    
     hours.each do |day, hours_array|
       i = 0
 
       while i < hours_array.length
         unless time_after(hours_array[i], hours_array[i + 1])
-          errors[:hours][0][day] << "cannot close before opening"
+          errors[:hours][0][day] << "closing error"
           error_detected = true
+        end
+
+        i += 2
+      end
+    end
+
+    hours.each do |day, hours_array|
+      i = 0
+
+      while i < hours_array.length
+        j = i + 2
+
+        while j < hours_array.length
+          if overlap?([hours_array[i], hours_array[i + 1]], [hours_array[j], hours_array[j + 1]])
+            errors[:hours][0][day] << "overlap error"
+            error_detected = true
+          end
+
+          j += 2
         end
 
         i += 2
@@ -128,5 +147,9 @@ class Restaurant < ActiveRecord::Base
 
   def time_after(time1, time2)
     return Time.parse(time2) > Time.parse(time1)
+  end
+
+  def overlap?(time_range1, time_range2)
+    return (Time.parse(time_range1[0])..Time.parse(time_range1[1])).overlaps?((Time.parse(time_range2[0])..Time.parse(time_range2[1])))
   end
 end
