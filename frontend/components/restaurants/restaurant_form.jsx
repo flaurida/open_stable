@@ -146,6 +146,7 @@ class RestaurantForm extends React.Component {
               <option disabled value="">Select State</option>
               { this.usStatesSelect() }
             </select>
+            
             <input type="text" value={ zip_code } placeholder="Zip Code *" onChange={ this.handleChange("zip_code") }
               className={ errors.zip_code ? "input-error" : "" }/>
             <select onChange={ this.handleChange("price_range") } value={ price_range }

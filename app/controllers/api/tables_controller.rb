@@ -1,5 +1,6 @@
 class Api::TablesController < ApplicationController
-  before_action :can_only_view_own_tables
+  before_action :can_only_view_own_tables, only: [:index, :create, :show, :update]
+  before_action :can_only_delete_own_tables, only: [:destroy]
 
   def index
     @tables = Table.where(restaurant_id: params[:restaurant_id])
@@ -13,7 +14,7 @@ class Api::TablesController < ApplicationController
     if @table.save
       render :show
     else
-      render @table.errors.messages, status: 422
+      render json: @table.errors.messages, status: 422
     end
   end
 
@@ -33,7 +34,7 @@ class Api::TablesController < ApplicationController
     if @table.update(table_params)
       render :show
     else
-      render @table.errors.messages, status: 422
+      render json: @table.errors.messages, status: 422
     end
   end
 
@@ -48,14 +49,22 @@ class Api::TablesController < ApplicationController
   private
 
   def table_params
-    params.require(:table).permit(:min_seats, :max_seats, :dining_time)
+    params.require(:table).permit(:name, :min_seats, :max_seats, :dining_time)
   end
 
   def can_only_view_own_tables
     @restaurant = Restaurant.find(params[:restaurant_id])
 
-    unless logged_in? && @restaurant && @restaurant.owner == current_user
-      render json: ["You cannot view the tables in someone else's restaurant!"], status: 403
+    unless logged_in? && @restaurant && @restaurant.owner_id == current_user.id
+      render json: ["You cannot mess with the stalls in someone else's stable!"], status: 403
+    end
+  end
+
+  def can_only_delete_own_tables
+    @table = Table.includes(:restaurant).find(params[:id])
+
+    unless logged_in? && @table.restaurant.owner_id == current_user.id
+      render json: ["You cannot mess with the stalls in someone else's stable!"], status: 403
     end
   end
 end

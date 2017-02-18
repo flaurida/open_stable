@@ -1,30 +1,24 @@
 import { connect } from 'react-redux';
-import { requestSingleTable, createTable, updateTable } from '../../actions/table_actions';
+import { requestSingleTable, createTable, updateTable, clearTableErrors } from '../../actions/table_actions';
 import TableForm from './table_form';
 
 const mapStateToProps = (state, ownProps) => {
-  let table = {
-    name: "",
-    min_seats: "",
-    max_seats: "",
-    dining_time: ""
+  return {
+    errors: state.errors.table
   };
-
-  if (ownProps.tableId) table = state.tables[ownProps.tableId];
-
-  return { table };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const handleForm = ownProps.formType === "new" ? createTable : updateTable;
 
   return {
-    handleForm: table => dispatch(handleForm(table)),
-    requestSingleTable: id => dispatch(requestSingleTable(id))
+    handleForm: (restaurantId, table) => dispatch(handleForm(restaurantId, table)),
+    requestSingleTable: id => dispatch(requestSingleTable(id)),
+    clearTableErrors: () => dispatch(clearTableErrors())
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(TableForm);

@@ -10,7 +10,7 @@ class Api::RestaurantsController < ApplicationController
     @restaurant = current_user.restaurants.new(restaurant_params)
 
     if @restaurant.save
-      render :show
+      render 'api/tables/short_table'
     else
       render json: @restaurant.errors.messages, status: 422
     end

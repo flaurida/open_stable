@@ -30,8 +30,8 @@ export const requestSingleTable = id => dispatch => {
   });
 };
 
-export const createTable = table => dispatch => {
-  return TableApiUtil.createTable(table).then(newTable => {
+export const createTable = (restaurantId, table) => dispatch => {
+  return TableApiUtil.createTable(restaurantId, table).then(newTable => {
     dispatch(receiveSingleTable(newTable));
     dispatch(clearTableErrors());
     dispatch(receiveNotices(createTableMessage(newTable)));
@@ -41,8 +41,8 @@ export const createTable = table => dispatch => {
   });
 };
 
-export const updateTable = table => dispatch => {
-  return TableApiUtil.updateTable(table).then(updatedTable => {
+export const updateTable = (restaurantId, table) => dispatch => {
+  return TableApiUtil.updateTable(restaurantId, table).then(updatedTable => {
     dispatch(receiveSingleTable(updatedTable));
     dispatch(clearTableErrors());
     dispatch(receiveNotices(updateTableMessage(updatedTable)));

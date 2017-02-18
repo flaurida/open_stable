@@ -191,7 +191,7 @@ Restaurant.create(
 )
 
 restaurant_ids = Restaurant.all.ids
-dining_times = %w(60 90 120 180)
+dining_times = %w(60 90 120 150 180)
 
 categories = [
   "Frequent brawling",
@@ -210,7 +210,7 @@ categories.each { |category| Category.create(name: category) }
 
 50.times do
   min_seats = (1..20).to_a.sample
-  max_seats = (min_seats..20).to_a.sample
+  max_seats = min_seats + (0..4).to_a.sample
 
 
   Table.create(min_seats: min_seats, max_seats: max_seats,

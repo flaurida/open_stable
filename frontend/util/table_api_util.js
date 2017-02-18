@@ -12,17 +12,18 @@ export const fetchTable = tableId => {
   });
 };
 
-export const createTable = restaurantId => {
+export const createTable = (restaurantId, table) => {
   return $.ajax({
     method: 'POST',
-    url: `api/restaurants/${restaurantId}/tables`
+    url: `api/restaurants/${restaurantId}/tables`,
+    data: { table }
   });
 };
 
-export const updateTable = table => {
+export const updateTable = (restaurantId, table) => {
   return $.ajax({
     method: 'PATCH',
-    url: `api/tables/${table.id}`,
+    url: `api/restaurants/${restaurantId}/tables/${table.id}`,
     data: { table }
   });
 };
