@@ -16,11 +16,12 @@ class TableIndex extends React.Component {
 
   componentDidMount() {
     this.props.requestAllTables(this.props.params.restaurantId);
+
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.restaurantId && nextProps.restaurantId !== this.props.params.restaurantId) {
-      this.props.requestAllTables(this.props.params.restaurantId);
+    if (nextProps.params.restaurantId && nextProps.params.restaurantId !== this.props.params.restaurantId) {
+      this.props.requestAllTables(nextProps.params.restaurantId);
     }
   }
 
@@ -50,10 +51,14 @@ class TableIndex extends React.Component {
   }
 
   render() {
+    if (Object.values(this.props.tables).length === 0) return null;
+
     return (
       <div className="table-index-container">
+        <h1><Link to={ `restaurants/${this.props.params.restaurantId}` }>{ Object.values(this.props.tables)[0].restaurant_name }</Link> Stalls</h1>
         { this.tableIndexItems() }
 
+        <h2>Create Stall</h2>
         <TableFormContainer formType="new" restaurantId={ this.props.params.restaurantId }/>
       </div>
     );

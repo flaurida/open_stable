@@ -1,6 +1,7 @@
 .form-container {
   width: 95%;
   margin: 0 auto;
+  padding-bottom: 15px;
 }
 
 .form-header {
@@ -95,9 +96,9 @@ form {
     font-size: 16px;
     transition: background 0.5s;
 
-    &:last-child {
-      margin-bottom: 15px;
-    }
+    // &:last-child {
+    //   margin-bottom: 15px;
+    // }
 
     &:hover {
       background: $red-hover;

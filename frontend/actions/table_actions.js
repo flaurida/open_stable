@@ -37,7 +37,7 @@ export const createTable = (restaurantId, table) => dispatch => {
     dispatch(receiveNotices(createTableMessage(newTable)));
     return newTable;
   }, err => {
-    dispatch(receiveTableErrors(err.responseJSON));
+    dispatch(receiveTableErrors(err.responseJSON, "table_new"));
   });
 };
 
@@ -48,7 +48,7 @@ export const updateTable = (restaurantId, table) => dispatch => {
     dispatch(receiveNotices(updateTableMessage(updatedTable)));
     return updatedTable;
   }, err => {
-    dispatch(receiveTableErrors(err.responseJSON));
+    dispatch(receiveTableErrors(err.responseJSON, "table_edit"));
   });
 };
 
@@ -58,8 +58,6 @@ export const deleteTable = table => dispatch => {
     dispatch(clearTableErrors());
     dispatch(receiveNotices(deleteTableMessage(table)));
     return table;
-  }, err => {
-    dispatch(receiveTableErrors(err.responseJSON));
   });
 };
 
@@ -83,8 +81,8 @@ export const clearTableErrors = () => ({
   key: "table"
 });
 
-const receiveTableErrors = errors => ({
+const receiveTableErrors = (errors, key) => ({
   type: RECEIVE_ERRORS,
-  key: "table",
+  key,
   errors
 });

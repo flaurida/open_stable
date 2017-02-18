@@ -12,7 +12,7 @@ class TableForm extends React.Component {
 
   componentWillUnMount() {
     this.resetForm();
-
+    this.props.clearTableErrors();
   }
 
   initialState() {
@@ -53,28 +53,25 @@ class TableForm extends React.Component {
   }
 
   render() {
-    const message = this.props.formType === "new" ? "Create Stall" : "Update Stall";
+    const message = this.props.formType === "new" ? "Create" : "Update";
     const { name, min_seats, max_seats, dining_time } = this.state;
     const { errors } = this.props;
 
     return (
-      <div className="table-form-page">
-        <div className="form-container table-form-container">
-          <h1 className="form-header">{ message }</h1>
+      <div className="table-form-container">
 
-          <Errors errors={ errors } />
+        <Errors errors={ errors } />
 
-          <form className="table-form" onSubmit={ this.handleSubmit }>
-            <input type="text" value={ name } placeholder="Name *" onChange={ this.handleChange("name") }
-              className={ errors.name ? "input-error" : "" }/>
+        <form className="table-form" onSubmit={ this.handleSubmit }>
+          <input type="text" value={ name } placeholder="Name *" onChange={ this.handleChange("name") }
+            className={ errors.name ? "input-error" : "" }/>
 
-            <SeatSelect type="min_seats" handleChange={ this.handleChange } value={ min_seats } errors={ errors }/>
-            <SeatSelect type="max_seats" handleChange={ this.handleChange } value={ max_seats } errors={ errors }/>
-            <DiningTimeSelect handleChange={ this.handleChange } value={ dining_time } errors={ errors }/>
+          <SeatSelect type="min_seats" handleChange={ this.handleChange } value={ min_seats } errors={ errors }/>
+          <SeatSelect type="max_seats" handleChange={ this.handleChange } value={ max_seats } errors={ errors }/>
+          <DiningTimeSelect handleChange={ this.handleChange } value={ dining_time } errors={ errors }/>
 
-            <input type="submit" value={ message } />
-          </form>
-        </div>
+          <input type="submit" value={ message } className="table-form-submit" />
+        </form>
       </div>
     );
   }

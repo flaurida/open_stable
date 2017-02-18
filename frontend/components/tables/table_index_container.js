@@ -4,7 +4,8 @@ import TableIndex from './table_index';
 
 const mapStateToProps = state => ({
   tables: state.tables,
-  currentUser: state.session.currentUser
+  currentUser: state.session.currentUser,
+  restaurant: state.restaurantDetail
 });
 
 const mapDispatchToProps = dispatch => ({

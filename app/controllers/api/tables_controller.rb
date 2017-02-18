@@ -3,7 +3,7 @@ class Api::TablesController < ApplicationController
   before_action :can_only_view_own_tables, only: [:show, :destroy]
 
   def index
-    @tables = Table.where(restaurant_id: params[:restaurant_id])
+    @tables = Table.includes(:restaurant).where(restaurant_id: params[:restaurant_id])
     render :index
   end
 
@@ -19,7 +19,7 @@ class Api::TablesController < ApplicationController
   end
 
   def show
-    @table = Table.find(params[:id])
+    @table = Table.includes(:restaurant).find(params[:id])
 
     if @table
       render :show

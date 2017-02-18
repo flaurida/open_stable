@@ -1,0 +1,125 @@
+.table-index-container {
+  background: $white;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px 0 100px;
+
+  h1, h2 {
+    font-size: 36px;
+    width: 90%;
+    width: 90%;
+    margin: 5px auto;
+  }
+
+  h2 {
+    font-size: 30px;
+    margin-top: 20px;
+  }
+
+  a {
+    color: $navy;
+    transition: color 0.5s;
+
+    &:hover {
+      color: $navy-hover;
+    }
+  }
+}
+
+.table-index-item {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: 5px auto;
+  height: 60px;
+
+
+  h1 {
+    font-size: 20px;
+    width: 30%;
+    max-width: 200px;
+  }
+
+  p {
+    width: 30%;
+    font-size: 16px;
+  }
+
+  .table-index-links {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 16px;
+
+    button {
+      color: $navy;
+      padding: 5px;
+      transition: color 0.5s;
+
+      &:hover {
+        color: $navy-hover;
+      }
+    }
+  }
+}
+
+.table-form-container {
+  width: 90%;
+  min-height: 60px;
+  margin: 5px auto;
+}
+
+.table-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top: none;
+
+  input, select {
+    width: 25%;
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .table-form-submit {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: $break-point) {
+  .table-index-container {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: $break-point-two) {
+  .table-index-container {
+    h1 {
+      font-size: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    strong {
+      display: none;
+    }
+  }
+
+  .table-index-item {
+    h1 {
+      font-size: 16px;
+    }
+
+    p, .table-index-links {
+      font-size: 14px;
+    }
+  }
+
+  .table-form {
+    input, select {
+      font-size: 14px;
+    }
+  }
+}

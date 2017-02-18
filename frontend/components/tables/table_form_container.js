@@ -3,9 +3,9 @@ import { requestSingleTable, createTable, updateTable, clearTableErrors } from '
 import TableForm from './table_form';
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    errors: state.errors.table
-  };
+  const errors = ownProps.formType === "new" ? state.errors.table_new : state.errors.table_edit;
+
+  return { errors };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

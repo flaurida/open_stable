@@ -4,7 +4,9 @@ import RestaurantLocationContainer from './restaurant_location_container';
 
 class RestaurantDetail extends React.Component {
   componentDidMount() {
-    this.props.requestSingleRestaurant(this.props.params.restaurantId);
+    if (this.props.params.restaurantId !== this.props.restaurant.id) {
+      this.props.requestSingleRestaurant(this.props.params.restaurantId);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
