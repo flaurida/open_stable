@@ -1,6 +1,7 @@
 import React from 'react';
 import RestaurantNav from './restaurant_nav';
 import RestaurantLocationContainer from './restaurant_location_container';
+import RestaurantSearchContainer from './restaurant_search_container';
 
 class RestaurantDetail extends React.Component {
   componentDidMount() {
@@ -36,6 +37,7 @@ class RestaurantDetail extends React.Component {
         <div className="restaurant-body">
           <RestaurantNav restaurant={ restaurant } currentUser={ currentUser }/>
           <section className="restaurant-body-detail">
+            <RestaurantSearchContainer searchType="single" />
             <RestaurantLocationContainer restaurant={ restaurant } />
 
             <section className="restaurant-description">

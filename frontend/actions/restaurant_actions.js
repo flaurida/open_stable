@@ -18,8 +18,8 @@ const deleteRestaurantMessage = restaurant => (
   `We will miss you, ${restaurant.name} :(`
 );
 
-export const requestAllRestaurants = () => dispatch => {
-  return RestaurantApiUtil.fetchRestaurants().then(restaurants => {
+export const requestAllRestaurants = data => dispatch => {
+  return RestaurantApiUtil.fetchRestaurants(data).then(restaurants => {
     dispatch(receiveAllRestaurants(restaurants));
   });
 };

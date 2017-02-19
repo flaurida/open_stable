@@ -13,4 +13,6 @@
 
 class Booking < ActiveRecord::Base
   validates :user_id, :table_id, :date, :start_time, null: false
+
+  belongs_to :table
 end

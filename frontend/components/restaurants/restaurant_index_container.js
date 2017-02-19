@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestAllRestaurants: () => dispatch(requestAllRestaurants()),
+  requestAllRestaurants: data => dispatch(requestAllRestaurants(data)),
   deleteRestaurant: restaurant => dispatch(deleteRestaurant(restaurant))
 });
 

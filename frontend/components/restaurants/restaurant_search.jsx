@@ -1,22 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import { NumGuestsSelect } from './restaurant_helper';
 import { SingleHoursSelect } from './hours_select';
 
 class RestaurantSearch extends React.Component {
   constructor(props) {
     super(props);
+    this.today = this.today();
+
     this.state = {
       num_seats: "2",
-      date: new Date(),
-      time: "7:00 pm"
+      date: this.today,
+      time: "7:00 pm",
+      query: "",
+      restaurant_id: this.props.params.restaurantId
     };
 
-    this.today = this.today();
-    console.log(this.today);
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.props.requestAllRestaurants(nextProps.location.query);
+  }
 
   today() {
     const today = new Date();
@@ -29,6 +34,14 @@ class RestaurantSearch extends React.Component {
     };
   }
 
+  searchBar() {
+    if (this.props.searchType === "single") {
+      return null;
+    }
+
+    return <input type="text" onChange={ this.handleChange("query") } value={ this.state.query } placeholder="Restaurant Name" />;
+  }
+
   render() {
     const { num_seats, date, time } = this.state;
 
@@ -37,13 +50,13 @@ class RestaurantSearch extends React.Component {
         <form>
           <NumGuestsSelect handleChange={ this.handleChange("num_seats") } value={ num_seats } />
           <input type="date" min={ this.today } onChange={ this.handleChange("date") } value={ date } />
-          <SingleHoursSelect onChange={ this.handleChange("time") } value={ time } />
-          <input type="text" placeholder="Restaurant Name" />
-          <Link to="/search">Find a Stable</Link>
+          <SingleHoursSelect handleChange={ this.handleChange("time") } value={ time } />
+          { this.searchBar() }
+          <Link to={{ pathname: `${this.props.location.pathname}`, query: this.state }}>Find a Stable</Link>
         </form>
       </div>
     );
   }
 }
 
-export default RestaurantSearch;
+export default withRouter(RestaurantSearch);

@@ -20,6 +20,7 @@
 #  image_content_type :string
 #  image_file_size    :integer
 #  image_updated_at   :datetime
+#  strategy           :string           default("normal"), not null
 #
 
 class Restaurant < ActiveRecord::Base
@@ -85,7 +86,30 @@ class Restaurant < ActiveRecord::Base
     formatted_hours
   end
 
+  def self.single_restaurant_availability(id, date, time, num_seats)
+    restaurant = Restaurant.includes(tables: [:bookings])
+    .order("tables.max_seats asc")
+    .find(id)
+
+    prospective_times = []
+    return prospective_times if restaurant.hours[Date.parse(date).strftime("%A").downcase].empty?
+
+    if restaurant.strategy == "normal"
+
+      debugger
+      restaurant.tables.each do |table|
+        next if table.max_seats < num_seats
+
+
+      end
+    end
+  end
+
   private
+
+  def closed?(day)
+    hours[day].empty?
+  end
 
   def full_street_address
     [address, city, state].join(", ")

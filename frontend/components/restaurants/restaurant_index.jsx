@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 class RestaurantIndex extends React.Component {
   componentDidMount() {
-    this.props.requestAllRestaurants();
+    this.props.requestAllRestaurants(this.props.location.query);
   }
 
   restaurantIndexItems() {

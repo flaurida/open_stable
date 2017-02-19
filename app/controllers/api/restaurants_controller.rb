@@ -3,6 +3,15 @@ class Api::RestaurantsController < ApplicationController
 
   def index
     @restaurants = Restaurant.all
+
+    date = params[:date]
+    time = Time.parse(params[:time])
+
+    if params[:restaurant_id]
+      @restaurant = Restaurant.single_restaurant_availability(params[:restaurant_id],
+      date, time, params[:num_seats])
+    end
+
     render :index
   end
 
@@ -52,7 +61,7 @@ class Api::RestaurantsController < ApplicationController
     end
 
     params.require(:restaurant).permit(:name, :address, :city, :state, :zip_code,
-      :price_range, :description, :image, :hours,
+      :price_range, :description, :image, :hours, :date,
       hours: { monday: [], tuesday: [], wednesday: [], thursday: [], friday: [], saturday: [], sunday: [] })
   end
 

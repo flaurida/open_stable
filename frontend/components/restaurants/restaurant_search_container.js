@@ -3,14 +3,13 @@ import { requestAllRestaurants } from '../../actions/restaurant_actions';
 import RestaurantSearch from './restaurant_search';
 
 const mapStateToProps = state => ({
-  restaurants: state.restaurants
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestAllRestaurants: () => dispatch(requestAllRestaurants())
+  requestAllRestaurants: data => dispatch(requestAllRestaurants(data))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
-)(RestaurantSearch)
+)(RestaurantSearch);
