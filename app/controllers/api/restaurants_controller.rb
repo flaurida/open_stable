@@ -3,16 +3,24 @@ class Api::RestaurantsController < ApplicationController
 
   def index
     @restaurants = Restaurant.all
-    ## depending on params, defer to various model methods and then render what you need
-    date = params[:date]
-    time = Time.parse(params[:time])
-
-    if params[:restaurant_id]
-      @restaurant = Restaurant.single_restaurant_availability(params[:restaurant_id],
-      date, time, params[:num_seats])
-    end
 
     render :index
+  end
+
+  def search
+    # debugger
+    # ## depending on params, defer to various model methods and then render what you need
+    # date = params[:date]
+    # time = params[:time]
+    #
+    # if params[:restaurant_id]
+    #   @restaurant = Restaurant.single_restaurant_availability(params[:restaurant_id],
+    #   date, time, params[:num_seats])
+    # end
+
+    @restaurants = Restaurant.all
+
+    render :indexs
   end
 
 

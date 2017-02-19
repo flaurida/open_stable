@@ -89,13 +89,12 @@ class Restaurant < ActiveRecord::Base
   def self.single_restaurant_availability(id, date, time, num_seats)
     ## BE CAREFUL ABOUT CLOSING TIMES
     ## Table.includes(:bookings).where(restaurant_id: id)
-    restaurant = Restaurant.includes(tables: [:bookings])
-    .order("tables.max_seats asc")
-    .find(id)
+    restaurant = Restaurant.includes(tables: [:bookings]).order("tables.max_seats asc").find(2)
 
     prospective_times = []
-    return prospective_times if restaurant.hours[Date.parse(date).strftime("%A").downcase].empty?
+    return prospective_times if restaurant.closed?(date)
 
+    possible_slots = restaurant.possible_slots(date, Time.parse(time))
     if restaurant.strategy == "normal"
 
       debugger
@@ -107,11 +106,42 @@ class Restaurant < ActiveRecord::Base
     end
   end
 
-  private
+  def possible_slots(date, time)
+    delta = 0
+    debugger
+    while delta <= 75
+      unless closed_during_time(date, time + delta.minutes)
+        possible_slots[delta] = false
+      end
 
-  def closed?(day)
-    hours[day].empty?
+      next if delta == 0
+
+      unless closed_during_time(date, time - delta.minutes)
+        possible_slots[-delta] = false
+      end
+
+      delta += 15
+    end
+
+    possible_slots
   end
+
+  def closed?(date)
+    hours[Date.parse(date).strftime("%A").downcase].empty?
+  end
+
+  def closed_during_time(date, time)
+    daily_hours = hours[Date.parse(date).strftime("%A").downcase]
+
+    daily_hours.each_index do |idx|
+      next if i % 2 != 0
+      return false if (Time.parse(daily_hours[i])..(Time.parse(daily_hours[i + 1]) - 1.hour)).include?(time)
+    end
+
+    true
+  end
+
+  private
 
   def full_street_address
     [address, city, state].join(", ")

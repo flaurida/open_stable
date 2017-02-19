@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       resources :tables, only: [:index, :create, :update]
     end
 
+    get "search", to: "restaurants#search"
+
     resources :tables, only: [:destroy, :show]
 
     resources :categories, only: [:create, :index]

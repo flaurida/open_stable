@@ -6,6 +6,14 @@ export const fetchRestaurants = data => {
   });
 };
 
+export const searchRestaurants = data => {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/search',
+    data: data
+  });
+};
+
 export const fetchRestaurant = id => {
   return $.ajax({
     method: 'GET',

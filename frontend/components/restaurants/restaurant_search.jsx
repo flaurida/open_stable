@@ -20,7 +20,7 @@ class RestaurantSearch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.props.requestAllRestaurants(nextProps.location.query);
+    this.props.searchRestaurants(nextProps.location.query);
   }
 
   today() {
@@ -46,15 +46,16 @@ class RestaurantSearch extends React.Component {
     const { num_seats, date, time } = this.state;
 
     return (
-      <div>
-        <form>
+      <section className="search-form-container">
+        <h2>Make a Reservation</h2>
+        <form className="search-form">
           <NumGuestsSelect handleChange={ this.handleChange("num_seats") } value={ num_seats } />
           <input type="date" min={ this.today } onChange={ this.handleChange("date") } value={ date } />
           <SingleHoursSelect handleChange={ this.handleChange("time") } value={ time } />
           { this.searchBar() }
           <Link to={{ pathname: `${this.props.location.pathname}`, query: this.state }}>Find a Stable</Link>
         </form>
-      </div>
+      </section>
     );
   }
 }

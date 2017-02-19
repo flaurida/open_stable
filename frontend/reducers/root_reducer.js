@@ -8,6 +8,7 @@ import restaurantDetail from './restaurant_detail_reducer';
 import userDetail from './user_detail_reducer';
 import tables from './tables_reducer';
 import tableDetail from './table_detail_reducer';
+import searchData from './search_data_reducer';
 
 export default combineReducers({
   session,
@@ -18,5 +19,6 @@ export default combineReducers({
   restaurantDetail,
   userDetail,
   tables,
-  tableDetail
+  tableDetail,
+  searchData
 });

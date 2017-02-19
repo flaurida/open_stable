@@ -6,7 +6,7 @@
 #  user_id    :integer          not null
 #  table_id   :integer          not null
 #  date       :date             not null
-#  start_time :time             not null
+#  start_time :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

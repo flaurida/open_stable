@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { requestAllRestaurants } from '../../actions/restaurant_actions';
+import { searchRestaurants } from '../../actions/restaurant_actions';
 import RestaurantSearch from './restaurant_search';
 
 const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestAllRestaurants: data => dispatch(requestAllRestaurants(data))
+  searchRestaurants: data => dispatch(searchRestaurants(data))
 });
 
 export default connect(

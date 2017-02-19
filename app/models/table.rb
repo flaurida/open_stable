@@ -26,15 +26,16 @@ class Table < ActiveRecord::Base
 
   def max_booking_range(date, time)
     nearby_bookings = bookings
+    debugger
     ## CHANGE TIME TO STRING, MANY ISSUES WITH PARSING TIMES
     # [-30, 30]
     # on lower end: desired time - 1.5 hrs + (if booking after -(1.5 + dining_time) hours => booking start + dining_time)
     # on upper end: desired time + 1.5 hrs - (if booking before desired_time + 1.5 => booking start)
 
-    # -90 -75 -60 -45 -30 -15 0 15 30 45 60 90
+    # -75 -60 -45 -30 -15 0 15 30 45 60 75
     # get all bookings that start between DT - 1.5 - dining time and DT + 1.5
     # find all gaps that are size of dining time or longer
-    
+
   end
 
   private

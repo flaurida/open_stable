@@ -90,14 +90,14 @@ Booking.create(
   user_id: User.first.id,
   table_id: Table.first.id,
   date: Date.today,
-  start_time: Time.parse("6:30 pm")
+  start_time: "6:30 pm"
 )
 
 Booking.create(
   user_id: User.first.id,
   table_id: Table.last.id,
   date: Date.today,
-  start_railtime: Time.parse("7:30 pm")
+  start_time: "7:30 pm"
 )
 
 Restaurant.create(

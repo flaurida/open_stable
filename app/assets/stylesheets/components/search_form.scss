@@ -1,0 +1,44 @@
+.search-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top: none;
+
+  input, select, a {
+    height: 50px;
+    width: 25%;
+    margin: 0%;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+
+  input {
+    font-size: 15px;
+  }
+
+  a {
+    background: $red;
+    color: $white;
+    line-height: 50px;
+    text-align: center;
+    transition: background 0.5s;
+
+    &:hover {
+      background: $red-hover;
+    }
+  }
+}
+
+
+@media screen and (max-width: $break-point) {
+  .search-form {
+    flex-wrap: wrap;
+    input, select {
+      width: 33.333%;
+    }
+
+    a {
+      width: 100%;
+    }
+  }
+}
