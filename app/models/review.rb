@@ -18,10 +18,14 @@
 #
 
 class Review < ActiveRecord::Base
-  validates :user, :restaurant, :overall_rating, :food_rating,
-  :service_rating, :ambience_rating, :value_rating, :noise_rating,
-  :recommended, :body, presence: true
+  RATINGS = (1..5).to_a
 
+  validates :user, :restaurant, :body, presence: true
+
+  validates :overall_rating, :food_rating, :service_rating, :ambience_rating,
+  :value_rating, :noise_rating, inclusion: { in: RATINGS }
+
+  validates :recommended, inclusion: { in: [true, false] }
   validates :user, uniqueness: { scope: :restaurant }
 
   belongs_to :user

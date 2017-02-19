@@ -34,7 +34,7 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
+    @restaurant = Restaurant.includes(reviews: [:user]).find(params[:id])
 
     if @restaurant
       render :show

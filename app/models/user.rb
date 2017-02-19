@@ -54,6 +54,10 @@ class User < ActiveRecord::Base
     @password_confirmation = password_confirmation
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   def ensure_session_token

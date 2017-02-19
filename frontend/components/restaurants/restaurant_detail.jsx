@@ -2,6 +2,7 @@ import React from 'react';
 import RestaurantNav from './restaurant_nav';
 import RestaurantLocationContainer from './restaurant_location_container';
 import RestaurantSearchContainer from './restaurant_search_container';
+import ReviewsIndexContainer from '../reviews/reviews_index_container';
 
 class RestaurantDetail extends React.Component {
   componentDidMount() {
@@ -49,6 +50,8 @@ class RestaurantDetail extends React.Component {
                 { restaurant.formatted_hours.map((hour, i) => <li key={i}>{ hour }</li>) }
               </ul>
             </section>
+
+            <ReviewsIndexContainer restaurant={ restaurant } />
           </section>
         </div>
       </div>
