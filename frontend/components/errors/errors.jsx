@@ -5,6 +5,14 @@ class Errors extends React.Component {
   errorList() {
     const { errors } = this.props;
 
+    if (Array.isArray(errors)) {
+      return (
+        <li className="flash-error" key={0}>
+          { errors.join(", ") }
+        </li>
+      );
+    }
+
     return Object.keys(errors).map((error, i) => {
       if (error === "hours") return this.hourErrors();
 

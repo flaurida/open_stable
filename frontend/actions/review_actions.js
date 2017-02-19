@@ -1,6 +1,7 @@
 import * as ReviewApiUtil from '../util/review_api_util';
 import { RECEIVE_ERRORS, CLEAR_ERRORS } from './error_actions';
 import { receiveNotices, clearNotices } from './notice_actions';
+import { clearModal } from './modal_actions';
 
 export const RECEIVE_SINGLE_REVIEW = "RECEIVE_SINGLE_REVIEW";
 export const REMOVE_REVIEW = "REMOVE_VIEW";
@@ -20,6 +21,7 @@ const deleteReviewMessage = () => (
 export const createReview = (restaurantId, review) => dispatch => {
   return ReviewApiUtil.createReview(restaurantId, review).then(newReview => {
     dispatch(receiveSingleReview(newReview));
+    dispatch(clearModal());
     dispatch(clearReviewErrors());
     dispatch(receiveNotices(createReviewMessage()));
     return newReview;
@@ -31,6 +33,7 @@ export const createReview = (restaurantId, review) => dispatch => {
 export const updateReview = (restaurantId, review) => dispatch => {
   return ReviewApiUtil.updateReview(restaurantId, review).then(updatedReview => {
     dispatch(receiveSingleReview(updatedReview));
+    dispatch(clearModal());
     dispatch(clearReviewErrors());
     dispatch(receiveNotices(updateReviewMessage()));
     return newReview;
@@ -41,10 +44,10 @@ export const updateReview = (restaurantId, review) => dispatch => {
 
 export const deleteReview = review => dispatch => {
   return ReviewApiUtil.deleteReview(review.id).then(() => {
-    dispatch(removeReview(reviewId));
+    dispatch(removeReview(review));
     dispatch(clearReviewErrors());
     dispatch(receiveNotices(deleteReviewMessage()));
-    return reviewId;
+    return review;
   }, err => {
     dispatch(receiveReviewErrors(err.responseJSON));
   });

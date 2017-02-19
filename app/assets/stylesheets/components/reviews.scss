@@ -1,9 +1,28 @@
+.reviews-header {
+  h2 {
+    margin-bottom: 0;
+  }
+
+  button {
+    color: $navy;
+    transition: color 0.5s;
+    padding: 5px 0;
+    margin-right: 5px;
+
+    &:hover {
+      color: $navy-hover;
+    }
+  }
+
+  margin-bottom: 20px;
+}
+
 .reviews-index-item {
   display: flex;
   margin-bottom: 20px;
 }
 
-.review-stars {
+.review-stars, .review-stars-input {
   display: flex;
   font-size: 20px;
 

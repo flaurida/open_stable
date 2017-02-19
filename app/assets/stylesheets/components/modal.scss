@@ -20,8 +20,15 @@
   height: 60%;
 }
 
+.modal-center-newReview, .modal-center-editReview {
+  background: $white;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
 @media screen and (max-width: $break-point) {
-  .modal-center {
+  .modal-center-signup, .modal-center-login,
+  .modal-center-newReview, .modal-center-editReview {
     width: 100%;
     max-width: none;
     height: 100%;

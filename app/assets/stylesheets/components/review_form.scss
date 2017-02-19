@@ -1,0 +1,14 @@
+.review-form-select {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+fieldset.review-stars-input {
+  background: green;
+  display: flex;
+  flex-direction: row;
+  input {
+    background: pink;
+  }
+}

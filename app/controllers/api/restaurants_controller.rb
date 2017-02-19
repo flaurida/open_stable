@@ -20,7 +20,7 @@ class Api::RestaurantsController < ApplicationController
 
     @restaurants = Restaurant.all
 
-    render :indexs
+    render :index
   end
 
   def create
