@@ -28,10 +28,15 @@ class RestaurantDetail extends React.Component {
 
           <div className="restaurant-header">
             <img src={ restaurant.image_url } className="img-restaurant-detail" alt="restaurant"/>
-            <div className="restaurant-header-notes">
-              <h1>{ restaurant.name }</h1>
-              <p>Category&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.city }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.price_range }</p>
-            </div>
+              <div className="restaurant-header-notes">
+                <h1>{ restaurant.name }</h1>
+                  <div className="restaurant-header-notes-detail">
+                    <p>Category&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.city }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.price_range }</p>
+                    <button className="favorite-button"><i className="fa fa-heart-o" aria-hidden="true"></i>
+                    <p>Add to Favorites</p>
+                    </button>
+                  </div>
+              </div>
           </div>
         </div>
 

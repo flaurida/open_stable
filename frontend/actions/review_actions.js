@@ -36,7 +36,7 @@ export const updateReview = (restaurantId, review) => dispatch => {
     dispatch(clearModal());
     dispatch(clearReviewErrors());
     dispatch(receiveNotices(updateReviewMessage()));
-    return newReview;
+    return updatedReview;
   }, err => {
     dispatch(receiveReviewErrors(err.responseJSON));
   });

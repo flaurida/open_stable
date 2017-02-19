@@ -11,12 +11,6 @@
     top: 40px;
     left: 40px;
   }
-
-  h1 {
-    color: white;
-    font-size: 30px;
-    margin-top: 80px;
-  }
 }
 
 .restaurant-header-wrapper {
@@ -32,10 +26,52 @@
 
 .restaurant-header-notes {
   margin-left: 250px;
+  margin-top: 80px;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
 
   p {
     color: $white;
   }
+
+  h1 {
+    color: white;
+    font-size: 30px;
+  }
+
+  i {
+    color: $white;
+    padding-right: 5px;
+  }
+
+  button {
+    border: 1px solid $white;
+    border-radius: 5px;
+    padding: 5px;
+    line-height: 20px;
+    height: 20px;
+    transition: background 0.5s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    p {
+      display: inline;
+      font-size: 12px;
+    }
+  }
+}
+
+.restaurant-header-notes-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.restaurant-header-body {
+  background: green;
 }
 
 .restaurant-body {
@@ -83,7 +119,7 @@
 
   section {
     background: $white;
-    margin: 20px 0;
+    margin: 30px 0;
     padding: 20px;
     border-radius: 5px;
     border-bottom: 2px solid $grey;
@@ -152,6 +188,8 @@
 
   .restaurant-header-notes {
     margin-left: 150px;
+    width: calc(100% - 150px);
+    margin-top: 40px;
   }
 
 }
