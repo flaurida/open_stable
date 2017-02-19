@@ -10,8 +10,8 @@
 #
 
 class RestaurantCategory < ActiveRecord::Base
-  validates :restaurant_id, :category_id, presence: true
-  validates :restaurant_id, uniqueness: { scope: :category }
+  validates :restaurant, :category, presence: true
+  validates :restaurant, uniqueness: { scope: :category }
 
   belongs_to :category
   belongs_to :restaurant

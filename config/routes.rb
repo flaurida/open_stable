@@ -10,12 +10,14 @@ Rails.application.routes.draw do
 
     resources :restaurants, except: [:new, :edit] do
       resources :tables, only: [:index, :create, :update]
+      resources :reviews, only: [:create, :update]
     end
 
     get "search", to: "restaurants#search"
 
-    resources :tables, only: [:destroy, :show]
+    resources :tables, only: [:destroy]
+    resources :reviews, only: [:destroy]
 
-    resources :categories, only: [:create, :index]
+    resources :categories, only: [:index]
   end
 end

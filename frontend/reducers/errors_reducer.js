@@ -5,7 +5,8 @@ const defaultState = {
   session: {},
   restaurant: {},
   table_new: {},
-  table_edit: {}
+  table_edit: {},
+  review: {}
 };
 
 const ErrorsReducer = (oldState = defaultState, action) => {

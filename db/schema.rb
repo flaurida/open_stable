@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219144406) do
+ActiveRecord::Schema.define(version: 20170219163455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,24 @@ ActiveRecord::Schema.define(version: 20170219144406) do
     t.string   "strategy",           default: "normal", null: false
     t.index ["name"], name: "index_restaurants_on_name", using: :btree
     t.index ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "user_id",         null: false
+    t.integer  "restaurant_id",   null: false
+    t.integer  "overall_rating",  null: false
+    t.integer  "food_rating",     null: false
+    t.integer  "service_rating",  null: false
+    t.integer  "ambience_rating", null: false
+    t.integer  "value_rating",    null: false
+    t.integer  "noise_rating",    null: false
+    t.boolean  "recommended",     null: false
+    t.text     "body",            null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id", using: :btree
+    t.index ["user_id", "restaurant_id"], name: "index_reviews_on_user_id_and_restaurant_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_reviews_on_user_id", using: :btree
   end
 
   create_table "tables", force: :cascade do |t|

@@ -23,7 +23,6 @@ class Api::RestaurantsController < ApplicationController
     render :indexs
   end
 
-
   def create
     @restaurant = current_user.restaurants.new(restaurant_params)
 

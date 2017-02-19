@@ -59,6 +59,8 @@ export const deleteTable = table => dispatch => {
     dispatch(clearTableErrors());
     dispatch(receiveNotices(deleteTableMessage(table)));
     return table;
+  }, err => {
+    dispatch(receiveTableErrors(err.responseJSON, "table_edit"));
   });
 };
 

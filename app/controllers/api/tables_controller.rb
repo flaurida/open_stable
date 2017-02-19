@@ -41,7 +41,9 @@ class Api::TablesController < ApplicationController
   def destroy
     @table = Table.find(params[:id])
 
-    unless @table.destroy
+    if @table.destroy
+      render json: {}
+    else
       render json: @table.errors.messages, status: 422
     end
   end

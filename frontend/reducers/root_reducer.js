@@ -9,6 +9,7 @@ import userDetail from './user_detail_reducer';
 import tables from './tables_reducer';
 import tableDetail from './table_detail_reducer';
 import searchData from './search_data_reducer';
+import reviews from './reviews_reducer';
 
 export default combineReducers({
   session,
@@ -20,5 +21,6 @@ export default combineReducers({
   userDetail,
   tables,
   tableDetail,
-  searchData
+  searchData,
+  reviews
 });
