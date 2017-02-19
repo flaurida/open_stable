@@ -87,6 +87,8 @@ class Restaurant < ActiveRecord::Base
   end
 
   def self.single_restaurant_availability(id, date, time, num_seats)
+    ## BE CAREFUL ABOUT CLOSING TIMES
+    ## Table.includes(:bookings).where(restaurant_id: id)
     restaurant = Restaurant.includes(tables: [:bookings])
     .order("tables.max_seats asc")
     .find(id)

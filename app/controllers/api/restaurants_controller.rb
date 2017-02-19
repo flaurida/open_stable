@@ -3,7 +3,7 @@ class Api::RestaurantsController < ApplicationController
 
   def index
     @restaurants = Restaurant.all
-
+    ## depending on params, defer to various model methods and then render what you need
     date = params[:date]
     time = Time.parse(params[:time])
 
@@ -14,6 +14,7 @@ class Api::RestaurantsController < ApplicationController
 
     render :index
   end
+
 
   def create
     @restaurant = current_user.restaurants.new(restaurant_params)
