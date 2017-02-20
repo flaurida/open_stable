@@ -3,7 +3,7 @@ class Api::RestaurantsController < ApplicationController
   before_action :must_be_logged_in_to_favorite, only: [:create_favorite]
 
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.includes(:favorites, :reviews).all
 
     render :index
   end
@@ -47,7 +47,8 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.includes(reviews: [:user]).find(params[:id])
+    @restaurant = Restaurant.includes(:favorites, reviews: [:user])
+    .find(params[:id])
 
     if @restaurant
       render :show

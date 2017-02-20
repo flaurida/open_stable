@@ -59,7 +59,6 @@
 
     p {
       display: inline;
-      font-size: 12px;
     }
   }
 }
@@ -140,6 +139,11 @@
     margin-left: 20px;
   }
 
+  .restaurant-header-notes {
+    margin-left: 200px;
+    width: calc(100% - 220px);
+  }
+
   .restaurant-nav {
     border-bottom: 1px solid $grey;
 
@@ -187,11 +191,12 @@
   }
 
   .restaurant-header-notes {
-    margin-left: 150px;
+    margin-left: 130px;
+    margin-top: 20px;
     width: calc(100% - 150px);
-    margin-top: 40px;
-  }
 
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 1270px) {

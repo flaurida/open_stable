@@ -9,13 +9,14 @@ import UserProfileContainer from './users/user_profile_container';
 import UserRestaurantsContainer from './users/user_restaurants_container';
 import TableIndexContainer from './tables/table_index_container';
 import RestaurantSearchContainer from './restaurants/restaurant_search_container';
+import SplashPage from './splash/splash_page';
 
 const Root = ({ store }) => {
   return (
     <Provider store={ store }>
       <Router history={ hashHistory }>
         <Route path="/" component={ AppContainer }>
-        <IndexRoute component={ RestaurantIndexContainer } />
+        <IndexRoute component={ SplashPage } />
           <Route path="/search" component={ RestaurantSearchContainer } />
           <Route path="/restaurants" component={ RestaurantIndexContainer } />
           <Route path="/restaurants/new" component={ RestaurantFormContainer } />

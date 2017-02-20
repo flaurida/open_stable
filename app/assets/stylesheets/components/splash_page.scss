@@ -1,0 +1,17 @@
+.splash-search-container {
+  background: $white;
+  padding: 40px 20px;
+  border-bottom: 1px solid $grey;
+
+  h2 {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: $break-point) {
+  .splash-search-container {
+    h2 {
+      font-size: 24px;
+    }
+  }
+}

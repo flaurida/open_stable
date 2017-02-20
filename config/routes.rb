@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
     resources :tables, only: [:destroy]
     resources :reviews, only: [:destroy]
-    resources :favorites, only: [:destroy]
+    resources :favorites, only: [:index, :destroy]
 
     resources :categories, only: [:index]
   end

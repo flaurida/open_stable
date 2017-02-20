@@ -47,7 +47,7 @@ class RestaurantSearch extends React.Component {
 
     return (
       <section className="search-form-container">
-        <h2>Make a Reservation</h2>
+        <h2>{ this.props.title }</h2>
         <form className="search-form">
           <NumGuestsSelect handleChange={ this.handleChange("num_seats") } value={ num_seats } />
           <input type="date" min={ this.today } onChange={ this.handleChange("date") } value={ date } />

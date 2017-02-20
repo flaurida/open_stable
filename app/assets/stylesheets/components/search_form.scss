@@ -10,6 +10,7 @@
     margin: 0%;
     border-radius: 0;
     -webkit-appearance: none;
+    border-right: none;
   }
 
   input {
@@ -35,9 +36,11 @@
     flex-wrap: wrap;
     input, select {
       width: 33.333%;
+      border: 1px solid $grey;
+      border-bottom: none;
     }
 
-    a {
+    a, input[type="text"] {
       width: 100%;
     }
   }

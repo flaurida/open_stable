@@ -33,7 +33,7 @@ class RestaurantDetail extends React.Component {
                   <div className="restaurant-header-notes-detail">
                     <p>Category&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.city }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.price_range }</p>
                     <button className="favorite-button"><i className="fa fa-heart-o" aria-hidden="true"></i>
-                    <p>Add to Favorites</p>
+                    <p>{ restaurant.favorites_count }</p>
                     </button>
                   </div>
               </div>
@@ -43,7 +43,7 @@ class RestaurantDetail extends React.Component {
         <div className="restaurant-body">
           <RestaurantNav restaurant={ restaurant } currentUser={ currentUser }/>
           <section className="restaurant-body-detail">
-            <RestaurantSearchContainer searchType="single" />
+            <RestaurantSearchContainer searchType="single" title="Make a Reservation"/>
             <RestaurantLocationContainer restaurant={ restaurant } />
 
             <section className="restaurant-description">

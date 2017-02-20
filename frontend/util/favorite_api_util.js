@@ -1,3 +1,10 @@
+export const fetchUserFavorites = () => {
+  return $.ajax({
+    method: 'GET',
+    url: `api/favorites`
+  });
+};
+
 export const favoriteRestaurant = restaurantId => {
   return $.ajax({
     method: 'POST',
