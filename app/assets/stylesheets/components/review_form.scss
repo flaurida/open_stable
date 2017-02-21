@@ -2,13 +2,55 @@
   width: 100%;
   display: flex;
   align-items: center;
+
+  p {
+    width: 140px;
+  }
 }
 
-fieldset.review-stars-input {
-  background: green;
+.review-form {
+  textarea.review-text {
+    padding-top: 5px;
+    height: 100px;
+  }
+}
+
+
+.review-stars-input, .review-noise-input {
   display: flex;
-  flex-direction: row;
+  margin: 2px 0;
+}
+
+.review-noise-input {
+  label {
+    margin: 0 5px;
+    color: $mid-grey;
+  }
+
+  .noise-selected {
+    color: $black;
+  }
+}
+
+.review-checkbox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 2px 0;
+
+  label {
+    width: 95%;
+  }
+
   input {
-    background: pink;
+    width: 5%;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+
+    &:focus {
+      outline: none;
+    }
   }
 }

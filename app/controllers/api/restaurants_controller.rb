@@ -3,8 +3,12 @@ class Api::RestaurantsController < ApplicationController
   before_action :must_be_logged_in_to_favorite, only: [:create_favorite]
 
   def index
-    @restaurants = Restaurant.includes(:favorites, :reviews).all
+    @restaurants = Restaurant.includes(:favorites, :reviews)
 
+    if params[:city]
+      @restaurants = @restaurants.where(city: params[:city])
+    end
+    
     render :index
   end
 

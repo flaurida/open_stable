@@ -59,6 +59,15 @@ class Restaurant < ActiveRecord::Base
     "Near Vaes Dothrak"
   ]
 
+  CITIES = [
+    "New York",
+    "San Francisco",
+    "Seattle",
+    "Las Vegas",
+    "Philadelphia",
+    "Orlando"
+  ]
+
   store :hours, accessors: [
     :monday,
     :tuesday,

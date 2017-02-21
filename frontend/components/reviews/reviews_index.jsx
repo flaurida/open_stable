@@ -3,6 +3,16 @@ import ReviewsIndexItem from './reviews_index_item';
 
 class ReviewsIndex extends React.Component {
   reviewIndexItems() {
+
+    if (!Object.keys(this.props.reviews).length) {
+      return (
+        <div>
+          <p>{ this.props.restaurant.name } has not been reviewed yet.
+            Why don't you be their first reviewer?</p>
+        </div>
+      );
+    }
+
     return Object.values(this.props.reviews).map((review, i) => (
       <ReviewsIndexItem review={ review } key={i} />
     ));

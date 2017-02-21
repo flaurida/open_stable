@@ -73,13 +73,17 @@ class ReviewForm extends React.Component {
           </div>
 
           <div className="review-form-select">
-            <p>Noise:&nbsp;&nbsp;</p><NoiseLevelInput numStars={ noise_rating }
+            <p>Noise:&nbsp;&nbsp;</p><NoiseLevelInput noiseLevel={ noise_rating }
               handleChange={ this.handleChange } />
           </div>
 
-          <input type="checkbox" id="recommend-checkbox" onChange={ this.toggleCheckbox } checked={ recommended }/>
-          <label htmlFor="recomment-checkbox">Recommend to another Khaleesi</label>
-          <textarea value={ body } onChange={ this.handleChange("body") } placeholder="Write your review here..." />
+          <div className="review-checkbox">
+            <input type="checkbox" onChange={ this.toggleCheckbox } checked={ recommended }/>
+            <label htmlFor="recommend-checkbox">I would recommend to another Khaleesi</label>
+          </div>
+
+          <textarea value={ body } onChange={ this.handleChange("body") }
+            placeholder="Write your review here..." className="review-text"/>
           <input type="submit" value={ message } />
         </form>
       </div>

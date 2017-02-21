@@ -386,9 +386,81 @@ seattle.each do |data|
     strategy: Restaurant::STRATEGIES.sample,
     category: Restaurant::CATEGORIES.sample,
     dining_time: Restaurant::DINING_TIMES.sample
-
   )
 end
+
+las_vegas = [
+  ["5030 Spring Mountain Road", 89146],
+  ["4321 W Flamingo Rd", 89103],
+  ["Encore Hotel and Casino", 89109],
+  ["3730 Las Vegas Blvd S", 89158],
+  ["3667 Las Vegas Blvd S", 89109],
+  ["2535 Las Vegas Blvd S", 89109],
+  ["3708 Las Vegas Blvd S", 89109],
+  ["3355 South Las Vegas Boulevard", 89109],
+  ["3225 Las Vegas Blvd S", 89109],
+  ["3400 South Jones Boulevard", 89146],
+  ["3950 Schiff Dr", 89103],
+  ["3131 Las Vegas Blvd S", 89109],
+  ["3325 Las Vegas Blvd. S", 89109],
+  ["3400 S Jones Blvd Ste B", 89146],
+  ["3429 S Jones Blvd", 89146],
+  ["3600 Las Vegas Boulevard South", 89109],
+  ["11011 W Charleston Blvd", 89135],
+  ["5808 Spring Mountain Rd", 89146],
+  ["3708 Las Vegas Blvd S", 89109],
+  ["3799 Las Vegas Blvd S", 89109],
+  ["3799 Las Vegas Blvd S", 89109],
+  ["3600 Las Vegas Blvd S", 89109],
+  ["953 E Sahara Ave", 89104],
+  ["3131 South Las Vegas Boulevard", 89109],
+  ["3240 Arville St", 89102],
+  ["3655 S Durango Dr Ste 6", 89147],
+  ["3600 South Las Vegas Boulevard", 89109],
+  ["201 N 3rd St", 89101],
+  ["3570 Las Vegas Blvd S", 89109],
+  ["3730 Las Vegas Blvd S", 89158],
+  ["140 S Green Valley Pkwy", 89012],
+  ["3500 Las Vegas Blvd", 89109],
+  ["3131 Las Vegas Blvd S", 89109],
+  ["3752 Las Vegas Blvd S", 89158],
+  ["4983 W Flamingo Rd", 89103],
+  ["3460 Arville St", 89102],
+  ["6115 S Fort Apache Rd", 89148],
+  ["9925 S Eastern Ave", 89183],
+  ["7591 W Washington Ave", 89128],
+  ["7865 W Sahara Ave", 89117],
+  ["3641 Las Vegas Blvd S", 89109],
+  ["3780 S Las Vegas Blvd", 89158],
+  ["3465 Las Vegas Blvd S", 89109],
+  ["3545 Las Vegas Blvd S", 89109],
+  ["3889 Spring Mountain Rd", 89102],
+  ["3708 Las Vegas Blvd S", 89109],
+  ["3799 S Las Vegas Blvd", 89109],
+  ["6870 Spring Mountain Rd", 89146],
+  ["11261 S Eastern Ave", 89052],
+  ["6640 N Durango Dr", 89149],
+  ["7790 S Jones Blvd", 89139],
+  ["3708 S Las Vegas Blvd", 89109]
+]
+
+las_vegas.each do |data|
+  Restaurant.create(
+    name: GOTFaker::Character.random_name,
+    address: data[0],
+    city: "Las Vegas",
+    state: "Nevada",
+    zip_code: data[1],
+    price_range: price_ranges.sample,
+    description: GOTFaker::Quote.bad_ass,
+    hours: hours.sample,
+    owner_id: user_ids.sample,
+    strategy: Restaurant::STRATEGIES.sample,
+    category: Restaurant::CATEGORIES.sample,
+    dining_time: Restaurant::DINING_TIMES.sample
+  )
+end
+
 
 restaurant_ids = Restaurant.all.ids
 

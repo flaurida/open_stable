@@ -7,6 +7,7 @@ class UserRestaurants extends React.Component {
     super(props);
     this.renderIndexItems = this.renderIndexItems.bind(this);
   }
+  
   componentDidMount() {
     this.props.requestCurrentUser();
   }

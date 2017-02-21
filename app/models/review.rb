@@ -24,7 +24,7 @@ class Review < ActiveRecord::Base
   :value_rating, :noise_rating, :body, presence: true
 
   validates :overall_rating, :food_rating, :service_rating, :ambience_rating,
-  :value_rating, :noise_rating, inclusion: { in: RATINGS }
+  :value_rating, :noise_rating, inclusion: { in: RATINGS, message: "click stars to fill in" }
 
   validates :recommended, inclusion: { in: [true, false] }
   validates :user, uniqueness: { scope: :restaurant }

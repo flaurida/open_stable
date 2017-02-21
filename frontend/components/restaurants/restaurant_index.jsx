@@ -7,6 +7,12 @@ class RestaurantIndex extends React.Component {
     this.props.requestAllRestaurants(this.props.location.query);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.query !== this.props.location.query) {
+      this.props.requestAllRestaurants(nextProps.location.query);
+    }
+  }
+
   restaurantIndexItems() {
     return Object.values(this.props.restaurants).map((restaurant, i) => (
       <RestaurantIndexItem key={i} restaurant={ restaurant }

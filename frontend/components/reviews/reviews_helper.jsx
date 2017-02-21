@@ -1,24 +1,21 @@
 import React from 'react';
 
-const fullStar = key => <p key={ key }><i className="fa fa-star full-star" aria-hidden="true"></i></p>;
-const emptyStar = key => <p key={ key }><i className="fa fa-star empty-star" aria-hidden="true"></i></p>;
+const starIcon = (key, type) => <p key={ key }><i className={ `fa fa-star ${type}-star` } aria-hidden="true"></i></p>;
 
 export const ReviewStars = ({ numStars = 0 }) => {
-  const fullStars = [];
-  const emptyStars = [];
+  const starIcons = [];
 
   for (let i = 0; i < numStars; i++) {
-    fullStars.push(fullStar(i));
-  }
-
-  for (let i = 0; i < 5 - numStars; i++) {
-    emptyStars.push(emptyStar(i));
+    if (i < numStars) {
+      starIcons.push(starIcon(i, "full"));
+    } else {
+      starIcons.push(starIcon(i, "empty"));
+    }
   }
 
   return (
     <div className="review-stars">
-      { fullStars }
-      { emptyStars }
+      { starIcons }
     </div>
   );
 };
@@ -26,7 +23,9 @@ export const ReviewStars = ({ numStars = 0 }) => {
 const starOption = (value, type, field, handleChange) => {
   return (
     <div key={ `${value}-stars-${field}` }>
-      <label htmlFor={ `${value}-stars-${field}` }><i className={ `fa fa-star ${type}-star` } aria-hidden="true"></i></label>
+      <label htmlFor={ `${value}-stars-${field}` }>
+        <i className={ `fa fa-star ${type}-star` } aria-hidden="true"></i>
+      </label>
       <input type="radio" id={ `${value}-stars-${field}` } key={ `${value}-stars-${field}` }
         value={ value } className="hidden" onChange={ handleChange(field) }/>
     </div>
@@ -67,7 +66,7 @@ export const NoiseLevelInput = ({ noiseLevel = 0, handleChange }) => {
   noiseLevel = parseInt(noiseLevel);
 
   for (let i = 1; i <= 5; i++) {
-    const type = i === noiseLevel ? "selected" : "unselected";
+    const type = i === parseInt(noiseLevel) ? "selected" : "unselected";
     reviewNoiseInput.push(noiseOption(i, type, handleChange));
   }
 

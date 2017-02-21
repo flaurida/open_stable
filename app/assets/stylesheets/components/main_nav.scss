@@ -8,6 +8,34 @@
 
 .logo {
   display: flex;
+}
+
+.city-select {
+  margin-left: 5px;
+  select {
+    height: 60px;
+    border-radius: 0;
+    background: $white;
+    -webkit-appearance: none;
+    font-size: 16px;
+    border: none;
+    border-right: 1px solid $grey;
+    padding-left: 5px;
+    padding-right: 15px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  i {
+    color: $mid-grey;
+    font-size: 30px;
+  }
+}
+
+.logo-link {
+  display: flex;
   align-items: center;
   padding: 0 30px;
   border-right: 1px solid $grey;
@@ -65,5 +93,24 @@
 @media screen and (max-width: $break-point) {
   .nav-links {
     display: none;
+  }
+}
+
+@media screen and (max-width: $break-point-city-select) {
+  .city-select {
+    margin-left: 0;
+    width: 70px;
+
+    select {
+      font-size: 14px;
+    }
+
+    i {
+      display: none;
+    }
+  }
+
+  .logo-link {
+    padding: 0 5px;
   }
 }
