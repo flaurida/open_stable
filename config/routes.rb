@@ -18,7 +18,9 @@ Rails.application.routes.draw do
 
     get "search", to: "restaurants#search"
 
-    resources :tables, only: [:destroy]
+    resources :tables, only: [:destroy] 
+
+    resources :bookings, only: [:create, :destroy]
     resources :reviews, only: [:destroy]
   end
 end

@@ -3,8 +3,8 @@ import { receiveAllRestaurants } from './restaurant_actions';
 
 export const RECEIVE_SINGLE_USER = "RECEIVE_SINGLE_USER";
 
-export const requestCurrentUser = id => dispatch => {
-  return UserApiUtil.fetchUser().then(user => {
+export const requestCurrentUser = data => dispatch => {
+  return UserApiUtil.fetchUser(data).then(user => {
     dispatch(receiveSingleUser(user));
     return user;
   });

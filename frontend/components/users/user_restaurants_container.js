@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestCurrentUser: id => dispatch(requestCurrentUser(id)),
+  requestCurrentUser: data => dispatch(requestCurrentUser(data)),
   deleteRestaurant: restaurants => dispatch(deleteRestaurant(restaurants))
 });
 

@@ -1,5 +1,6 @@
 class Api::RestaurantsController < ApplicationController
   before_action :only_owner_can_edit_or_delete, only: [:update, :destroy]
+  before_action :search_start_time_not_in_past, only: [:search]
 
   def index
     @restaurants = Restaurant.includes(:favorites, :reviews)
@@ -12,14 +13,14 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def search
-    # debugger
-    # ## depending on params, defer to various model methods and then render what you need
     proposed_time = DateTime.parse("#{params[:date]} #{params[:time]}}") if params[:date] && params[:time]
     num_seats = params[:num_seats]
 
     if params[:restaurant_id]
       @result = Restaurant.find(params[:restaurant_id]).table_availability(proposed_time, num_seats)
       render json: @result
+    else
+      render json: {}
     end
   end
 
@@ -34,7 +35,8 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.includes(:favorites, reviews: [:user])
+    @restaurant = Restaurant
+    .includes(:favorites, reviews: [:user])
     .find(params[:id])
 
     if @restaurant
@@ -79,6 +81,14 @@ class Api::RestaurantsController < ApplicationController
 
     unless @restaurant.owner == current_user
       render json: ["You cannot mess with someone else's restaurant!"], status: 403
+    end
+  end
+
+  def search_start_time_not_in_past
+    return unless params[:date] && params[:time]
+
+    if DateTime.parse("#{params[:date]} #{params[:time]}}") < DateTime.now.change(offset: "+0000")
+      render json: ["The time you requested is in the past!"], status: 422
     end
   end
 end

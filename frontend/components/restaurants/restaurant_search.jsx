@@ -21,7 +21,9 @@ class RestaurantSearch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // this.props.searchRestaurants(nextProps.location.query);
+    if (this.props.location.query !== nextProps.location.query) {
+      this.props.searchRestaurants(nextProps.location.query);
+    }
   }
 
   today() {
@@ -45,7 +47,9 @@ class RestaurantSearch extends React.Component {
 
   individualSearchData() {
     if (this.props.searchType === "single") {
-      return <RestaurantDetailSearch searchData={ this.props.searchData } />;
+      return <RestaurantDetailSearch searchData={ this.props.searchData }
+        restaurantId={ this.props.params.restaurantId }
+        createBooking= { this.props.createBooking }/>;
     }
 
     return null;
@@ -62,7 +66,9 @@ class RestaurantSearch extends React.Component {
           <input type="date" min={ this.today } onChange={ this.handleChange("date") } value={ date } />
           <SingleHoursSelect handleChange={ this.handleChange("time") } value={ time } />
           { this.searchBar() }
-          <Link to={{ pathname: `${this.props.location.pathname}`, query: this.state }}>Find a Stable</Link>
+          <Link to={{ pathname: `${this.props.location.pathname}`, query: this.state }}>
+            Find a Stable
+          </Link>
         </form>
 
         { this.individualSearchData() }

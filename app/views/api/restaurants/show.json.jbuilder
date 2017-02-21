@@ -1,6 +1,6 @@
 json.partial! 'short_restaurant', restaurant: @restaurant, user: current_user
 
-json.extract! @restaurant, :hours, :formatted_hours
+json.extract! @restaurant, :hours, :formatted_hours, :strategy, :dining_time
 
 user = current_user
 

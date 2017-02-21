@@ -7,7 +7,7 @@ class UserProfile extends React.Component {
       <div className="user-profile-container">
         <nav className="user-nav">
           <ul>
-            <li><Link to="/profile/restaurants">My Stables</Link></li>
+            <li><Link to={{ pathname: "/profile/restaurants", query: { restaurants: "mine" }}}>My Stables</Link></li>
           </ul>
         </nav>
         { this.props.children }

@@ -7,9 +7,15 @@ class UserRestaurants extends React.Component {
     super(props);
     this.renderIndexItems = this.renderIndexItems.bind(this);
   }
-  
+
   componentDidMount() {
-    this.props.requestCurrentUser();
+    this.props.requestCurrentUser(this.props.location.query);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.query !== this.props.location.query) {
+      this.props.requestCurrentUser(nextProps.location.query);
+    }
   }
 
   renderIndexItems() {

@@ -19,6 +19,12 @@
 .review-stars-input, .review-noise-input {
   display: flex;
   margin: 2px 0;
+
+  label {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .review-noise-input {
@@ -51,6 +57,10 @@
 
     &:focus {
       outline: none;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }

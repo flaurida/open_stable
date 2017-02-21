@@ -98,8 +98,6 @@ class Restaurant < ActiveRecord::Base
     primary_key: :id,
     foreign_key: :owner_id
 
-  has_many :restaurant_categories, dependent: :destroy
-  has_many :categories, through: :restaurant_categories
   has_many :tables, dependent: :destroy
   has_many :bookings, through: :tables
   has_many :reviews, dependent: :destroy
@@ -126,13 +124,19 @@ class Restaurant < ActiveRecord::Base
     result = Restaurant.includes(tables: [:bookings])
     .where("tables.max_seats >= ? AND tables.min_seats <= ?", num_seats, num_seats)
     .where(id: id)
-    .where.not(bookings: { start_time: ((proposed_time - dining_time.minutes)..(proposed_time + dining_time.minutes))})
+    .where.not(bookings: { start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute))})
     .order(order)
 
     parse_individual_result(result, proposed_time)
   end
 
   def table_availability(proposed_time, num_seats)
+    # old filters
+    # .where(id: id)
+    # .where(seating, num_seats)
+    # .where(bookings: { start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute))})
+    # .order(order)
+
     order = "tables.max_seats ASC"
     seating = "? BETWEEN tables.min_seats AND tables.max_seats"
 
@@ -140,35 +144,111 @@ class Restaurant < ActiveRecord::Base
     seating = "tables.max_seats = ?" if strategy == "greedy"
 
     result = Restaurant.includes(tables: [:bookings])
-    .where(seating, num_seats)
     .where(id: id)
-    .where.not(bookings: { start_time: ((proposed_time - dining_time.minutes)..(proposed_time + dining_time.minutes))})
+    .where(seating, num_seats)
     .order(order)
-    debugger
-    parse_individual_result(result, proposed_time)
+
+    analyze_individual_result(result, proposed_time, num_seats)
   end
-  # {
-  #   restaurant_id => {
-  #     name: restaurant.name,
-  #     proposed_times: [
-  #       [table_id, start_time],
-  #       [table_id, start_time]
-  #     ]
-  #   }
-  # }
-  def self.parse_result(result, proposed_time)
-    search_result = {}
-    result.each do |restaurant|
-      search_result[restaurant.id] = restaurant.parse_individual_result(proposed_time)
+
+  def analyze_individual_result(result, proposed_time, num_seats)
+    return { id => { closed: true } } if closed?(proposed_time)
+    return { id => { booked: true } } if result.empty? || (strategy == "hipster" && [true, false].sample)
+
+    golden_count = 0
+    parsed = {}
+
+    result.first.tables.each do |table|
+      bookings = table.bookings.where(start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute)))
+      next if bookings.count >= 2
+
+      if bookings.empty?
+        fill_in_all(parsed, table)
+        golden_count = 5
+      else
+        if bookings.first.start_time <= proposed_time - dining_time.minutes || bookings.first.start_time >= proposed_time + dining_time.minutes
+          parsed[0] = table.id
+        elsif bookings.first.start_time < proposed_time
+          end_time = bookings.first.start_time + dining_time.minutes
+          diff = (end_time - proposed_time) * 1.day / 60
+          fill_up_to_all(parsed, table, diff.round())
+        else
+          end_time = proposed_time + dining_time.minutes
+          diff = (bookings.first.start_time.to_datetime - end_time) * 1.day / 60
+          debugger
+          fill_down_to_all(parsed, table, diff.round())
+        end
+      end
+
+      break if golden_count >= 5
+    end
+
+    parse_individual_result(parsed, proposed_time, num_seats)
+  end
+
+  def fill_up_to_all(parsed, table, limit)
+    until limit > 60
+      parsed[limit] = table.id
+      limit += 15
     end
   end
 
-  def parse_individual_result(result, proposed_time)
-    return { id => {} } if strategy == "hipster" && [true, false].sample
+  def fill_down_to_all(parsed, table, limit)
+    until limit < -60
+      parsed[limit] = table.id
+      limit -= 15
+    end
+  end
 
-    return { id => {} } if closed?(proposed_time) || tables.empty?
+  def fill_in_all(parsed, table)
+    options = [-60, -45, -30, -15, 0, 15, 30, 45, 60]
 
-    table = result.first.tables.first
+    options.each do |option|
+      parsed[option] ||= table.id
+    end
+
+    parsed
+  end
+
+  def parse_individual_result(parsed, proposed_time, num_seats)
+    left_count = 0
+    right_count = 0
+    delta = 0
+
+    proposed_times = []
+
+    until left_count + right_count >= 5 || delta > 60
+      if delta == 0 && parsed[delta]
+        proposed_times << {
+          pretty_time: proposed_time.strftime("%-l:%M %P"),
+          table_id: parsed[delta],
+          num_seats: num_seats,
+          start_time: proposed_time
+        }
+
+        left_count += 1
+      else
+        if parsed[delta]
+          proposed_times << {
+            pretty_time: (proposed_time + delta.minutes).strftime("%-l:%M %P"),
+            table_id: parsed[delta],
+            num_seats: num_seats,
+            start_time: (proposed_time + delta.minutes)
+          }
+          right_count += 1
+        elsif parsed[-delta]
+          proposed_times.unshift({
+            pretty_time: (proposed_time - delta.minutes).strftime("%-l:%M %P"),
+            table_id: parsed[-delta],
+            num_seats: num_seats,
+            start_time: (proposed_time - delta.minutes)
+          })
+          left_count += 1
+        end
+      end
+
+      delta += 15
+    end
 
     return { id => {
         name: name,
@@ -176,13 +256,7 @@ class Restaurant < ActiveRecord::Base
         review_count: reviews.length,
         num_dollar_signs: num_dollar_signs,
         city: city,
-        proposed_times: [
-          [(proposed_time - 30.minutes).strftime("%l:%M %P"), table.id],
-          [(proposed_time - 15.minutes).strftime("%l:%M %P"), table.id],
-          [proposed_time.strftime("%l:%M %P"), table.id],
-          [(proposed_time  + 15.minutes).strftime("%l:%M %P"), table.id],
-          [(proposed_time  + 30.minutes).strftime("%l:%M %P"), table.id]
-        ]
+        proposed_times: proposed_times
       }
     }
   end
@@ -201,6 +275,15 @@ class Restaurant < ActiveRecord::Base
     end
 
     true
+  end
+
+  def overall_rating
+    average_rating(:overall_rating)
+  end
+
+  def average_rating(category)
+    return nil if reviews.empty?
+    reviews.sum(category) / reviews.count
   end
 
   private
@@ -277,39 +360,3 @@ class Restaurant < ActiveRecord::Base
     return (Time.parse(time_range1[0])..Time.parse(time_range1[1])).overlaps?((Time.parse(time_range2[0])..Time.parse(time_range2[1])))
   end
 end
-
-# return {} if closed?(proposed_time)
-# debugger
-# restaurant = Restaurant.find_by_sql(<<-SQL)
-#   SELECT restaurants.*, tables.*, bookings.*
-#   FROM restaurants
-#   INNER JOIN tables ON tables.restaurant_id = restaurants.id
-#   LEFT OUTER JOIN bookings ON bookings.table_id = tables.id
-#
-# SQL
-# debugger
-
-#
-# tables = Table.includes(:bookings).where(restaurant_id: restaurant_id)
-# .joins("LEFT OUTER JOIN bookings ON bookings.table_id = tables.id")
-# .where(bookings: { start_time: ((proposed_time - 4.hours)..(proposed_time + 1.hour))})
-# .order(order)
-
-# tables = Table.where(restaurant_id: restaurant_id)
-# .select("tables.*, COUNT(bookings.id) as num_bookings")
-# .joins("LEFT OUTER JOIN bookings ON bookings.table_id = tables.id")
-# .where(bookings: { start_time: ((proposed_time - 4.hours)..(proposed_time + 1.hour))}).group(:id).first
-
-# x = Restaurant.select("restaurants.*, tables.id AS table_id, bookings.id AS booking_id")
-#   .joins(:tables)
-#   .joins("LEFT OUTER JOIN bookings ON bookings.table_id = tables.id")
-#   .where("bookings.start_time BETWEEN ? AND ?", proposed_time - 75.minutes, proposed_time + 75.minutes)
-#   .where(id: id)
-#
-# maurice = Table.where(restaurant_id: restaurant_id)
-# .select("tables.*, COUNT(bookings.id) as num_bookings")
-# .joins(:bookings)
-# .where(bookings: { start_time: (DateTime.parse("2017-02-20 6:00 pm")..DateTime.parse("2017-02-20 7:30 pm"))}).group(:id).first
-
-# restaurants = Restaurant.includes(tables: [:bookings])
-# .where(bookings: {start_time: (DateTime.parse("2017-02-20 6:00 pm")..DateTime.parse("2017-02-20 7:30 pm"))})

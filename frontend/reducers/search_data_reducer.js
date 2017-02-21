@@ -2,7 +2,7 @@ import { RECEIVE_RESTAURANT_SEARCH, CLEAR_SEARCH_DATA } from '../actions/restaur
 
 const defaultState = {};
 
-const searchDataReducer = (oldState = defaultState, action) => {
+const SearchDataReducer = (oldState = defaultState, action) => {
   Object.freeze(defaultState);
 
   switch(action.type) {
@@ -15,4 +15,4 @@ const searchDataReducer = (oldState = defaultState, action) => {
   }
 };
 
-export default searchDataReducer;
+export default SearchDataReducer;
