@@ -6,7 +6,8 @@ const defaultState = {
   restaurant: {},
   table_new: {},
   table_edit: {},
-  review: {}
+  review: {},
+  search: {}
 };
 
 const ErrorsReducer = (oldState = defaultState, action) => {

@@ -29,6 +29,8 @@ export const requestAllRestaurants = data => dispatch => {
 export const searchRestaurants = data => dispatch => {
   return RestaurantApiUtil.searchRestaurants(data).then(searchData => {
     dispatch(receiveRestaurantSearch(searchData));
+  }, err => {
+    dispatch(receiveSearchErrors(err.responseJSON));
   });
 };
 
@@ -103,5 +105,16 @@ export const clearRestaurantErrors = () => ({
 const receiveRestaurantErrors = errors => ({
   type: RECEIVE_ERRORS,
   key: "restaurant",
+  errors
+});
+
+export const clearSearchErrors = () => ({
+  type: CLEAR_ERRORS,
+  key: "search"
+});
+
+const receiveSearchErrors = errors => ({
+  type: RECEIVE_ERRORS,
+  key: "search",
   errors
 });

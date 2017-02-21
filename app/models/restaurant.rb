@@ -80,11 +80,11 @@ class Restaurant < ActiveRecord::Base
 
   validates :name, :owner, :address, :city, :description, :hours, :dining_time, :category, :strategy, presence: true
   validates_format_of :zip_code, with: /\d{5}/, message: "should be in the form 12345"
-  validates :state, inclusion: { in: US_STATES }
-  validates :price_range, inclusion: { in: PRICE_RANGES.keys }
-  validates :dining_time, inclusion: { in: DINING_TIMES_INT }
-  validates :strategy, inclusion: { in: STRATEGIES }
-  validates :category, inclusion: { in: CATEGORIES }
+  validates :state, inclusion: { in: US_STATES, message: "please select below" }
+  validates :price_range, inclusion: { in: PRICE_RANGES.keys, message: "please select below" }
+  validates :dining_time, inclusion: { in: DINING_TIMES_INT, message: "please select below" }
+  validates :strategy, inclusion: { in: STRATEGIES, message: "please select below" }
+  validates :category, inclusion: { in: CATEGORIES, message: "please select below" }
 
   validate :closing_time_not_before_opening_time_and_no_overlap
   geocoded_by :full_street_address
@@ -119,15 +119,7 @@ class Restaurant < ActiveRecord::Base
 
   ## FIX THIS! JUST NEED TO DO SOMETHING LIKE restuarants.dining_time.minutes and then you're golden
   def self.restaurant_availability(date, time, num_seats)
-    order = "tables.max_seats ASC"
 
-    result = Restaurant.includes(tables: [:bookings])
-    .where("tables.max_seats >= ? AND tables.min_seats <= ?", num_seats, num_seats)
-    .where(id: id)
-    .where.not(bookings: { start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute))})
-    .order(order)
-
-    parse_individual_result(result, proposed_time)
   end
 
   def table_availability(proposed_time, num_seats)
@@ -159,7 +151,12 @@ class Restaurant < ActiveRecord::Base
     parsed = {}
 
     result.first.tables.each do |table|
-      bookings = table.bookings.where(start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute)))
+      # bookings = table.bookings.where(start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute)))
+
+      bookings = table.bookings.select do |booking|
+        booking.start_time.between?((proposed_time - dining_time.minutes + 1.minute), (proposed_time + dining_time.minutes - 1.minute))
+      end
+
       next if bookings.count >= 2
 
       if bookings.empty?
@@ -168,14 +165,13 @@ class Restaurant < ActiveRecord::Base
       else
         if bookings.first.start_time <= proposed_time - dining_time.minutes || bookings.first.start_time >= proposed_time + dining_time.minutes
           parsed[0] = table.id
-        elsif bookings.first.start_time < proposed_time
-          end_time = bookings.first.start_time + dining_time.minutes
-          diff = (end_time - proposed_time) * 1.day / 60
-          fill_up_to_all(parsed, table, diff.round())
         else
+          end_time = bookings.first.start_time + dining_time.minutes
+          diff = (end_time.to_datetime - proposed_time) * 1.day / 60
+          fill_up_to_all(parsed, table, diff.round())
+
           end_time = proposed_time + dining_time.minutes
           diff = (bookings.first.start_time.to_datetime - end_time) * 1.day / 60
-          debugger
           fill_down_to_all(parsed, table, diff.round())
         end
       end
@@ -211,13 +207,13 @@ class Restaurant < ActiveRecord::Base
   end
 
   def parse_individual_result(parsed, proposed_time, num_seats)
-    left_count = 0
-    right_count = 0
+    return { id => { booked: true } } if parsed.empty?
+
     delta = 0
 
     proposed_times = []
 
-    until left_count + right_count >= 5 || delta > 60
+    until proposed_times.count >= 5 || delta > 60
       if delta == 0 && parsed[delta]
         proposed_times << {
           pretty_time: proposed_time.strftime("%-l:%M %P"),
@@ -225,8 +221,6 @@ class Restaurant < ActiveRecord::Base
           num_seats: num_seats,
           start_time: proposed_time
         }
-
-        left_count += 1
       else
         if parsed[delta]
           proposed_times << {
@@ -235,20 +229,41 @@ class Restaurant < ActiveRecord::Base
             num_seats: num_seats,
             start_time: (proposed_time + delta.minutes)
           }
-          right_count += 1
-        elsif parsed[-delta]
+        end
+
+        if parsed[-delta]
           proposed_times.unshift({
             pretty_time: (proposed_time - delta.minutes).strftime("%-l:%M %P"),
             table_id: parsed[-delta],
             num_seats: num_seats,
             start_time: (proposed_time - delta.minutes)
           })
-          left_count += 1
         end
       end
 
       delta += 15
     end
+
+
+    proposed_times_with_blanks = []
+
+    blank_time = {
+      table_id: nil,
+      pretty_time: "blank"
+    }
+
+    proposed_times.each do |time|
+
+      if time[:start_time] > proposed_time && proposed_times_with_blanks.count < 2
+        (2 - proposed_times_with_blanks.count).times do
+          proposed_times_with_blanks << blank_time
+        end
+      end
+
+      proposed_times_with_blanks << time unless closed?(time[:start_time])
+    end
+
+    proposed_times_with_blanks << blank_time until proposed_times_with_blanks.count >= 5
 
     return { id => {
         name: name,
@@ -256,7 +271,7 @@ class Restaurant < ActiveRecord::Base
         review_count: reviews.length,
         num_dollar_signs: num_dollar_signs,
         city: city,
-        proposed_times: proposed_times
+        proposed_times: proposed_times_with_blanks
       }
     }
   end

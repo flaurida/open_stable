@@ -1,11 +1,18 @@
 import React from 'react';
 
 const BookingOption = ({ booking, createBooking }) => {
-  return (
-    <button onClick={ () => createBooking(booking) } className="booking-button">
-      { booking.pretty_time }
-    </button>
-  );
+  if (booking.table_id) {
+    return (
+      <button onClick={ () => createBooking(booking) } className="booking-button">
+        { booking.pretty_time }
+      </button>
+    );
+  } else {
+    return (
+      <button className="booking-button booking-button-blank">
+      </button>
+    )
+  }
 };
 
 export const BookingOptions = ({ searchData, createBooking }) => {

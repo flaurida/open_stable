@@ -49,7 +49,9 @@ class RestaurantSearch extends React.Component {
     if (this.props.searchType === "single") {
       return <RestaurantDetailSearch searchData={ this.props.searchData }
         restaurantId={ this.props.params.restaurantId }
-        createBooking= { this.props.createBooking }/>;
+        createBooking= { this.props.createBooking }
+        clearSearchErrors={ this.props.clearSearchErrors }
+        errors={ this.props.errors }/>;
     }
 
     return null;

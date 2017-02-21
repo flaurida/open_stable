@@ -1,4 +1,41 @@
 .booking-options {
-  background-color: green;
-  height: 200px;
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+}
+
+.booking-button {
+  background: $red;
+  color: $white;
+  text-align: center;
+  margin: 5px;
+  padding: 5px;
+  width: 20%;
+  height: 30px;
+  border-radius: 5px;
+  transition: background 0.5s;
+
+  &:hover {
+    background: $red-hover;
+  }
+}
+
+.booking-button-blank {
+  background: $grey;
+
+  &:hover {
+    cursor: auto;
+  }
+}
+
+.no-results-notice {
+  color: $red;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: $break-point) {
+  .booking-button {
+    font-size: 14px;
+  }
 }
