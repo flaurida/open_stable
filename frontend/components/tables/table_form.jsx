@@ -25,8 +25,7 @@ class TableForm extends React.Component {
       return {
         name: "",
         min_seats: "",
-        max_seats: "",
-        dining_time: ""
+        max_seats: ""
       };
     }
   }
@@ -36,8 +35,7 @@ class TableForm extends React.Component {
     this.setState({
       name: "",
       min_seats: "",
-      max_seats: "",
-      dining_time: ""
+      max_seats: ""
     });
   }
 
@@ -71,7 +69,6 @@ class TableForm extends React.Component {
 
           <SeatSelect type="min_seats" handleChange={ this.handleChange } value={ min_seats } errors={ errors }/>
           <SeatSelect type="max_seats" handleChange={ this.handleChange } value={ max_seats } errors={ errors }/>
-          <DiningTimeSelect handleChange={ this.handleChange } value={ dining_time } errors={ errors }/>
 
           <input type="submit" value={ message } className="table-form-submit" />
         </form>

@@ -16,7 +16,7 @@ const Root = ({ store }) => {
     <Provider store={ store }>
       <Router history={ hashHistory }>
         <Route path="/" component={ AppContainer }>
-        <IndexRoute component={ SplashPage } />
+        <IndexRoute component={ RestaurantIndexContainer } />
           <Route path="/search" component={ RestaurantSearchContainer } />
           <Route path="/restaurants" component={ RestaurantIndexContainer } />
           <Route path="/restaurants/new" component={ RestaurantFormContainer } />

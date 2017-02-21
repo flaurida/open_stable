@@ -6,6 +6,7 @@ export const RECEIVE_ALL_RESTAURANTS = "RECEIVE_ALL_RESTAURANTS";
 export const RECEIVE_SINGLE_RESTAURANT = "RECEIVE_SINGLE_RESTAURANT";
 export const REMOVE_RESTAURANT = "REMOVE_RESTAURANT";
 export const RECEIVE_RESTAURANT_SEARCH = "RECEIVE_RESTAURANT_SEARCH";
+export const CLEAR_SEARCH_DATA = "CLEAR_SEARCH_DATA";
 
 const createRestaurantMessage = restaurant => (
   `${restaurant.name} is now available for booking at OpenStable!`
@@ -27,7 +28,7 @@ export const requestAllRestaurants = data => dispatch => {
 
 export const searchRestaurants = data => dispatch => {
   return RestaurantApiUtil.searchRestaurants(data).then(searchData => {
-    dispatch(recieveRestaurantSearch(searchData));
+    dispatch(receiveRestaurantSearch(searchData));
   });
 };
 
@@ -75,12 +76,16 @@ export const receiveAllRestaurants = restaurants => ({
   restaurants
 });
 
+export const clearSearchData = () => ({
+  type: CLEAR_SEARCH_DATA
+});
+
 const receiveSingleRestaurant = restaurant => ({
   type: RECEIVE_SINGLE_RESTAURANT,
   restaurant
 });
 
-const recieveRestaurantSearch = searchData => ({
+const receiveRestaurantSearch = searchData => ({
   type: RECEIVE_RESTAURANT_SEARCH,
   searchData
 });

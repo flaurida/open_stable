@@ -26,6 +26,9 @@ const mapStateToProps = (state, ownProps) => {
     hours: default_hours,
     description: "",
     price_range: "",
+    dining_time: "",
+    category: "",
+    strategy: "",
     imageUrl: null,
     imageFile: null
   };

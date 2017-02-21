@@ -9,7 +9,6 @@ class ReviewForm extends React.Component {
     this.state = this.props.review;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.resetField = this.resetField.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
   }
 
@@ -25,19 +24,12 @@ class ReviewForm extends React.Component {
 
   handleChange(field) {
     return e => {
-      debugger
       this.setState({ [field]: e.target.value });
     };
   }
 
   toggleCheckbox(e) {
     this.setState({ recommended: !this.state.recommended });
-  }
-
-  resetField(field) {
-    return e => {
-      this.setState({ [field]: null });
-    };
   }
 
   render() {

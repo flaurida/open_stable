@@ -10,7 +10,7 @@ class ReviewsIndex extends React.Component {
 
   currentUserReview() {
     if (this.props.currentUser) {
-      return this.props.reviews[currentUser.id];
+      return this.props.reviews[this.props.currentUser.id];
     }
     return null;
   }

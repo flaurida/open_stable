@@ -1,4 +1,4 @@
-import { RECEIVE_RESTAURANT_SEARCH } from '../actions/restaurant_actions';
+import { RECEIVE_RESTAURANT_SEARCH, CLEAR_SEARCH_DATA } from '../actions/restaurant_actions';
 
 const defaultState = {};
 
@@ -8,6 +8,8 @@ const searchDataReducer = (oldState = defaultState, action) => {
   switch(action.type) {
     case RECEIVE_RESTAURANT_SEARCH:
       return action.searchData;
+    case CLEAR_SEARCH_DATA:
+      return {};
     default:
       return oldState;
   }

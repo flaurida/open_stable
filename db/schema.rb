@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219223116) do
+ActiveRecord::Schema.define(version: 20170221000817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,19 +18,12 @@ ActiveRecord::Schema.define(version: 20170219223116) do
   create_table "bookings", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "table_id",   null: false
-    t.date     "date",       null: false
-    t.string   "start_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.integer  "num_seats",  null: false
     t.index ["table_id"], name: "index_bookings_on_table_id", using: :btree
     t.index ["user_id"], name: "index_bookings_on_user_id", using: :btree
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_categories_on_name", using: :btree
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -41,14 +34,6 @@ ActiveRecord::Schema.define(version: 20170219223116) do
     t.index ["restaurant_id"], name: "index_favorites_on_restaurant_id", using: :btree
     t.index ["user_id", "restaurant_id"], name: "index_favorites_on_user_id_and_restaurant_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_favorites_on_user_id", using: :btree
-  end
-
-  create_table "restaurant_categories", force: :cascade do |t|
-    t.integer  "category_id",   null: false
-    t.integer  "restaurant_id", null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["category_id", "restaurant_id"], name: "index_restaurant_categories_on_category_id_and_restaurant_id", unique: true, using: :btree
   end
 
   create_table "restaurants", force: :cascade do |t|
@@ -70,6 +55,8 @@ ActiveRecord::Schema.define(version: 20170219223116) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "strategy",           default: "normal", null: false
+    t.integer  "dining_time",        default: 60,       null: false
+    t.string   "category",                              null: false
     t.index ["name"], name: "index_restaurants_on_name", using: :btree
     t.index ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
   end
@@ -97,7 +84,6 @@ ActiveRecord::Schema.define(version: 20170219223116) do
     t.integer  "restaurant_id", null: false
     t.integer  "min_seats",     null: false
     t.integer  "max_seats",     null: false
-    t.integer  "dining_time",   null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["restaurant_id", "name"], name: "index_tables_on_restaurant_id_and_name", unique: true, using: :btree

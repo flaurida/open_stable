@@ -14,7 +14,7 @@ class Api::UsersController < ApplicationController
 
   def show
     if current_user
-      @user = User.includes(:restaurants).find(current_user.id)
+      @user = User.includes(:restaurants, :favorites).find(current_user.id)
     end
 
     if @user

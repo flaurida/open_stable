@@ -25,19 +25,3 @@ export const SeatSelect = ({ type, handleChange, value, errors }) => {
     </select>
   );
 };
-
-const diningOptions = () => {
-  return window.DINING_TIMES.map((time, i) => (
-    <option value={ time } key={i}>{ time / 60 } hours</option>
-  ));
-}
-
-export const DiningTimeSelect = ({ handleChange, value, errors }) => {
-  return (
-    <select value={ value } onChange={ handleChange("dining_time") }
-      className={ errors.dining_time ? "input-error" : "" }>
-      <option value="" disabled>Duration</option>
-      { diningOptions() }
-    </select>
-  );
-};

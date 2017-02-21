@@ -21,6 +21,8 @@
 #  image_file_size    :integer
 #  image_updated_at   :datetime
 #  strategy           :string           default("normal"), not null
+#  dining_time        :integer          default("60"), not null
+#  category           :string           not null
 #
 
 class Restaurant < ActiveRecord::Base
@@ -40,6 +42,22 @@ class Restaurant < ActiveRecord::Base
   8:00\ pm 8:30\ pm 9:00\ pm 9:30\ pm 10:00\ pm 10:30\ pm 11:00\ pm 11:30\ pm)
 
   DAYS = %w(monday tuesday wednesday thursday friday saturday sunday)
+  DINING_TIMES_INT = [60, 90, 120, 150, 180]
+  DINING_TIMES = %w(60 90 120 150 180)
+  STRATEGIES = %w(normal generous hipster greedy)
+
+  CATEGORIES = [
+    "Frequent brawling",
+    "Horses eat free",
+    "Tents provided",
+    "Trading center",
+    "Great for weddings",
+    "Far from water",
+    "No blood magic",
+    "Free braiding",
+    "Good for ceremonies",
+    "Near Vaes Dothrak"
+  ]
 
   store :hours, accessors: [
     :monday,
@@ -51,10 +69,14 @@ class Restaurant < ActiveRecord::Base
     :sunday
   ], coder: JSON
 
-  validates :name, :owner, :address, :city, :description, :hours, presence: true
+  validates :name, :owner, :address, :city, :description, :hours, :dining_time, :category, :strategy, presence: true
   validates_format_of :zip_code, with: /\d{5}/, message: "should be in the form 12345"
   validates :state, inclusion: { in: US_STATES }
   validates :price_range, inclusion: { in: PRICE_RANGES.keys }
+  validates :dining_time, inclusion: { in: DINING_TIMES_INT }
+  validates :strategy, inclusion: { in: STRATEGIES }
+  validates :category, inclusion: { in: CATEGORIES }
+
   validate :closing_time_not_before_opening_time_and_no_overlap
   geocoded_by :full_street_address
   after_validation :geocode
@@ -88,56 +110,85 @@ class Restaurant < ActiveRecord::Base
     formatted_hours
   end
 
-  def self.single_restaurant_availability(id, date, time, num_seats)
-    ## BE CAREFUL ABOUT CLOSING TIMES
-    ## Table.includes(:bookings).where(restaurant_id: id)
-    restaurant = Restaurant.includes(tables: [:bookings]).order("tables.max_seats asc").find(2)
+  ## FIX THIS! JUST NEED TO DO SOMETHING LIKE restuarants.dining_time.minutes and then you're golden
+  def self.restaurant_availability(date, time, num_seats)
+    order = "tables.max_seats ASC"
 
-    prospective_times = []
-    return prospective_times if restaurant.closed?(date)
+    result = Restaurant.includes(tables: [:bookings])
+    .where("tables.max_seats >= ? AND tables.min_seats <= ?", num_seats, num_seats)
+    .where(id: id)
+    .where.not(bookings: { start_time: ((proposed_time - dining_time.minutes)..(proposed_time + dining_time.minutes))})
+    .order(order)
 
-    possible_slots = restaurant.possible_slots(date, Time.parse(time))
-    if restaurant.strategy == "normal"
-
-      debugger
-      restaurant.tables.each do |table|
-        next if table.max_seats < num_seats
-
-
-      end
-    end
+    parse_individual_result(result, proposed_time)
   end
 
-  def possible_slots(date, time)
-    delta = 0
+  def table_availability(proposed_time, num_seats)
+    order = "tables.max_seats ASC"
+    seating = "? BETWEEN tables.min_seats AND tables.max_seats"
+
+    order = "tables.max_seats DESC" if strategy == "generous"
+    seating = "tables.max_seats = ?" if strategy == "greedy"
+
+    result = Restaurant.includes(tables: [:bookings])
+    .where(seating, num_seats)
+    .where(id: id)
+    .where.not(bookings: { start_time: ((proposed_time - dining_time.minutes)..(proposed_time + dining_time.minutes))})
+    .order(order)
     debugger
-    while delta <= 75
-      unless closed_during_time(date, time + delta.minutes)
-        possible_slots[delta] = false
-      end
-
-      next if delta == 0
-
-      unless closed_during_time(date, time - delta.minutes)
-        possible_slots[-delta] = false
-      end
-
-      delta += 15
+    parse_individual_result(result, proposed_time)
+  end
+  # {
+  #   restaurant_id => {
+  #     name: restaurant.name,
+  #     proposed_times: [
+  #       [table_id, start_time],
+  #       [table_id, start_time]
+  #     ]
+  #   }
+  # }
+  def self.parse_result(result, proposed_time)
+    search_result = {}
+    result.each do |restaurant|
+      search_result[restaurant.id] = restaurant.parse_individual_result(proposed_time)
     end
-
-    possible_slots
   end
 
-  def closed?(date)
-    hours[Date.parse(date).strftime("%A").downcase].empty?
+  def parse_individual_result(result, proposed_time)
+    return { id => {} } if strategy == "hipster" && [true, false].sample
+
+    return { id => {} } if closed?(proposed_time) || tables.empty?
+
+    table = result.first.tables.first
+
+    return { id => {
+        name: name,
+        id: id,
+        review_count: reviews.length,
+        num_dollar_signs: num_dollar_signs,
+        city: city,
+        proposed_times: [
+          [(proposed_time - 30.minutes).strftime("%l:%M %P"), table.id],
+          [(proposed_time - 15.minutes).strftime("%l:%M %P"), table.id],
+          [proposed_time.strftime("%l:%M %P"), table.id],
+          [(proposed_time  + 15.minutes).strftime("%l:%M %P"), table.id],
+          [(proposed_time  + 30.minutes).strftime("%l:%M %P"), table.id]
+        ]
+      }
+    }
   end
 
-  def closed_during_time(date, time)
-    daily_hours = hours[Date.parse(date).strftime("%A").downcase]
+  def closed?(proposed_time)
+    daily_hours = hours[proposed_time.strftime("%A").downcase]
+    return true if daily_hours.empty?
 
-    daily_hours.each_index do |idx|
+    daily_hours.each_index do |i|
       next if i % 2 != 0
-      return false if (Time.parse(daily_hours[i])..(Time.parse(daily_hours[i + 1]) - 1.hour)).include?(time)
+
+      opening = DateTime.parse("#{proposed_time.strftime('%Y-%m-%d')} #{daily_hours[i]}")
+      closing = DateTime.parse("#{proposed_time.strftime('%Y-%m-%d')} #{daily_hours[i + 1]}")
+
+      return false if (opening..(closing - dining_time.minutes)).cover?(proposed_time)
     end
 
     true
@@ -217,3 +268,39 @@ class Restaurant < ActiveRecord::Base
     return (Time.parse(time_range1[0])..Time.parse(time_range1[1])).overlaps?((Time.parse(time_range2[0])..Time.parse(time_range2[1])))
   end
 end
+
+# return {} if closed?(proposed_time)
+# debugger
+# restaurant = Restaurant.find_by_sql(<<-SQL)
+#   SELECT restaurants.*, tables.*, bookings.*
+#   FROM restaurants
+#   INNER JOIN tables ON tables.restaurant_id = restaurants.id
+#   LEFT OUTER JOIN bookings ON bookings.table_id = tables.id
+#
+# SQL
+# debugger
+
+#
+# tables = Table.includes(:bookings).where(restaurant_id: restaurant_id)
+# .joins("LEFT OUTER JOIN bookings ON bookings.table_id = tables.id")
+# .where(bookings: { start_time: ((proposed_time - 4.hours)..(proposed_time + 1.hour))})
+# .order(order)
+
+# tables = Table.where(restaurant_id: restaurant_id)
+# .select("tables.*, COUNT(bookings.id) as num_bookings")
+# .joins("LEFT OUTER JOIN bookings ON bookings.table_id = tables.id")
+# .where(bookings: { start_time: ((proposed_time - 4.hours)..(proposed_time + 1.hour))}).group(:id).first
+
+# x = Restaurant.select("restaurants.*, tables.id AS table_id, bookings.id AS booking_id")
+#   .joins(:tables)
+#   .joins("LEFT OUTER JOIN bookings ON bookings.table_id = tables.id")
+#   .where("bookings.start_time BETWEEN ? AND ?", proposed_time - 75.minutes, proposed_time + 75.minutes)
+#   .where(id: id)
+#
+# maurice = Table.where(restaurant_id: restaurant_id)
+# .select("tables.*, COUNT(bookings.id) as num_bookings")
+# .joins(:bookings)
+# .where(bookings: { start_time: (DateTime.parse("2017-02-20 6:00 pm")..DateTime.parse("2017-02-20 7:30 pm"))}).group(:id).first
+
+# restaurants = Restaurant.includes(tables: [:bookings])
+# .where(bookings: {start_time: (DateTime.parse("2017-02-20 6:00 pm")..DateTime.parse("2017-02-20 7:30 pm"))})

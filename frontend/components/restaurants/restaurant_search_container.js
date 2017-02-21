@@ -3,6 +3,7 @@ import { searchRestaurants } from '../../actions/restaurant_actions';
 import RestaurantSearch from './restaurant_search';
 
 const mapStateToProps = state => ({
+  searchData: state.searchData
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -10,6 +11,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(RestaurantSearch);

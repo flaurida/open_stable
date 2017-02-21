@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.destroy_all
 Restaurant.destroy_all
-Category.destroy_all
 Review.destroy_all
 Favorite.destroy_all
+Booking.destroy_all
 
 User.create(
   first_name: "Daenerys",
@@ -119,13 +119,15 @@ Restaurant.create(
   price_range: "$50 and over",
   description: "App Academy is an immersive web development and job placement program in San Francisco and New York City. You only pay us if you find a job as a developer after the program. 98% of our graduates have offers or are working in tech jobs. In 2014, SF graduates received an average salary of $105,000; in 2014, NY graduates received an average salary of $89,000.",
   hours: hours.sample,
-  owner_id: User.first.id
+  owner_id: User.first.id,
+  strategy: Restaurant::STRATEGIES.sample,
+  category: Restaurant::CATEGORIES.sample,
+  dining_time: Restaurant::DINING_TIMES.sample
 )
 
 Table.create(
   name: "Table 1",
   restaurant_id: Restaurant.first.id,
-  dining_time: 60,
   min_seats: 2,
   max_seats: 4
 )
@@ -133,23 +135,22 @@ Table.create(
 Table.create(
   name: "Table 2",
   restaurant_id: Restaurant.first.id,
-  dining_time: 120,
   min_seats: 3,
   max_seats: 4
 )
 
-Booking.create(
+booking = Booking.create(
   user_id: User.first.id,
   table_id: Table.first.id,
-  date: Date.today,
-  start_time: "6:30 pm"
+  start_time: "#{Date.today} 6:30 pm",
+  num_seats: 3
 )
 
 Booking.create(
   user_id: User.first.id,
   table_id: Table.last.id,
-  date: Date.today,
-  start_time: "7:30 pm"
+  start_time: "#{Date.today} 7:30 pm",
+  num_seats: 3
 )
 
 Restaurant.create(
@@ -161,7 +162,10 @@ Restaurant.create(
   price_range: "$15 and under",
   description: "When my dragons are grown, we will take back what was stolen from me and destroy those who wronged me! We will lay waste to armies and burn cities to the ground!",
   hours: hours.sample,
-  owner_id: User.first.id
+  owner_id: User.first.id,
+  strategy: Restaurant::STRATEGIES.sample,
+  category: Restaurant::CATEGORIES.sample,
+  dining_time: Restaurant::DINING_TIMES.sample
 )
 
 new_york = [
@@ -225,7 +229,10 @@ new_york.each do |data|
     price_range: price_ranges.sample,
     description: GOTFaker::Quote.bad_ass,
     hours: hours.sample,
-    owner_id: user_ids.sample
+    owner_id: user_ids.sample,
+    strategy: Restaurant::STRATEGIES.sample,
+    category: Restaurant::CATEGORIES.sample,
+    dining_time: Restaurant::DINING_TIMES.sample
   )
 end
 
@@ -301,7 +308,10 @@ san_francisco.each do |data|
     price_range: price_ranges.sample,
     description: GOTFaker::Quote.bad_ass,
     hours: hours.sample,
-    owner_id: user_ids.sample
+    owner_id: user_ids.sample,
+    strategy: Restaurant::STRATEGIES.sample,
+    category: Restaurant::CATEGORIES.sample,
+    dining_time: Restaurant::DINING_TIMES.sample
   )
 end
 
@@ -372,48 +382,37 @@ seattle.each do |data|
     price_range: price_ranges.sample,
     description: GOTFaker::Quote.bad_ass,
     hours: hours.sample,
-    owner_id: user_ids.sample
+    owner_id: user_ids.sample,
+    strategy: Restaurant::STRATEGIES.sample,
+    category: Restaurant::CATEGORIES.sample,
+    dining_time: Restaurant::DINING_TIMES.sample
+
   )
 end
 
 restaurant_ids = Restaurant.all.ids
-dining_times = %w(60 90 120 150 180)
 
-categories = [
-  "Frequent brawling",
-  "Horses eat free",
-  "Tents provided",
-  "Trading center",
-  "Great for weddings",
-  "Far from water",
-  "No blood magic",
-  "Free braiding",
-  "Good for ceremonies",
-  "Near Vaes Dothrak"
-]
 
-categories.each { |category| Category.create(name: category) }
-
-50.times do
+150.times do
   min_seats = (1..20).to_a.sample
   max_seats = min_seats + (0..4).to_a.sample
 
 
   Table.create(min_seats: min_seats, max_seats: max_seats,
-  name: GOTFaker::Character.random_name, dining_time: dining_times.sample,
+  name: GOTFaker::Character.random_name,
   restaurant_id: restaurant_ids.sample)
 end
 
 scores = (1..5).to_a
 recommend = [true, false]
 
-50.times do
+150.times do
   Review.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample,
   overall_rating: scores.sample, food_rating: scores.sample, ambience_rating: scores.sample,
   value_rating: scores.sample, service_rating: scores.sample, noise_rating: scores.sample, recommended: recommend.sample,
   body: GOTFaker::Quote.bad_ass)
 end
 
-50.times do
+150.times do
   Favorite.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample)
 end

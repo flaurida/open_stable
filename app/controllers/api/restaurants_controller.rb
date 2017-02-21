@@ -11,17 +11,13 @@ class Api::RestaurantsController < ApplicationController
   def search
     # debugger
     # ## depending on params, defer to various model methods and then render what you need
-    # date = params[:date]
-    # time = params[:time]
-    #
-    # if params[:restaurant_id]
-    #   @restaurant = Restaurant.single_restaurant_availability(params[:restaurant_id],
-    #   date, time, params[:num_seats])
-    # end
+    proposed_time = DateTime.parse("#{params[:date]} #{params[:time]}}") if params[:date] && params[:time]
+    num_seats = params[:num_seats]
 
-    @restaurants = Restaurant.all
-
-    render :index
+    if params[:restaurant_id]
+      @result = Restaurant.find(params[:restaurant_id]).table_availability(proposed_time, num_seats)
+      render json: @result
+    end
   end
 
   def create_favorite
@@ -40,7 +36,7 @@ class Api::RestaurantsController < ApplicationController
     @restaurant = current_user.restaurants.new(restaurant_params)
 
     if @restaurant.save
-      render 'api/tables/short_table'
+      render :show
     else
       render json: @restaurant.errors.messages, status: 422
     end
@@ -83,7 +79,7 @@ class Api::RestaurantsController < ApplicationController
     end
 
     params.require(:restaurant).permit(:name, :address, :city, :state, :zip_code,
-      :price_range, :description, :image, :hours, :date,
+      :price_range, :description, :image, :hours, :date, :dining_time, :strategy, :category,
       hours: { monday: [], tuesday: [], wednesday: [], thursday: [], friday: [], saturday: [], sunday: [] })
   end
 

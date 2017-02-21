@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
 import { AllHoursSelect } from './hours_select';
+import { DiningTimeSelect, CategorySelect, StrategySelect } from './restaurant_helper';
 import Errors from '../errors/errors';
 
 class RestaurantForm extends React.Component {
@@ -8,6 +9,7 @@ class RestaurantForm extends React.Component {
     super(props);
     this.state = this.props.restaurant;
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleHoursChange = this.handleHoursChange.bind(this);
     this.updateFile = this.updateFile.bind(this);
   }
@@ -61,6 +63,10 @@ class RestaurantForm extends React.Component {
     formData.append("restaurant[hours]", JSON.stringify(this.state.hours));
     formData.append("restaurant[description]", this.state.description);
     formData.append("restaurant[price_range]", this.state.price_range);
+    formData.append("restaurant[dining_time]", this.state.dining_time);
+    formData.append("restaurant[category]", this.state.category);
+    formData.append("restaurant[strategy]", this.state.strategy);
+
 
     if (this.props.params.restaurantId) {
       formData.append("restaurant[id]", this.props.params.restaurantId);
@@ -124,7 +130,8 @@ class RestaurantForm extends React.Component {
 
   render() {
     const message = this.props.formType === "new" ? "Create Stable" : "Update Stable";
-    const { name, address, city, state, zip_code, description, price_range, hours } = this.state;
+    const { name, address, city, state, zip_code, description, price_range,
+      hours, dining_time, category, strategy } = this.state;
     const { errors } = this.props;
 
     return (
@@ -146,14 +153,20 @@ class RestaurantForm extends React.Component {
               <option disabled value="">Select State</option>
               { this.usStatesSelect() }
             </select>
-            
+
             <input type="text" value={ zip_code } placeholder="Zip Code *" onChange={ this.handleChange("zip_code") }
               className={ errors.zip_code ? "input-error" : "" }/>
+
+            <CategorySelect value={ category } errors={ errors } handleChange={ this.handleChange }/>
+
             <select onChange={ this.handleChange("price_range") } value={ price_range }
               className={ errors.price_range ? "input-error" : "" }>
               <option disabled value="">Select Price Range</option>
               { this.priceRangeSelect() }
             </select>
+
+            <StrategySelect value={ strategy } handleChange={ this.handleChange } errors={ errors }/>
+            <DiningTimeSelect value={ dining_time } errors={ errors } handleChange={ this.handleChange }/>
 
             <label htmlFor="restaurant-img" className="img-upload">Upload Image</label>
             <input id="restaurant-img" type="file" onChange={this.updateFile} className="hidden" />

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router';
 import { NumGuestsSelect } from './restaurant_helper';
 import { SingleHoursSelect } from './hours_select';
+import RestaurantDetailSearch from './restaurant_detail_search';
 
 class RestaurantSearch extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class RestaurantSearch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.props.searchRestaurants(nextProps.location.query);
+    // this.props.searchRestaurants(nextProps.location.query);
   }
 
   today() {
@@ -42,6 +43,14 @@ class RestaurantSearch extends React.Component {
     return <input type="text" onChange={ this.handleChange("query") } value={ this.state.query } placeholder="Restaurant Name" />;
   }
 
+  individualSearchData() {
+    if (this.props.searchType === "single") {
+      return <RestaurantDetailSearch searchData={ this.props.searchData } />;
+    }
+
+    return null;
+  }
+
   render() {
     const { num_seats, date, time } = this.state;
 
@@ -55,6 +64,8 @@ class RestaurantSearch extends React.Component {
           { this.searchBar() }
           <Link to={{ pathname: `${this.props.location.pathname}`, query: this.state }}>Find a Stable</Link>
         </form>
+
+        { this.individualSearchData() }
       </section>
     );
   }

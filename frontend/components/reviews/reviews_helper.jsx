@@ -25,13 +25,13 @@ export const ReviewStars = ({ numStars = 0 }) => {
 
 const starOption = (value, type, field, handleChange) => {
   return (
-    <div key={ `${value}-stars` }>
-      <label htmlFor={ `${value}-stars` }><i className={ `fa fa-star ${type}-star` } aria-hidden="true"></i></label>
-      <input type="radio" id={ `${value}-stars` } name={ field } key={ `${value}-stars` }
+    <div key={ `${value}-stars-${field}` }>
+      <label htmlFor={ `${value}-stars-${field}` }><i className={ `fa fa-star ${type}-star` } aria-hidden="true"></i></label>
+      <input type="radio" id={ `${value}-stars-${field}` } key={ `${value}-stars-${field}` }
         value={ value } className="hidden" onChange={ handleChange(field) }/>
     </div>
   );
-}
+};
 
 export const ReviewStarsInput = ({ numStars = 0, field, handleChange, resetField }) => {
   const reviewStarsInput = [];

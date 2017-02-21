@@ -13,7 +13,6 @@ const ReviewsReducer = (oldState = defaultState, action) => {
     case RECEIVE_SINGLE_REVIEW:
       newState = Object.assign({}, oldState);
       newState[action.review.user_id] = action.review;
-      debugger
       return newState;
     case REMOVE_REVIEW:
       newState = Object.assign({}, oldState);
