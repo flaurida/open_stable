@@ -1,6 +1,5 @@
 class Api::RestaurantsController < ApplicationController
   before_action :only_owner_can_edit_or_delete, only: [:update, :destroy]
-  before_action :must_be_logged_in_to_favorite, only: [:create_favorite]
 
   def index
     @restaurants = Restaurant.includes(:favorites, :reviews)
@@ -8,7 +7,7 @@ class Api::RestaurantsController < ApplicationController
     if params[:city]
       @restaurants = @restaurants.where(city: params[:city])
     end
-    
+
     render :index
   end
 
@@ -21,18 +20,6 @@ class Api::RestaurantsController < ApplicationController
     if params[:restaurant_id]
       @result = Restaurant.find(params[:restaurant_id]).table_availability(proposed_time, num_seats)
       render json: @result
-    end
-  end
-
-  def create_favorite
-    @restaurant = Restaurant.find(params[:restaurant_id])
-
-    favorite = current_user.favorites.new(restaurant: @restaurant)
-
-    if favorite.save
-      render json: { id: favorite.id, restaurant_id: favorite.restaurant_id, user_id: current_user.id }
-    else
-      render json: favorite.errors.messages, status: 422
     end
   end
 
@@ -92,12 +79,6 @@ class Api::RestaurantsController < ApplicationController
 
     unless @restaurant.owner == current_user
       render json: ["You cannot mess with someone else's restaurant!"], status: 403
-    end
-  end
-
-  def must_be_logged_in_to_favorite
-    unless logged_in?
-      render json: ["Please log in to favorite restaurants"], status: 403
     end
   end
 end

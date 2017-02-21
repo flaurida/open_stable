@@ -5,7 +5,7 @@ const starIcon = (key, type) => <p key={ key }><i className={ `fa fa-star ${type
 export const ReviewStars = ({ numStars = 0 }) => {
   const starIcons = [];
 
-  for (let i = 0; i < numStars; i++) {
+  for (let i = 0; i < 5; i++) {
     if (i < numStars) {
       starIcons.push(starIcon(i, "full"));
     } else {

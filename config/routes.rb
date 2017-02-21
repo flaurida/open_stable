@@ -11,15 +11,14 @@ Rails.application.routes.draw do
     resources :restaurants, except: [:new, :edit] do
       resources :tables, only: [:index, :create, :update]
       resources :reviews, only: [:create, :update]
-      post "/favorite", to: "restaurants#create_favorite"
+      resources :favorites, only: [:create]
+
+      delete "favorites", to: "favorites#destroy"
     end
 
     get "search", to: "restaurants#search"
 
     resources :tables, only: [:destroy]
     resources :reviews, only: [:destroy]
-    resources :favorites, only: [:index, :destroy]
-
-    resources :categories, only: [:index]
   end
 end

@@ -23,11 +23,14 @@ const citySelectItems = () => {
   ));
 };
 
-export const CitySelect = ({ handleChange, value }) => (
-  <div className="city-select">
-    <i className="fa fa-map-marker" aria-hidden="true"></i>
-    <select value={ value } onChange={ handleChange } className="city-select">
-      { citySelectItems() }
-    </select>
-  </div>
-);
+export const CitySelect = ({ handleChange, value }) => {
+  return (
+    <div className="city-select">
+      <i className="fa fa-map-marker" aria-hidden="true"></i>
+      <select value={ value } onChange={ handleChange } className="city-select">
+        <option value="" disabled>Select City</option>
+        { citySelectItems() }
+      </select>
+    </div>
+  );
+};

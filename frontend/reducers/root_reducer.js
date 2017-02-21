@@ -10,7 +10,6 @@ import tables from './tables_reducer';
 import tableDetail from './table_detail_reducer';
 import searchData from './search_data_reducer';
 import reviews from './reviews_reducer';
-import favorites from './favorites_reducer';
 
 export default combineReducers({
   session,
@@ -23,6 +22,5 @@ export default combineReducers({
   tables,
   tableDetail,
   searchData,
-  reviews,
-  favorites
+  reviews
 });

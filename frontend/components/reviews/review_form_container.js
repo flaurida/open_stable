@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
   let review;
 
   if (ownProps.formType === "edit") {
-    review = state.reviews[state.session.currentUser.id];
+    review = state.reviews[state.reviews.current_user_review];
   } else {
     review = {
       overall_rating: null,

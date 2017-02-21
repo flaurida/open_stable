@@ -15,6 +15,8 @@ class Navigation extends React.Component {
   }
 
   render() {
+    const cityLinkValue = this.props.location.query.city || "";
+
     return (
       <nav className="main-nav">
         <div className="logo">
@@ -22,7 +24,7 @@ class Navigation extends React.Component {
             <img src={ window.images.openStableLogo } className="logo-img" alt="Excited horse!"/>
             <h1>OpenStable</h1>
           </Link>
-          <CitySelect handleChange={ this.handleCityLinkChange } value={ this.props.location.query.city }/>
+          <CitySelect handleChange={ this.handleCityLinkChange } value={ cityLinkValue }/>
         </div>
         <NavLinksContainer className="nav-links"/>
         <HamburgerNav />

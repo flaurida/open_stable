@@ -51,6 +51,11 @@
     color: $dark-grey;
     font-size: 16px;
   }
+
+}
+
+.edit-and-delete-links {
+  font-size: 16px;
 }
 
 .restaurant-notes-detail {
@@ -97,7 +102,7 @@
     margin-top: 0;
   }
 
-  .restaruant-reviews > p, .restaurant-details > p {
+  .restaruant-reviews > p, .restaurant-details > p, .edit-and-delete-links {
     font-size: 14px;
   }
 }

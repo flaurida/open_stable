@@ -13,11 +13,21 @@ const RestaurantDetailReducer = (oldState = defaultState, action) => {
       return action.restaurant;
     case RECEIVE_SINGLE_FAVORITE:
       newState = merge({}, oldState);
-      newState.favorites_count++;
+
+      if (newState.favorites) {
+        newState.favorites.favorites_count++;
+        newState.favorites.current_user_favorite = true;
+      }
+
       return newState;
     case REMOVE_SINGLE_FAVORITE:
       newState = merge({}, oldState);
-      newState.favorites_count--;
+
+      if (newState.favorites) {
+        newState.favorites.favorites_count--;
+        newState.favorites.current_user_favorite = false;
+      }
+
       return newState;
     default:
       return oldState;

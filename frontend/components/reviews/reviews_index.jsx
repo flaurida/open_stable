@@ -3,7 +3,6 @@ import ReviewsIndexItem from './reviews_index_item';
 
 class ReviewsIndex extends React.Component {
   reviewIndexItems() {
-
     if (!Object.keys(this.props.reviews).length) {
       return (
         <div>
@@ -13,16 +12,14 @@ class ReviewsIndex extends React.Component {
       );
     }
 
-    return Object.values(this.props.reviews).map((review, i) => (
-      <ReviewsIndexItem review={ review } key={i} />
-    ));
+    return Object.values(this.props.reviews).map((review, i) => {
+      if (!review || typeof review !== "object") return null;
+      return <ReviewsIndexItem review={ review } key={i} />;
+    });
   }
 
   currentUserReview() {
-    if (this.props.currentUser) {
-      return this.props.reviews[this.props.currentUser.id];
-    }
-    return null;
+    return this.props.reviews[this.props.reviews.current_user_review];
   }
 
   deleteButton() {

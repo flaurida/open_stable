@@ -1,37 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { favoriteRestaurant, unfavoriteRestaurant, requestAllFavorites } from '../../actions/favorite_actions';
-
-const mapStateToProps = state => ({
-  favorites: state.favorites
-});
+import { favoriteRestaurant, unfavoriteRestaurant } from '../../actions/favorite_actions';
 
 const mapDispatchToProps = dispatch => ({
   favoriteRestaurant: restaurantId => dispatch(favoriteRestaurant(restaurantId)),
-  unfavoriteRestaurant: favorite => dispatch(unfavoriteRestaurant(favorite)),
-  requestAllFavorites: () => dispatch(requestAllFavorites())
+  unfavoriteRestaurant: favorite => dispatch(unfavoriteRestaurant(favorite))
 });
 
 class FavoriteButton extends React.Component {
-  componentWillMount() {
-    this.props.requestAllFavorites();
-  }
-
-  componentWillReceiveProps() {
-    this.props.requestAllFavorites();
-  }
-
   render() {
-    const { favorites, restaurant, unfavoriteRestaurant, favoriteRestaurant } = this.props;
+    const { restaurant, unfavoriteRestaurant, favoriteRestaurant } = this.props;
 
-    const currentUserFavorite = favorites[restaurant.id];
+    const currentUserFavorite = restaurant.favorites.current_user_favorite;
     const heartType = currentUserFavorite ? "fa-heart" : "fa-heart-o";
-    const favoriteAction = currentUserFavorite ? () => unfavoriteRestaurant(currentUserFavorite) : () => favoriteRestaurant(restaurant.id);
+    const favoriteAction = currentUserFavorite ? () => unfavoriteRestaurant(restaurant.id) : () => favoriteRestaurant(restaurant.id);
 
     return (
       <div>
         <button onClick={ favoriteAction } className="favorite-button"><i className={ `fa ${heartType}` } aria-hidden="true"></i>
-          <p>{ restaurant.favorites_count }</p>
+          <p>{ restaurant.favorites.favorites_count }</p>
         </button>
       </div>
     );
@@ -39,6 +26,6 @@ class FavoriteButton extends React.Component {
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(FavoriteButton);

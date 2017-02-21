@@ -43,13 +43,13 @@ class RestaurantIndexItem extends React.Component {
               <RestaurantDollarSigns numDollarSigns={ restaurant.num_dollar_signs } />
               <p>{ restaurant.category }</p>
               <p>{ restaurant.city }</p>
-              <p>{ this.editAndDeleteLinks() }</p>
+              { this.editAndDeleteLinks() }
             </div>
           </div>
         </div>
 
         <div className="restaruant-reviews">
-          {/* <FavoriteButtonContainer restaurant={ restaurant } /> */}
+          <FavoriteButtonContainer restaurant={ restaurant } />
           <p>This is a placeholder review</p>
         </div>
       </div>

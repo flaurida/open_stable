@@ -1,13 +1,18 @@
-json.partial! 'short_restaurant', restaurant: @restaurant
+json.partial! 'short_restaurant', restaurant: @restaurant, user: current_user
 
 json.extract! @restaurant, :hours, :formatted_hours
 
+user = current_user
 
-json.reviews({}) do
+json.reviews({})
+json.reviews do
   @restaurant.reviews.each do |review|
-    debugger
-    json.set! review.user_id do
+    json.current_user_review nil
+
+    json.set! review.id do
       json.partial! 'api/reviews/review', review: review
     end
+
+    json.current_user_review review.id if user.id == review.user_id
   end
 end

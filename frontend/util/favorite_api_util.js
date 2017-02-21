@@ -1,20 +1,13 @@
-export const fetchUserFavorites = () => {
-  return $.ajax({
-    method: 'GET',
-    url: `api/favorites`
-  });
-};
-
 export const favoriteRestaurant = restaurantId => {
   return $.ajax({
     method: 'POST',
-    url: `api/restaurants/${restaurantId}/favorite`
+    url: `api/restaurants/${restaurantId}/favorites`
   });
 };
 
-export const unfavoriteRestaurant = id => {
+export const unfavoriteRestaurant = restaurantId => {
   return $.ajax({
     method: 'DELETE',
-    url: `api/favorites/${id}`
+    url: `api/restaurants/${restaurantId}/favorites`
   });
 };

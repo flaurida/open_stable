@@ -33,7 +33,7 @@ class RestaurantDetail extends React.Component {
                 <h1>{ restaurant.name }</h1>
                   <div className="restaurant-header-notes-detail">
                     <p className="restaurant-byline">{ restaurant.category }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.city }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.price_range }</p>
-                    {/* <FavoriteButtonContainer restaurant={ restaurant } /> */}
+                    <FavoriteButtonContainer restaurant={ restaurant } />
                   </div>
               </div>
           </div>
