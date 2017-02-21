@@ -5,7 +5,7 @@ import ReviewForm from './review_form';
 
 const mapStateToProps = (state, ownProps) => {
   let review;
-  debugger
+
   if (ownProps.formType === "edit") {
     review = state.reviews[state.session.currentUser.id];
   } else {

@@ -2,6 +2,8 @@ import { RECEIVE_ALL_RESTAURANTS,
 RECEIVE_SINGLE_RESTAURANT,
 REMOVE_RESTAURANT } from '../actions/restaurant_actions';
 import { RECEIVE_SINGLE_USER } from '../actions/user_actions';
+import { RECEIVE_SINGLE_FAVORITE, REMOVE_SINGLE_FAVORITE } from '../actions/favorite_actions';
+import merge from 'lodash/merge';
 
 const defaultState = {};
 
@@ -20,6 +22,14 @@ const RestaurantsReducer = (oldState = defaultState, action) => {
     case REMOVE_RESTAURANT:
       newState = Object.assign({}, oldState);
       delete newState[action.restaurant.id];
+      return newState;
+    case RECEIVE_SINGLE_FAVORITE:
+      newState = merge({}, oldState);
+      newState[action.favorite.restaurant_id].favorites_count++;
+      return newState;
+    case REMOVE_SINGLE_FAVORITE:
+      newState = merge({}, oldState);
+      newState[action.favorite.restaurant_id].favorites_count--;
       return newState;
     default:
       return oldState;

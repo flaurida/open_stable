@@ -11,6 +11,18 @@ export const requestAllFavorites = () => dispatch => {
   });
 };
 
+export const favoriteRestaurant = restaurantId => dispatch => {
+  return FavoriteApiUtil.favoriteRestaurant(restaurantId).then(favorite => {
+    dispatch(receiveSingleFavorite(favorite));
+  });
+};
+
+export const unfavoriteRestaurant = favorite => dispatch => {
+  return FavoriteApiUtil.unfavoriteRestaurant(favorite.id).then(deletedFavorite => {
+    dispatch(removeSingleFavorite(deletedFavorite));
+  });
+};
+
 const receiveAllFavorites = favorites => ({
   type: RECEIVE_ALL_FAVORITES,
   favorites
@@ -19,4 +31,13 @@ const receiveAllFavorites = favorites => ({
 const receiveSingleFavorite = favorite => ({
   type: RECEIVE_SINGLE_FAVORITE,
   favorite
+});
+
+const removeSingleFavorite = favorite => ({
+  type: REMOVE_SINGLE_FAVORITE,
+  favorite
+});
+
+export const clearAllFavorites = () => ({
+  type: REMOVE_ALL_FAVORITES
 });

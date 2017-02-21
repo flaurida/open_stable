@@ -14,7 +14,7 @@ class Api::FavoritesController < ApplicationController
     @favorite = Favorite.find(params[:id])
 
     if @favorite.destroy
-      render json: {}
+      render json: { id: @favorite.id, restaurant_id: @favorite.restaurant_id }
     else
       render json: @favorite.errors.messages, status: 422
     end

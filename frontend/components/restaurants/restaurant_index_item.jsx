@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { RestaurantDollarSigns, currentUserIsOwner } from './restaurant_helper';
+import FavoriteButtonContainer from './restaurant_favorites';
 
 class RestaurantIndexItem extends React.Component {
   editAndDeleteLinks() {
@@ -40,7 +41,7 @@ class RestaurantIndexItem extends React.Component {
             </Link>
             <div className="restaurant-details">
               <RestaurantDollarSigns numDollarSigns={ restaurant.num_dollar_signs } />
-              <p>Categories placeholder</p>
+              <p>{ restaurant.category }</p>
               <p>{ restaurant.city }</p>
               <p>{ this.editAndDeleteLinks() }</p>
             </div>
@@ -48,6 +49,7 @@ class RestaurantIndexItem extends React.Component {
         </div>
 
         <div className="restaruant-reviews">
+          {/* <FavoriteButtonContainer restaurant={ restaurant } /> */}
           <p>This is a placeholder review</p>
         </div>
       </div>

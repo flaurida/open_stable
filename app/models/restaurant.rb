@@ -47,15 +47,15 @@ class Restaurant < ActiveRecord::Base
   STRATEGIES = %w(normal generous hipster greedy)
 
   CATEGORIES = [
-    "Frequent brawling",
-    "Horses eat free",
-    "Tents provided",
-    "Trading center",
-    "Great for weddings",
-    "Far from water",
-    "No blood magic",
-    "Free braiding",
-    "Good for ceremonies",
+    "Frequent Brawling",
+    "Horses Eat Free",
+    "Tents Provided",
+    "Trading Center",
+    "Great for Weddings",
+    "Far from Water",
+    "No Blood Magic",
+    "Free Braiding",
+    "Good for Ceremonies",
     "Near Vaes Dothrak"
   ]
 

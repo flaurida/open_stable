@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
-import { ReviewStarsInput } from './reviews_helper';
+import { ReviewStarsInput, NoiseLevelInput } from './reviews_helper';
 import Errors from '../errors/errors';
 
 class ReviewForm extends React.Component {
@@ -34,7 +34,8 @@ class ReviewForm extends React.Component {
 
   render() {
     const message = this.props.formType === "new" ? "Create Review" : "Update Review";
-    const { overall_rating, food_rating, ambience_rating, recommended, body } = this.state;
+    const { overall_rating, food_rating, ambience_rating,
+      service_rating, value_rating, noise_rating, recommended, body } = this.state;
 
     return (
       <div className="form-container">
@@ -47,13 +48,33 @@ class ReviewForm extends React.Component {
         <form onSubmit={this.handleSubmit} className="review-form">
 
           <div className="review-form-select">
+            <p>Overall Rating:&nbsp;&nbsp;</p><ReviewStarsInput numStars={ overall_rating }
+              handleChange={ this.handleChange } field="overall_rating"/>
+          </div>
+
+          <div className="review-form-select">
             <p>Food Rating:&nbsp;&nbsp;</p><ReviewStarsInput numStars={ food_rating }
-              handleChange={ this.handleChange } resetField={ this.resetField } field="food_rating"/>
+              handleChange={ this.handleChange } field="food_rating"/>
           </div>
 
           <div className="review-form-select">
             <p>Ambience Rating:&nbsp;&nbsp;</p><ReviewStarsInput numStars={ ambience_rating }
-              handleChange={ this.handleChange } resetField={ this.resetField } field="ambience_rating"/>
+              handleChange={ this.handleChange } field="ambience_rating"/>
+          </div>
+
+          <div className="review-form-select">
+            <p>Service Rating:&nbsp;&nbsp;</p><ReviewStarsInput numStars={ service_rating }
+              handleChange={ this.handleChange } field="service_rating"/>
+          </div>
+
+          <div className="review-form-select">
+            <p>Value Rating:&nbsp;&nbsp;</p><ReviewStarsInput numStars={ value_rating }
+              handleChange={ this.handleChange } field="value_rating"/>
+          </div>
+
+          <div className="review-form-select">
+            <p>Noise:&nbsp;&nbsp;</p><NoiseLevelInput numStars={ noise_rating }
+              handleChange={ this.handleChange } />
           </div>
 
           <input type="checkbox" id="recommend-checkbox" onChange={ this.toggleCheckbox } checked={ recommended }/>

@@ -20,7 +20,8 @@
 class Review < ActiveRecord::Base
   RATINGS = (1..5).to_a
 
-  validates :user, :restaurant, :body, presence: true
+  validates :user, :restaurant, :overall_rating, :food_rating, :service_rating, :ambience_rating,
+  :value_rating, :noise_rating, :body, presence: true
 
   validates :overall_rating, :food_rating, :service_rating, :ambience_rating,
   :value_rating, :noise_rating, inclusion: { in: RATINGS }

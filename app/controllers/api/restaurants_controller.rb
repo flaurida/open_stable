@@ -21,12 +21,12 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def create_favorite
-    @restaurant = Restaurant.find(params[:id])
+    @restaurant = Restaurant.find(params[:restaurant_id])
 
     favorite = current_user.favorites.new(restaurant: @restaurant)
 
     if favorite.save
-      render json: { id: favorite.id, restaurant_id: params[:id], user_id: current_user }
+      render json: { id: favorite.id, restaurant_id: favorite.restaurant_id, user_id: current_user.id }
     else
       render json: favorite.errors.messages, status: 422
     end

@@ -1,6 +1,6 @@
 json.extract! restaurant, :id, :name, :description, :price_range,
   :address, :city, :state, :zip_code, :latitude, :longitude,
-  :num_dollar_signs, :owner_id
+  :num_dollar_signs, :owner_id, :category
 
 json.favorites_count restaurant.favorites.length
 

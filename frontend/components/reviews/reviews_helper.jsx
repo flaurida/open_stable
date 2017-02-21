@@ -33,7 +33,7 @@ const starOption = (value, type, field, handleChange) => {
   );
 };
 
-export const ReviewStarsInput = ({ numStars = 0, field, handleChange, resetField }) => {
+export const ReviewStarsInput = ({ numStars = 0, field, handleChange }) => {
   const reviewStarsInput = [];
   numStars = parseInt(numStars);
 
@@ -45,6 +45,35 @@ export const ReviewStarsInput = ({ numStars = 0, field, handleChange, resetField
   return (
     <div className="review-stars-input">
         { reviewStarsInput }
+    </div>
+  );
+};
+
+const noiseLabels = ["quiet", "modest", "moderate", "loud", "screaming"];
+
+const noiseOption = (value, type, handleChange) => {
+  return (
+    <div key={ `${value}-noise` }>
+      <label htmlFor={ `${value}-noise` } className={ `noise-${type}` }>{ noiseLabels[value - 1] }</label>
+      <input type="radio" id={ `${value}-noise` } key={ `${value}-noise` }
+        value={ value } className="hidden" onChange={ handleChange("noise_rating") }/>
+    </div>
+  );
+};
+
+
+export const NoiseLevelInput = ({ noiseLevel = 0, handleChange }) => {
+  const reviewNoiseInput = [];
+  noiseLevel = parseInt(noiseLevel);
+
+  for (let i = 1; i <= 5; i++) {
+    const type = i === noiseLevel ? "selected" : "unselected";
+    reviewNoiseInput.push(noiseOption(i, type, handleChange));
+  }
+
+  return (
+    <div className="review-noise-input">
+        { reviewNoiseInput }
     </div>
   );
 };

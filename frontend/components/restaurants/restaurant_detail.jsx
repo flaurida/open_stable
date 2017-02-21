@@ -3,9 +3,10 @@ import RestaurantNav from './restaurant_nav';
 import RestaurantLocationContainer from './restaurant_location_container';
 import RestaurantSearchContainer from './restaurant_search_container';
 import ReviewsIndexContainer from '../reviews/reviews_index_container';
+import FavoriteButtonContainer from './restaurant_favorites';
 
 class RestaurantDetail extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.params.restaurantId !== this.props.restaurant.id) {
       this.props.requestSingleRestaurant(this.props.params.restaurantId);
     }
@@ -31,10 +32,8 @@ class RestaurantDetail extends React.Component {
               <div className="restaurant-header-notes">
                 <h1>{ restaurant.name }</h1>
                   <div className="restaurant-header-notes-detail">
-                    <p>Category&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.city }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.price_range }</p>
-                    <button className="favorite-button"><i className="fa fa-heart-o" aria-hidden="true"></i>
-                    <p>{ restaurant.favorites_count }</p>
-                    </button>
+                    <p className="restaurant-byline">{ restaurant.category }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.city }&nbsp;&nbsp;|&nbsp;&nbsp;{ restaurant.price_range }</p>
+                    {/* <FavoriteButtonContainer restaurant={ restaurant } /> */}
                   </div>
               </div>
           </div>
