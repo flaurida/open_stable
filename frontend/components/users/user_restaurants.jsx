@@ -19,18 +19,36 @@ class UserRestaurants extends React.Component {
   }
 
   renderIndexItems() {
-    return Object.values(this.props.restaurants).map((restaurant, i) => (
-      <RestaurantIndexItem restaurant={ restaurant } key={i}
-        deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser } />
-    ));
+    if (this.props.location.query.restaurants === "favorites") {
+      return Object.values(this.props.restaurants).map((restaurant, i) => (
+        <RestaurantIndexItem restaurant={ restaurant } key={i}
+          deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser }
+          type="favoriteItem" />
+      ));
+    } else {
+      return Object.values(this.props.restaurants).map((restaurant, i) => (
+        <RestaurantIndexItem restaurant={ restaurant } key={i}
+          deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser } />
+      ));
+    }
+  }
+
+  createLink() {
+    if (this.props.location.query.restaurants === "mine") {
+      return (
+        <div className="create-link">
+          <Link to="/restaurants/new">Create New Stable</Link>
+        </div>
+      );
+    }
+
+    return null;
   }
 
   render() {
     return (
       <div className="user-profile-item-container">
-        <div className="create-link">
-          <Link to="/restaurants/new">Create New Stable</Link>
-        </div>
+        { this.createLink() }
         <ul>
           { this.renderIndexItems() }
         </ul>

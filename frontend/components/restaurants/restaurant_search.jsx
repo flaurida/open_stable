@@ -23,6 +23,7 @@ class RestaurantSearch extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.query !== nextProps.location.query) {
       this.props.searchRestaurants(nextProps.location.query);
+      this.props.clearSearchErrors();
     }
   }
 

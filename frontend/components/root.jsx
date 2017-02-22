@@ -7,6 +7,7 @@ import RestaurantDetailContainer from './restaurants/restaurant_detail_container
 import RestaurantFormContainer from './restaurants/restaurant_form_container';
 import UserProfileContainer from './users/user_profile_container';
 import UserRestaurantsContainer from './users/user_restaurants_container';
+import UserReviewsContainer from './users/user_reviews_container';
 import TableIndexContainer from './tables/table_index_container';
 import RestaurantSearchContainer from './restaurants/restaurant_search_container';
 import SplashPage from './splash/splash_page';
@@ -25,6 +26,7 @@ const Root = ({ store }) => {
           <Route path="/restaurants/:restaurantId" component={ RestaurantDetailContainer } />
           <Route path="/profile" component={ UserProfileContainer }>
             <Route path="/profile/restaurants" component={ UserRestaurantsContainer } />
+            <Route path="/profile/reviews" component={ UserReviewsContainer } />
           </Route>
         </Route>
       </Router>

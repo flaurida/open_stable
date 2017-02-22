@@ -29,7 +29,9 @@ export const requestAllRestaurants = data => dispatch => {
 export const searchRestaurants = data => dispatch => {
   return RestaurantApiUtil.searchRestaurants(data).then(searchData => {
     dispatch(receiveRestaurantSearch(searchData));
+    dispatch(clearRestaurantErrors());
   }, err => {
+    dispatch(clearSearchData());
     dispatch(receiveSearchErrors(err.responseJSON));
   });
 };
@@ -92,7 +94,7 @@ const receiveRestaurantSearch = searchData => ({
   searchData
 });
 
-const removeRestaurant = restaurant => ({
+export const removeRestaurant = restaurant => ({
   type: REMOVE_RESTAURANT,
   restaurant
 });

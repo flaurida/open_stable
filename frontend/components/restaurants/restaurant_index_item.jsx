@@ -25,6 +25,14 @@ class RestaurantIndexItem extends React.Component {
     }
   }
 
+  favoriteButton(restaurant) {
+    if (this.props.type === "favoriteItem") {
+      return <FavoriteButtonContainer restaurant={ restaurant } type="favoritesItem" />;
+    } else {
+      return <FavoriteButtonContainer restaurant={ restaurant } />;
+    }
+  }
+
   render() {
     const { restaurant } = this.props;
 
@@ -49,7 +57,7 @@ class RestaurantIndexItem extends React.Component {
         </div>
 
         <div className="restaruant-reviews">
-          <FavoriteButtonContainer restaurant={ restaurant } />
+          { this.favoriteButton(restaurant) }
           <p>This is a placeholder review</p>
         </div>
       </div>

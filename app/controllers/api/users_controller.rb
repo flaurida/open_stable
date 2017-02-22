@@ -13,14 +13,19 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    if current_user
-      @user = User.includes(:restaurants, :favorites).find(current_user.id)
-    end
-
-    if @user
-      render :show
+    if params[:restaurants]
+      if params[:restaurants] == "mine"
+        @user = User.includes(restaurants: [:favorites]).find(current_user.id)
+        render :restaurants if @user
+      else
+        @user = User.includes(:favorited_restaurants).find(current_user.id)
+        render :favorites if @user
+      end
+    elsif params[:reviews]
+      @user = User.includes(reviews: [:restaurant]).find(current_user.id)
+      render :reviews
     else
-      render json: ["That user was not found!"], status: 404
+      render json: ["That route was not found!"], status: 404
     end
   end
 

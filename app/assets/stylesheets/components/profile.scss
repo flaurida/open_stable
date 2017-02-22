@@ -3,9 +3,12 @@
   border-bottom: 1px solid $grey;
   background: $white;
 
+  ul {
+    display: flex;
+  }
+
   li {
     padding: 15px 15px 15px 0;
-    display: block;
 
     a {
       height: 100%;
@@ -26,6 +29,7 @@
 .user-profile-item-container {
   width: 80%;
   margin: 0 auto;
+  background: $white;
 
   .create-link {
     padding: 15px 0;
@@ -49,5 +53,6 @@
 
   .user-nav {
     padding-left: 5%;
+    font-size: 12px;
   }
 }

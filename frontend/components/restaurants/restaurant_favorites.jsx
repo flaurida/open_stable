@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { favoriteRestaurant, unfavoriteRestaurant } from '../../actions/favorite_actions';
+import { favoriteRestaurant, unfavoriteRestaurant, unfavoriteFromFavoritesList  } from '../../actions/favorite_actions';
 
 const mapDispatchToProps = dispatch => ({
   favoriteRestaurant: restaurantId => dispatch(favoriteRestaurant(restaurantId)),
-  unfavoriteRestaurant: favorite => dispatch(unfavoriteRestaurant(favorite))
+  unfavoriteRestaurant: restaurantId => dispatch(unfavoriteRestaurant(restaurantId)),
+  unfavoriteFromFavoritesList: restaurantId => dispatch(unfavoriteFromFavoritesList(restaurantId))
 });
 
 class FavoriteButton extends React.Component {
@@ -13,7 +14,13 @@ class FavoriteButton extends React.Component {
 
     const currentUserFavorite = restaurant.favorites.current_user_favorite;
     const heartType = currentUserFavorite ? "fa-heart" : "fa-heart-o";
-    const favoriteAction = currentUserFavorite ? () => unfavoriteRestaurant(restaurant.id) : () => favoriteRestaurant(restaurant.id);
+    let favoriteAction;
+
+    if (this.props.type === "favoritesItem") {
+      favoriteAction = () => unfavoriteFromFavoritesList(restaurant.id);
+    } else {
+      favoriteAction = currentUserFavorite ? () => unfavoriteRestaurant(restaurant.id) : () => favoriteRestaurant(restaurant.id);
+    }
 
     return (
       <div>

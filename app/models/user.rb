@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   has_many :tables, through: :bookings
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  has_many :favorited_restaurants, through: :favorites
+  has_many :favorited_restaurants, through: :favorites, source: :restaurant
 
   def self.generate_random_token
     SecureRandom.urlsafe_base64(16)
