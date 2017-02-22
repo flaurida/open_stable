@@ -3,26 +3,43 @@ import { Link, withRouter } from 'react-router';
 import { ReviewStars } from './reviews_helper';
 
 class ReviewsIndexItem extends React.Component {
+  header() {
+    if (this.props.type !== "currentUserReviews") {
+      return <h3 className="review-name">{ this.props.review.reviewer_name }</h3>;
+    } else {
+      return (
+        <h3 className="review-name">
+          <Link to={ `/restaurants/${this.props.review.restaurant_id}` } className="reviews-link">
+            { this.props.review.restaurant_name}
+          </Link>
+        </h3>
+      );
+    }
+  }
+
+  editAndDeleteButtons() {
+    if (this.props.type === "currentUserReviews") {
+      return (
+        <div>
+          <button className="reviews-links" onClick={ () => this.props.receiveModal("editReview") }>Edit</button>
+          <button className="reviews-links" onClick={ () => this.props.deleteReview(this.props.review) }>Delete</button>
+        </div>
+      );
+    }
+
+    return null;
+  }
+
   render () {
-    const { review, type, deleteReview, updateReview, receiveModal } = this.props;
-    const header = (type !== "currentUserReviews") ? <h3 className="review-name">{ review.reviewer_name }</h3> :
-      <h3 className="review-name"><Link to={ `/restaurants/${review.restaurant_id}` } className="reviews-link">{ review.restaurant_name}</Link></h3>;
-
-    const editAndDeleteButtons = () => {
-      if (type === "currentUserReviews") {
-        return <button className="reviews-links" onClick={ () => this.props.receiveModal("editReview") }>Edit</button>;
-      }
-
-      return null;
-    };
+    const { review } = this.props;
 
     return (
       <div className="reviews-index-item">
         <div className="review-content">
           <div className="review-header">
             <ReviewStars numStars={ review.overall_rating } />
-            { header }
-            { editAndDeleteButtons() }
+            { this.header() }
+            { this.editAndDeleteButtons() }
           </div>
           <p>{ review.body }</p>
         </div>

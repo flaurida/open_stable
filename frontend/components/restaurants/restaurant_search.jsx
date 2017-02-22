@@ -20,7 +20,7 @@ class RestaurantSearch extends React.Component {
     if (this.state.query === "" && (this.props.queryData.restaurants.length !== 0 || this.props.queryData.cities.length !== 0)) {
       this.props.clearSearchErrors();
       this.props.clearQueryData();
-    } else if (JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
+    } else if (nextProps.location.query.type === "search" && JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
       this.props.searchRestaurants(nextProps.location.query);
       this.props.clearSearchErrors();
     }
@@ -32,7 +32,7 @@ class RestaurantSearch extends React.Component {
     }
   }
 
-  componentWillUnMount() {
+  componentWillUnmount() {
     this.props.clearSearchErrors();
     this.props.clearQueryData();
   }

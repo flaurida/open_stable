@@ -18,10 +18,10 @@ class Api::RestaurantsController < ApplicationController
 
     if params[:restaurant_id]
       @result = Restaurant.find(params[:restaurant_id]).table_availability(proposed_time, num_seats)
-      render json: @result
+      render :search
     elsif params[:city]
       @result = Restaurant.restaurant_availability(proposed_time, num_seats, params[:city])
-      render json: @result
+      render :search
     else
       render json: {}
     end

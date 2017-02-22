@@ -26,6 +26,8 @@
 #
 
 class Restaurant < ActiveRecord::Base
+  include ActionView::Helpers
+
   PRICE_RANGES = {
     "$15 and under" => 1,
     "$16 to $30" => 2,
@@ -335,7 +337,7 @@ class Restaurant < ActiveRecord::Base
   end
 
   def image_url
-    self.image.url
+    ActionController::Base.helpers.asset_path(self.image.url)
   end
 
   private
