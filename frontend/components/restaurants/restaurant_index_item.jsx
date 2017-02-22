@@ -49,6 +49,8 @@ class RestaurantIndexItem extends React.Component {
             </Link>
             <div className="restaurant-details">
               <RestaurantDollarSigns numDollarSigns={ restaurant.num_dollar_signs } />
+              <p>{ restaurant.overall_rating } ({ restaurant.num_reviews })</p>
+              <p>{ restaurant.recommended_score }% recommend</p>
               <p>{ restaurant.category }</p>
               <p>{ restaurant.city }</p>
               { this.editAndDeleteLinks() }
@@ -58,7 +60,7 @@ class RestaurantIndexItem extends React.Component {
 
         <div className="restaruant-reviews">
           { this.favoriteButton(restaurant) }
-          <p>This is a placeholder review</p>
+          <p>{ restaurant.review_preview }</p>
         </div>
       </div>
     );

@@ -4,7 +4,7 @@ import PhotoIndexItem from './photo_index_item';
 
 class RestaurantPhotos extends React.Component {
   photoIndexItems() {
-    return Object.values(this.props.photos).map((photo, i) => {
+    return (this.props.photos).map((photo, i) => {
       return <PhotoIndexItem photo={ photo } key={i} />;
     });
   }

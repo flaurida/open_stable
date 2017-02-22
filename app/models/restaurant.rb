@@ -297,6 +297,21 @@ class Restaurant < ActiveRecord::Base
     average_rating(:overall_rating)
   end
 
+  def num_reviews
+    reviews.count
+  end
+
+  def recommended_score
+    return nil if reviews.empty?
+    reviews.where(recommended: true).count / reviews.count * 100.0
+  end
+
+  def review_preview
+    return nil if reviews.empty?
+    last_review = reviews.last.body
+    last_review.length > 300 ? "#{last_review[0...300]}..." : last_review
+  end
+
   def average_rating(category)
     return nil if reviews.empty?
     reviews.sum(category) / reviews.count
