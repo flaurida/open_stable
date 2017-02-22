@@ -17,10 +17,24 @@ class RestaurantSearch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.location.query !== nextProps.location.query) {
+    if (this.state.query === "" && (this.props.queryData.restaurants.length !== 0 || this.props.queryData.cities.length !== 0)) {
+      this.props.clearSearchErrors();
+      this.props.clearQueryData();
+    } else if (JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
       this.props.searchRestaurants(nextProps.location.query);
       this.props.clearSearchErrors();
     }
+  }
+
+  componentWillMount() {
+    if (Object.keys(this.props.location.query).length !== 0) {
+      this.props.searchRestaurants(this.props.location.query);
+    }
+  }
+
+  componentWillUnMount() {
+    this.props.clearSearchErrors();
+    this.props.clearQueryData();
   }
 
   initialState() {
@@ -108,8 +122,11 @@ class RestaurantSearch extends React.Component {
         </Link>
       );
     } else if (this.state.queryData.type === "restaurant") {
+      const { num_seats, date, time } = this.state;
+      const restaurant_id = this.state.queryData.id;
+
       return (
-        <Link to={{ pathname: `/restaurants/${this.state.queryData.id}`, query: this.state }}>
+        <Link to={{ pathname: `/restaurants/${this.state.queryData.id}`, query: { num_seats, date, time, restaurant_id }}}>
           Find a Stable
         </Link>
       );
@@ -124,9 +141,11 @@ class RestaurantSearch extends React.Component {
 
   render() {
     const { num_seats, date, time } = this.state;
+    const { splash } = this.props;
+    const className = splash ? "search-form-container search-form-splash" : "search-form-container";
 
     return (
-      <section className="search-form-container">
+      <section className={ className }>
         <h2>{ this.props.title }</h2>
         <form className="search-form">
           <NumGuestsSelect handleChange={ this.handleChange("num_seats") } value={ num_seats } />

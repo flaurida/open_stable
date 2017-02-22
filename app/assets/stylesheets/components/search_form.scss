@@ -38,6 +38,20 @@
   }
 }
 
+.search-form-splash {
+  background: $white;
+  position: absolute;
+  width: 90%;
+  left: calc(5% - 20px);
+  top: 60%;
+  z-index: 3;
+  padding: 20px;
+
+  h2 {
+    font-size: 24px;
+  }
+}
+
 
 @media screen and (max-width: $break-point) {
   .search-form {
@@ -51,5 +65,11 @@
     a, .query-container {
       width: 100%;
     }
+  }
+
+  .search-form-splash {
+    position: relative;
+    margin: 0 auto;
+    left: 0;
   }
 }

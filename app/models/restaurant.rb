@@ -302,7 +302,7 @@ class Restaurant < ActiveRecord::Base
 
   def recommended_score
     return nil if reviews.empty?
-    reviews.where(recommended: true).count / reviews.count * 100.0
+    (reviews.where(recommended: true).count / (1.0 * reviews.count) * 100).round()
   end
 
   def review_preview

@@ -15,8 +15,8 @@
 
 @media screen and (max-width: $break-point) {
   .splash-container {
-    h1 {
-      font-size: 24px;
+    img, h1 {
+      display: none;
     }
   }
 }

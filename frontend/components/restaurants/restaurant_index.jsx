@@ -1,5 +1,6 @@
 import React from 'react';
 import RestaurantIndexItem from './restaurant_index_item';
+import RestaurantSearchContainer from './restaurant_search_container';
 import { Link } from 'react-router';
 
 class RestaurantIndex extends React.Component {
@@ -26,6 +27,7 @@ class RestaurantIndex extends React.Component {
         <div className="splash-container">
           <h1>Find a reservation for your entire horde</h1>
           <img src={ window.images.splashPhoto } alt="Dothraki"/>
+          <RestaurantSearchContainer title="Make a reservation" splash= { true }/>
         </div>
 
         <div className="restaurant-index">

@@ -5,7 +5,8 @@ import RestaurantSearch from './restaurant_search';
 
 const mapStateToProps = state => ({
   searchData: state.searchData,
-  errors: state.errors.search
+  errors: state.errors.search,
+  queryData: state.queryData
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -13,7 +14,7 @@ const mapDispatchToProps = dispatch => ({
   queryRestaurants: data => dispatch(queryRestaurants(data)),
   createBooking: booking => dispatch(createBooking(booking)),
   clearSearchErrors: () => dispatch(clearSearchErrors()),
-  clearQueryData: () => dispatch(clearQueryData())
+  clearQueryData: () =>  dispatch(clearQueryData())
 });
 
 export default connect(

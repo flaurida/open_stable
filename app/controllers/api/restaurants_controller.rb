@@ -19,12 +19,14 @@ class Api::RestaurantsController < ApplicationController
     if params[:restaurant_id]
       @result = Restaurant.find(params[:restaurant_id]).table_availability(proposed_time, num_seats)
       render json: @result
+    elsif params[:city]
     else
       render json: {}
     end
   end
 
   def find_by_name
+
     if params[:query]
       queryString = "%#{params[:query]}%"
       @restaurants = Restaurant.where("name ILIKE ?", queryString)
