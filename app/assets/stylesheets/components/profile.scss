@@ -30,6 +30,7 @@
   width: 80%;
   margin: 0 auto;
   background: $white;
+  padding-bottom: 20px;
 
   .create-link {
     padding: 15px 0;
@@ -54,5 +55,15 @@
   .user-nav {
     padding-left: 5%;
     font-size: 12px;
+  }
+}
+
+.reviews-links {
+  color: $navy;
+  padding-left: 5px;
+  transition: color 0.5s;
+
+  &:hover {
+    color: $navy-hover;
   }
 }

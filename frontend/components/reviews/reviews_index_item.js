@@ -10,7 +10,7 @@ class ReviewsIndexItem extends React.Component {
 
     const editAndDeleteButtons = () => {
       if (type === "currentUserReviews") {
-        return <button onClick={ () => this.props.receiveModal("editReview") }>Edit</button>;
+        return <button className="reviews-links" onClick={ () => this.props.receiveModal("editReview") }>Edit</button>;
       }
 
       return null;
