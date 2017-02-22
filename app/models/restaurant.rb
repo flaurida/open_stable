@@ -118,8 +118,7 @@ class Restaurant < ActiveRecord::Base
     formatted_hours
   end
 
-  ## FIX THIS! JUST NEED TO DO SOMETHING LIKE restuarants.dining_time.minutes and then you're golden
-  def self.restaurant_availability(date, time, num_seats)
+  def self.restaurant_availability(proposed_time, num_seats)
 
   end
 

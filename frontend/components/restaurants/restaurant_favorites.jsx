@@ -10,7 +10,7 @@ const mapDispatchToProps = dispatch => ({
 
 class FavoriteButton extends React.Component {
   render() {
-    const { restaurant, unfavoriteRestaurant, favoriteRestaurant } = this.props;
+    const { restaurant, unfavoriteRestaurant, favoriteRestaurant, unfavoriteFromFavoritesList } = this.props;
 
     const currentUserFavorite = restaurant.favorites.current_user_favorite;
     const heartType = currentUserFavorite ? "fa-heart" : "fa-heart-o";

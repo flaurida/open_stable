@@ -16,7 +16,7 @@ class Booking < ActiveRecord::Base
   validates :num_seats, inclusion: { in: (1..20) }
   validate :start_time_not_in_past
   # validate :cannot_book_busy_table
-  
+
   belongs_to :table
   belongs_to :user
 

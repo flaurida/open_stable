@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
 
     get "search", to: "restaurants#search"
+    get "query", to: "restaurants#find_by_name"
 
     resources :tables, only: [:destroy]
 

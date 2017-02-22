@@ -120,9 +120,9 @@ Restaurant.create(
   description: "App Academy is an immersive web development and job placement program in San Francisco and New York City. You only pay us if you find a job as a developer after the program. 98% of our graduates have offers or are working in tech jobs. In 2014, SF graduates received an average salary of $105,000; in 2014, NY graduates received an average salary of $89,000.",
   hours: hours.sample,
   owner_id: User.first.id,
-  strategy: Restaurant::STRATEGIES.sample,
+  strategy: "normal",
   category: Restaurant::CATEGORIES.sample,
-  dining_time: Restaurant::DINING_TIMES.sample
+  dining_time: 60
 )
 
 Table.create(
@@ -513,7 +513,7 @@ philadelphia = [
   ["1200 Market St", 19107]
 ]
 
-philadelpha.each do |data|
+philadelphia.each do |data|
   Restaurant.create(
     name: GOTFaker::Character.random_name,
     address: data[0],

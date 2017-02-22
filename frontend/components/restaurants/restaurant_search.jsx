@@ -3,21 +3,17 @@ import { Link, withRouter } from 'react-router';
 import { NumGuestsSelect } from './restaurant_helper';
 import { SingleHoursSelect } from './hours_select';
 import RestaurantDetailSearch from './restaurant_detail_search';
+import RestaurantQuery from './restaurant_query';
 
 class RestaurantSearch extends React.Component {
   constructor(props) {
     super(props);
     this.today = this.today();
-
-    this.state = {
-      num_seats: "2",
-      date: this.today,
-      time: "7:00 pm",
-      query: "",
-      restaurant_id: this.props.params.restaurantId
-    };
+    this.state = this.initialState();
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleQueryString = this.handleQueryString.bind(this);
+    this.setQueryData = this.setQueryData.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,6 +21,19 @@ class RestaurantSearch extends React.Component {
       this.props.searchRestaurants(nextProps.location.query);
       this.props.clearSearchErrors();
     }
+  }
+
+  initialState() {
+    const defaultState = {
+      num_seats: "2",
+      date: this.today,
+      time: "7:00 pm",
+      query: "",
+      queryData: null,
+      restaurant_id: this.props.params.restaurantId,
+    };
+
+    return Object.assign(defaultState, this.props.location.query);
   }
 
   today() {
@@ -38,12 +47,45 @@ class RestaurantSearch extends React.Component {
     };
   }
 
+  handleQueryString(e) {
+    this.setState({ query: e.currentTarget.value }, () => {
+      if (this.state.query === "") {
+        this.setState({ queryData: null });
+        this.props.clearQueryData();
+      } else {
+        this.props.queryRestaurants(this.state);
+      }
+    });
+  }
+
+  setQueryData(queryData) {
+    return e => {
+      this.setState({ queryData, query: queryData.name }, () => {
+      });
+    };
+  }
+
+  restaurantQuery() {
+    if (!this.state.queryData) {
+      return <RestaurantQuery setQueryData={ this.setQueryData }/>;
+    }
+
+    return null;
+  }
+
   searchBar() {
     if (this.props.searchType === "single") {
       return null;
     }
 
-    return <input type="text" onChange={ this.handleChange("query") } value={ this.state.query } placeholder="Restaurant Name" />;
+    const { num_seats, date, time } = this.state;
+
+    return (
+      <div className="query-container">
+        <input type="text" onChange={ this.handleQueryString } value={ this.state.query } placeholder="Restaurant Name" />
+        { this.restaurantQuery() }
+      </div>
+    );
   }
 
   individualSearchData() {
@@ -58,6 +100,28 @@ class RestaurantSearch extends React.Component {
     return null;
   }
 
+  searchLink() {
+    if (!this.state.queryData) {
+      return (
+        <Link to={{ pathname: this.props.location.pathname, query: this.state }}>
+          Find a Stable
+        </Link>
+      );
+    } else if (this.state.queryData.type === "restaurant") {
+      return (
+        <Link to={{ pathname: `/restaurants/${this.state.queryData.id}`, query: this.state }}>
+          Find a Stable
+        </Link>
+      );
+    } else {
+      return (
+        <Link to={{ pathname: "/restaurants", query: { city: this.state.queryData.name }}}>
+          Find a Stable
+        </Link>
+      );
+    }
+  }
+
   render() {
     const { num_seats, date, time } = this.state;
 
@@ -69,9 +133,7 @@ class RestaurantSearch extends React.Component {
           <input type="date" min={ this.today } onChange={ this.handleChange("date") } value={ date } />
           <SingleHoursSelect handleChange={ this.handleChange("time") } value={ time } />
           { this.searchBar() }
-          <Link to={{ pathname: `${this.props.location.pathname}`, query: this.state }}>
-            Find a Stable
-          </Link>
+          { this.searchLink() }
         </form>
 
         { this.individualSearchData() }

@@ -9,6 +9,7 @@ import userDetail from './user_detail_reducer';
 import tables from './tables_reducer';
 import tableDetail from './table_detail_reducer';
 import searchData from './search_data_reducer';
+import queryData from './query_data_reducer';
 import reviews from './reviews_reducer';
 import bookings from './bookings_reducer';
 import photos from './photos_reducer';
@@ -24,6 +25,7 @@ export default combineReducers({
   tables,
   tableDetail,
   searchData,
+  queryData,
   reviews,
   bookings,
   photos

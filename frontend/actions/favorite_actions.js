@@ -19,7 +19,6 @@ export const unfavoriteRestaurant = restaurantId => dispatch => {
 };
 
 export const unfavoriteFromFavoritesList = restaurantId => dispatch => {
-  debugger
   return FavoriteApiUtil.unfavoriteRestaurant(restaurantId).then(deletedFavorite => {
     dispatch(removeFavoritedRestaurant(deletedFavorite));
   });

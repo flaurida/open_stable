@@ -14,6 +14,14 @@ export const searchRestaurants = data => {
   });
 };
 
+export const queryRestaurants = data => {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/query',
+    data: data
+  });
+};
+
 export const fetchRestaurant = id => {
   return $.ajax({
     method: 'GET',

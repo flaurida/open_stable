@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { searchRestaurants, clearSearchErrors } from '../../actions/restaurant_actions';
+import { searchRestaurants, clearSearchErrors, queryRestaurants, clearQueryData } from '../../actions/restaurant_actions';
 import { createBooking } from '../../actions/booking_actions';
 import RestaurantSearch from './restaurant_search';
 
@@ -10,8 +10,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   searchRestaurants: data => dispatch(searchRestaurants(data)),
+  queryRestaurants: data => dispatch(queryRestaurants(data)),
   createBooking: booking => dispatch(createBooking(booking)),
-  clearSearchErrors: () => dispatch(clearSearchErrors())
+  clearSearchErrors: () => dispatch(clearSearchErrors()),
+  clearQueryData: () => dispatch(clearQueryData())
 });
 
 export default connect(

@@ -13,7 +13,7 @@ json.reviews do
       json.partial! 'api/reviews/review', review: review
     end
 
-    json.current_user_review review.id if user.id == review.user_id
+    json.current_user_review review.id if user && user.id == review.user_id
   end
 end
 

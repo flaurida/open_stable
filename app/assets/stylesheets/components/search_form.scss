@@ -4,13 +4,21 @@
   align-items: center;
   border-top: none;
 
-  input, select, a {
+  .query-container, input, select, a {
     height: 50px;
     width: 25%;
     margin: 0%;
     border-radius: 0;
     -webkit-appearance: none;
     border-right: none;
+  }
+
+  .query-container {
+    background: pink;
+
+    input {
+      width: 100%;
+    }
   }
 
   input {
@@ -40,7 +48,7 @@
       border-bottom: none;
     }
 
-    a, input[type="text"] {
+    a, .query-container {
       width: 100%;
     }
   }

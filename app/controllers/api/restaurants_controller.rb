@@ -1,6 +1,6 @@
 class Api::RestaurantsController < ApplicationController
   before_action :only_owner_can_edit_or_delete, only: [:update, :destroy]
-  before_action :search_start_time_not_in_past, only: [:search]
+  before_action :search_start_time_not_in_past, :cannot_have_overlapping_bookings, only: [:search]
 
   def index
     @restaurants = Restaurant.includes(:favorites, :reviews)
@@ -19,6 +19,18 @@ class Api::RestaurantsController < ApplicationController
     if params[:restaurant_id]
       @result = Restaurant.find(params[:restaurant_id]).table_availability(proposed_time, num_seats)
       render json: @result
+    else
+      render json: {}
+    end
+  end
+
+  def find_by_name
+    if params[:query]
+      queryString = "%#{params[:query]}%"
+      @restaurants = Restaurant.where("name ILIKE ?", queryString)
+      @cities = Restaurant::CITIES.select { |city| city[/.*#{params[:query]}.*/i] }
+
+      render :query
     else
       render json: {}
     end
@@ -89,6 +101,19 @@ class Api::RestaurantsController < ApplicationController
 
     if DateTime.parse("#{params[:date]} #{params[:time]}}") < DateTime.now.change(offset: "+0000")
       render json: ["The time you requested is in the past!"], status: 422
+    end
+  end
+
+  def cannot_have_overlapping_bookings
+    return unless logged_in? && params[:date] && params[:time]
+    proposed_time = DateTime.parse("#{params[:date]} #{params[:time]}}")
+
+    existing_bookings = Booking.includes(table: [:restaurant])
+      .where(user_id: current_user)
+      .where(start_time: (proposed_time - 2.hours)..(proposed_time + 2.hours))
+
+    unless existing_bookings.empty?
+      render json: ["You already have a reservation at #{existing_bookings.first.table.restaurant.name} on #{existing_bookings.first.formatted_time}"], status: 422
     end
   end
 end

@@ -21,7 +21,6 @@ class Table < ActiveRecord::Base
 
   def max_booking_range(date, time)
     nearby_bookings = bookings
-    debugger
     ## CHANGE TIME TO STRING, MANY ISSUES WITH PARSING TIMES
     # [-30, 30]
     # on lower end: desired time - 1.5 hrs + (if booking after -(1.5 + dining_time) hours => booking start + dining_time)
