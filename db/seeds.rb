@@ -461,14 +461,154 @@ las_vegas.each do |data|
   )
 end
 
+philadelphia = [
+  ["1617 E Passyunk Ave", 19148],
+  ["1046 Tasker St", 19148],
+  ["1911 Passyunk Ave", 19148],
+  ["Philadelphia, PA 19148", 19148],
+  ["3601 S Broad St", 19148],
+  ["1648 E Passyunk Ave", 19148],
+  ["1838 E Passyunk Ave", 19148],
+  ["1703 S 11th St", 19148],
+  ["1537 S 11th St", 19147],
+  ["14 Snyder Ave", 19148],
+  ["1754 S Hicks St", 19145],
+  ["1800 Federal St", 19146],
+  ["757 S Front St", 19147],
+  ["1009 S 8th St", 19147],
+  ["746 S 6th St", 19147],
+  ["743 S 4th St", 19147],
+  ["614 S 7th St", 19147],
+  ["237 Saint James Pl", 19106],
+  ["306 Market St", 19106],
+  ["308 Market St", 19106],
+  ["604 South St", 19147],
+  ["1221 Locust St", 19107],
+  ["105 S 13th St", 19107],
+  ["1311 Sansom St", 19107],
+  ["440 S Broad St", 19146],
+  ["1521 Spruce St", 19102],
+  ["1623 Sansom St", 19103],
+  ["1516 Sansom St", 19102],
+  ["1901 Chestnut St", 19103],
+  ["126 S 19th St", 19103],
+  ["2031 Walnut St", 19103],
+  ["1303 N 5th St", 19122],
+  ["308 E Girard Ave", 19125],
+  ["115 E Girard Ave", 19125],
+  ["1310 Frankford Ave", 19125],
+  ["5955 N 5th St", 19120],
+  ["3420 Sansom St", 19104],
+  ["2028 Fairmount Ave", 19130],
+  ["444 N 4th St", 19123],
+  ["2031 Walnut St", 19103],
+  ["210 W Rittenhouse Square", 19103],
+  ["1920 Chestnut St", 19103],
+  ["701 N 3rd St", 19123],
+  ["110 S 13th St", 19107],
+  ["1535 S 11th St", 19147],
+  ["1901 S 9th St", 19148],
+  ["231 S 15th St", 19102],
+  ["124 S 18th St", 19103],
+  ["1200 Market St", 19107]
+]
+
+philadelpha.each do |data|
+  Restaurant.create(
+    name: GOTFaker::Character.random_name,
+    address: data[0],
+    city: "Philadelphia",
+    state: "Pennsylvania",
+    zip_code: data[1],
+    price_range: price_ranges.sample,
+    description: GOTFaker::Quote.bad_ass,
+    hours: hours.sample,
+    owner_id: user_ids.sample,
+    strategy: Restaurant::STRATEGIES.sample,
+    category: Restaurant::CATEGORIES.sample,
+    dining_time: Restaurant::DINING_TIMES.sample
+  )
+end
+
+orlando = [
+  ["898 E Washington St", 32801],
+  ["140 N Orlando Ave", 32789],
+  ["2603 E South St", 32803],
+  ["2950 Curry Ford Rd", 32806],
+  ["9741 S Orange Blossom Trl", 32837],
+  ["7431 S Orange Ave", 32809],
+  ["617 N Primrose Dr", 32803],
+  ["1326 N Mills Ave", 32803],
+  ["4200 Conroy Rd", 32839],
+  ["4706 Millenia Plaza Way", 32839],
+  ["710 N MILLS AVE", 32803],
+  ["22 E Pine St", 32801],
+  ["12101 University Blvd", 32817],
+  ["6607 S Semoran Blvd", 32822],
+  ["1011 E Colonial Dr", 32803],
+  ["807 N Mills Ave", 32803],
+  ["4724 Millenia Plaza Way", 32839],
+  ["1710 Edgewater Dr", 32804],
+  ["2000 Premier Row", 32809],
+  ["100 S Eola Dr", 32801],
+  ["5752 International Dr", 32819],
+  ["4439 Edgewater Dr", 32804],
+  ["1103 Mills Ave N", 32803],
+  ["6125 S Semoran Blvd", 32822],
+  ["898 E Washington St", 32801],
+  ["55 W Church St", 32801],
+  ["743 N Magnolia Ave", 32803],
+  ["4693 Gardens Park Blvd", 32839],
+  ["805 S Kirkman Rd", 32818],
+  ["100 South Eola Dr", 32801],
+  ["419 E Michigan St", 32806],
+  ["932 N Mills Ave", 32803],
+  ["640 S Orlando Ave", 32751],
+  ["5695-A Vineland Rd", 32819],
+  ["8204 Crystal Clear Ln", 32809],
+  ["12101 University Blvd", 32817],
+  ["6607 S Semoran Blvd", 32822],
+  ["17 W Church St", 32801],
+  ["8625 International Dr", 32819],
+  ["12173 S Apopka Vineland Rd", 32836],
+  ["8005 International Dr", 32819],
+  ["6000 Universal Blvd", 32819],
+  ["861 N Orange Ave", 32801],
+  ["5180 S Conway Rd", 32812],
+  ["40 W Washington St", 32801],
+  ["5101 E Colonial Dr", 32803],
+  ["5350 International Dr", 32819],
+  ["4233 E Plaza Dr", 32816],
+  ["110 S Orlando Ave", 32789],
+  ["236 E Michigan St", 32806],
+  ["1875 Central Florida Pkwy", 32837],
+  ["843 Lee Rd", 32810],
+  ["8261 S John Young Pkwy", 32819],
+  ["4192 Conroy Rd", 32839]
+]
+
+orlando.each do |data|
+  Restaurant.create(
+    name: GOTFaker::Character.random_name,
+    address: data[0],
+    city: "Orlando",
+    state: "Florida",
+    zip_code: data[1],
+    price_range: price_ranges.sample,
+    description: GOTFaker::Quote.bad_ass,
+    hours: hours.sample,
+    owner_id: user_ids.sample,
+    strategy: Restaurant::STRATEGIES.sample,
+    category: Restaurant::CATEGORIES.sample,
+    dining_time: Restaurant::DINING_TIMES.sample
+  )
+end
 
 restaurant_ids = Restaurant.all.ids
 
-
-150.times do
+600.times do
   min_seats = (1..20).to_a.sample
   max_seats = min_seats + (0..4).to_a.sample
-
 
   Table.create(min_seats: min_seats, max_seats: max_seats,
   name: GOTFaker::Character.random_name,
@@ -478,13 +618,13 @@ end
 scores = (1..5).to_a
 recommend = [true, false]
 
-150.times do
+600.times do
   Review.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample,
   overall_rating: scores.sample, food_rating: scores.sample, ambience_rating: scores.sample,
   value_rating: scores.sample, service_rating: scores.sample, noise_rating: scores.sample, recommended: recommend.sample,
   body: GOTFaker::Quote.bad_ass)
 end
 
-150.times do
+600.times do
   Favorite.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample)
 end
