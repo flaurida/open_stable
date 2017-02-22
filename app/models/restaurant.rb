@@ -118,17 +118,20 @@ class Restaurant < ActiveRecord::Base
     formatted_hours
   end
 
-  def self.restaurant_availability(proposed_time, num_seats)
+  def self.restaurant_availability(proposed_time, num_seats, city)
+    restaurants = Restaurant.where(city: city)
 
+    result = {}
+
+    restaurants.each do |restaurant|
+      restaurant_result = restaurant.table_availability(proposed_time, num_seats)
+      result[restaurant.id] = restaurant_result[restaurant.id]
+    end
+
+    result
   end
 
   def table_availability(proposed_time, num_seats)
-    # old filters
-    # .where(id: id)
-    # .where(seating, num_seats)
-    # .where(bookings: { start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute))})
-    # .order(order)
-
     order = "tables.max_seats ASC"
     seating = "? BETWEEN tables.min_seats AND tables.max_seats"
 
@@ -144,8 +147,22 @@ class Restaurant < ActiveRecord::Base
   end
 
   def analyze_individual_result(result, proposed_time, num_seats)
-    return { id => { closed: true } } if closed?(proposed_time)
-    return { id => { booked: true } } if result.empty? || (strategy == "hipster" && [true, false].sample)
+    return { id => {
+            name: name,
+            id: id,
+            city: city,
+            category: category,
+            num_dollar_signs: num_dollar_signs,
+            image_url: image_url,
+            closed: true } } if closed?(proposed_time)
+    return { id => {
+            name: name,
+            id: id,
+            city: city,
+            category: category,
+            num_dollar_signs: num_dollar_signs,
+            image_url: image_url,
+            booked: true } } if result.empty? || (strategy == "hipster" && [true, false].sample)
 
     golden_count = 0
     parsed = {}
@@ -268,9 +285,10 @@ class Restaurant < ActiveRecord::Base
     return { id => {
         name: name,
         id: id,
-        review_count: reviews.length,
-        num_dollar_signs: num_dollar_signs,
         city: city,
+        category: category,
+        num_dollar_signs: num_dollar_signs,
+        image_url: image_url,
         proposed_times: proposed_times_with_blanks
       }
     }
@@ -314,6 +332,10 @@ class Restaurant < ActiveRecord::Base
   def average_rating(category)
     return nil if reviews.empty?
     reviews.sum(category) / reviews.count
+  end
+
+  def image_url
+    self.image.url
   end
 
   private

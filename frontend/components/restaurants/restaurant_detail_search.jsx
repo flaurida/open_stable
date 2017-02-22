@@ -31,9 +31,17 @@ class RestaurantDetailSearch extends React.Component {
       );
     }
 
+    const errorRender = () => {
+      if (errors) {
+        return <Errors errors={ errors } />;
+      }
+
+      return null;
+    };
+
     return (
       <div>
-        <Errors errors={ errors } />
+        { errorRender() }
         <BookingOptions searchData={ searchData[restaurantId].proposed_times } createBooking={ createBooking } />
       </div>
     );

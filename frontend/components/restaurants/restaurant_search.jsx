@@ -115,6 +115,8 @@ class RestaurantSearch extends React.Component {
   }
 
   searchLink() {
+    const { num_seats, date, time } = this.state;
+
     if (!this.state.queryData) {
       return (
         <Link to={{ pathname: this.props.location.pathname, query: this.state }}>
@@ -122,7 +124,6 @@ class RestaurantSearch extends React.Component {
         </Link>
       );
     } else if (this.state.queryData.type === "restaurant") {
-      const { num_seats, date, time } = this.state;
       const restaurant_id = this.state.queryData.id;
 
       return (
@@ -132,7 +133,7 @@ class RestaurantSearch extends React.Component {
       );
     } else {
       return (
-        <Link to={{ pathname: "/restaurants", query: { city: this.state.queryData.name }}}>
+        <Link to={{ pathname: "/restaurants", query: { city: this.state.queryData.name, type: "search", num_seats, date, time }}}>
           Find a Stable
         </Link>
       );
