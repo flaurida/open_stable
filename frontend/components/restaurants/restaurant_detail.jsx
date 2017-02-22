@@ -4,6 +4,7 @@ import RestaurantLocationContainer from './restaurant_location_container';
 import RestaurantSearchContainer from './restaurant_search_container';
 import ReviewsIndexContainer from '../reviews/reviews_index_container';
 import FavoriteButtonContainer from './restaurant_favorites';
+import RestaurantPhotosContainer from './restaurant_photos_container';
 
 class RestaurantDetail extends React.Component {
   componentWillMount() {
@@ -55,6 +56,7 @@ class RestaurantDetail extends React.Component {
               </ul>
             </section>
 
+            <RestaurantPhotosContainer restaurant={ restaurant } />
             <ReviewsIndexContainer restaurant={ restaurant } />
           </section>
         </div>

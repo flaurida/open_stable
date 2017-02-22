@@ -125,6 +125,8 @@ class RestaurantForm extends React.Component {
 
     if (file) {
       fileReader.readAsDataURL(file);
+    } else {
+      this.setState({ imageUrl: "", imageFile: null });
     }
   }
 

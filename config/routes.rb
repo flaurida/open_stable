@@ -12,13 +12,14 @@ Rails.application.routes.draw do
       resources :tables, only: [:index, :create, :update]
       resources :reviews, only: [:create, :update]
       resources :favorites, only: [:create]
+      resources :photos, only: [:create]
 
       delete "favorites", to: "favorites#destroy"
     end
 
     get "search", to: "restaurants#search"
 
-    resources :tables, only: [:destroy] 
+    resources :tables, only: [:destroy]
 
     resources :bookings, only: [:create, :destroy]
     resources :reviews, only: [:destroy]

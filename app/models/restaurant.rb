@@ -102,6 +102,7 @@ class Restaurant < ActiveRecord::Base
   has_many :bookings, through: :tables
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :photos, dependent: :destroy
 
   def num_dollar_signs
     PRICE_RANGES[price_range]

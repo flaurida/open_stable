@@ -36,7 +36,7 @@ class Api::RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant
-    .includes(:favorites, reviews: [:user])
+    .includes(:favorites, :photos, reviews: [:user])
     .find(params[:id])
 
     if @restaurant

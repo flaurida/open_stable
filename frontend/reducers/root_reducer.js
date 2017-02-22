@@ -11,6 +11,7 @@ import tableDetail from './table_detail_reducer';
 import searchData from './search_data_reducer';
 import reviews from './reviews_reducer';
 import bookings from './bookings_reducer';
+import photos from './photos_reducer';
 
 export default combineReducers({
   session,
@@ -24,5 +25,6 @@ export default combineReducers({
   tableDetail,
   searchData,
   reviews,
-  bookings
+  bookings,
+  photos
 });

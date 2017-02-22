@@ -1,0 +1,22 @@
+.restaurant-photos-container {
+  form {
+    border: none;
+  }
+}
+
+.restaurant-photos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+img.restaurant-detail-photo {
+  width: calc(20% - 10px);
+  height: 100px;
+  margin: 5px;
+}
+
+@media screen and (max-width: $break-point) {
+  img.restaurant-detail-photo {
+    width: 100%;
+  }
+}
