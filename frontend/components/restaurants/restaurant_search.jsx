@@ -47,6 +47,7 @@ class RestaurantSearch extends React.Component {
       queryData: null,
       city: "",
       restaurant_id: this.props.params.restaurantId,
+      fetching: false
     };
 
     return Object.assign(defaultState, this.props.location.query);
@@ -108,6 +109,10 @@ class RestaurantSearch extends React.Component {
   }
 
   individualSearchData() {
+    if (this.state.fetching) {
+      return <div className="loader">Loading...</div>;
+    }
+
     if (this.props.searchType === "single") {
       return <RestaurantDetailSearch searchData={ this.props.searchData }
         restaurantId={ this.props.params.restaurantId }

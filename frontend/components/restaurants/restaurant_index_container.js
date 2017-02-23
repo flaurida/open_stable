@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestAllRestaurants: data => dispatch(requestAllRestaurants(data)),
   deleteRestaurant: restaurant => dispatch(deleteRestaurant(restaurant)),
-  createBooking: booking => dispatch(createBooking(booking)),
+  createBooking: booking => dispatch(createBooking(booking))
 });
 
 export default connect(

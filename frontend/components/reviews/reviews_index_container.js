@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  receiveModal: modal => dispatch(receiveModal(modal)),
+  receiveModal: (modal, props) => dispatch(receiveModal(modal, props)),
   deleteReview: review => dispatch(deleteReview(review))
 });
 

@@ -1,9 +1,10 @@
 export const RECEIVE_MODAL = "RECEIVE_MODAL";
 export const CLEAR_MODAL = "CLEAR_MODAL";
 
-export const receiveModal = modal => ({
+export const receiveModal = (modal, props = {}) => ({
   type: RECEIVE_MODAL,
-  modal
+  modal,
+  props
 });
 
 export const clearModal = () => ({

@@ -3,6 +3,10 @@ import { BookingOptions } from './search_helper';
 import Errors from '../errors/errors';
 
 class RestaurantDetailSearch extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentWillMount() {
     this.props.clearSearchErrors();
   }

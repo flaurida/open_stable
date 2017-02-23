@@ -7,21 +7,33 @@ import FavoriteButtonContainer from './restaurant_favorites';
 import RestaurantPhotosContainer from './restaurant_photos_container';
 
 class RestaurantDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { fetching: true };
+  }
+
   componentWillMount() {
     if (this.props.params.restaurantId !== this.props.restaurant.id) {
-      this.props.requestSingleRestaurant(this.props.params.restaurantId);
+      this.props.requestSingleRestaurant(this.props.params.restaurantId).then(() => {
+        this.setState({ fetching: false });
+      });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.params.restaurantId !== nextProps.params.restaurantId) {
-      this.props.requestSingleRestaurant(nextProps.params.restaurantId);
+      this.props.requestSingleRestaurant(nextProps.params.restaurantId).then(() => {
+        this.setState({ fetching: false });
+      });
     }
   }
 
   render() {
     const { restaurant, currentUser } = this.props;
-    if (!restaurant.name) return null;
+
+    if (this.state.fetching) {
+      return <div className="loader">Loading...</div>;
+    }
 
     return (
       <div className="restaurant-detail">

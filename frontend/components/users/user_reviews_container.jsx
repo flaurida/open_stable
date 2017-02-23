@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
   requestCurrentUser: data => dispatch(requestCurrentUser(data)),
   updateReview: (restaurantId, review) => dispatch(updateReview(restaurantId, review)),
   deleteReview: review => dispatch(deleteReview(review)),
-  receiveModal: modal => dispatch(receiveModal(modal))
+  receiveModal: (modal, props) => dispatch(receiveModal(modal, props))
 });
 
 class UserReviews extends React.Component {
@@ -33,7 +33,6 @@ class UserReviews extends React.Component {
       if (review === null || typeof review !== "object") {
         return null;
       } else {
-        console.log(this.props.reviews);
         return (
           <ReviewsIndexItem review={ review } key={review.id}
             deleteReview={ this.props.deleteReview }

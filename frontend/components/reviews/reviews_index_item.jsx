@@ -19,9 +19,10 @@ class ReviewsIndexItem extends React.Component {
 
   editAndDeleteButtons() {
     if (this.props.type === "currentUserReviews") {
+      debugger
       return (
         <div>
-          <button className="reviews-links" onClick={ () => this.props.receiveModal("editReview") }>Edit</button>
+          <button className="reviews-links" onClick={ () => this.props.receiveModal("editReview", { reviewId: this.props.review.id }) }>Edit</button>
           <button className="reviews-links" onClick={ () => this.props.deleteReview(this.props.review) }>Delete</button>
         </div>
       );

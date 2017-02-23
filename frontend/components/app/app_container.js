@@ -22,19 +22,26 @@ const EditReviewForm = props => {
   return <ReviewFormContainer { ...props } formType="edit" />;
 };
 
-const modals = {
-  login: <LoginForm />,
-  signup: <SignupForm />,
-  map: <RestaurantMapContainer />,
-  newReview: <NewReviewForm />,
-  editReview: <EditReviewForm />,
-  photo: <RestaurantPhotoDetailContainer />
+const RestaurantPhotoDetail = props => {
+  return <RestaurantPhotoDetailContainer { ...props } />;
 };
 
-const mapStateToProps = state => ({
-  modal: modals[state.modal],
-  modalType: state.modal
-});
+const modals = {
+  login: props => LoginForm(props),
+  signup: props => SignupForm(props),
+  map: props => RestaurantMapContainer(props),
+  newReview: props => NewReviewForm(props),
+  editReview: props => EditReviewForm(props),
+  photo: props => RestaurantPhotoDetail(props)
+};
+
+const mapStateToProps = state => {
+  const modal = state.modal.modal ? modals[state.modal.modal](state.modal.props) : null;
+  return {
+    modal,
+    modalType: state.modal.modal
+  };
+};
 
 export default connect(
   mapStateToProps,

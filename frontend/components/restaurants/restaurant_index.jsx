@@ -6,23 +6,36 @@ import CategorySelectContainer from '../categories/category_select_container';
 import { Link } from 'react-router';
 
 class RestaurantIndex extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { fetching: false };
+  }
+
   componentDidMount() {
-    if (this.props.location.query.type === "search") {
-    } else {
-      this.props.requestAllRestaurants(this.props.location.query);
+    if (this.props.location.query.type !== "search") {
+      this.setState({ fetching: true });
+      this.props.requestAllRestaurants(this.props.location.query).then(() => {
+        this.setState({ fetching: false });
+      });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location.query !== this.props.location.query) {
-      if (this.props.location.query.type === "search") {
-      } else {
-        this.props.requestAllRestaurants(nextProps.location.query);
+      if (this.props.location.query.type !== "search") {
+        this.setState({ fetching: true });
+        this.props.requestAllRestaurants(nextProps.location.query).then(() => {
+          this.setState({ fetching: false });
+        });
       }
     }
   }
 
   restaurantIndexItems() {
+    if (this.state.fetching) {
+      return <div className="loader">Loading...</div>;
+    }
+
     if (this.props.location.query.type === "search") {
       return Object.values(this.props.searchData).map((searchData, i) => (
         <SearchIndexItem key={i} searchData={ searchData } createBooking={ this.props.createBooking }/>

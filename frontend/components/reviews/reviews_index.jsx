@@ -24,7 +24,6 @@ class ReviewsIndex extends React.Component {
 
   deleteButton() {
     const currentUserReview = this.currentUserReview();
-
     if (!currentUserReview) return null;
 
     return (
@@ -35,13 +34,14 @@ class ReviewsIndex extends React.Component {
   render() {
     const currentUserReview = this.currentUserReview();
     const reviewMessage = currentUserReview ? "Edit Your Review" : "Write Review";
-    const reviewFormType = currentUserReview ? "editReview" : "newReview";
+    const reviewFunction = currentUserReview ? () => this.props.receiveModal("editReview", { reviewId: this.props.reviews.current_user_review }) :
+      () => this.props.receiveModal("newReview");
 
     return (
       <section>
         <div className="reviews-header">
           <h2>{ this.props.restaurant.name } Ratings and Reviews</h2>
-          <button onClick={ () => this.props.receiveModal(reviewFormType) }>{ reviewMessage }</button>
+          <button onClick={ reviewFunction }>{ reviewMessage }</button>
           { this.deleteButton() }
         </div>
         { this.reviewIndexItems() }
