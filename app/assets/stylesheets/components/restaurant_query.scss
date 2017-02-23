@@ -1,0 +1,32 @@
+.query-results {
+  background: $white;
+  border: 1px solid $grey;
+  z-index: 1;
+  max-height: 300px;
+  overflow-y: scroll;
+  font-size: 14px;
+}
+
+.query-list-item {
+  color: $dark-grey;
+
+  span {
+    display: block;
+  }
+
+  margin-bottom: 5px;
+
+  &:hover {
+    background: $light-grey;
+  }
+}
+
+.query-results-header {
+  margin: 5px 0;
+  font-weight: bold;
+  font-size: 16px;
+
+  i {
+    color: $black;
+  }
+}

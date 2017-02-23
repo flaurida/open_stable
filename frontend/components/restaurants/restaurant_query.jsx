@@ -10,7 +10,7 @@ class RestaurantQuery extends React.Component {
   restaurantListItems() {
     return this.props.queryData.restaurants.map((restaurant, i) => {
       return (
-        <li key={i} onClick={ this.props.setQueryData(restaurant) }>
+        <li key={i} onClick={ this.props.setQueryData(restaurant) } className="query-list-item">
           <span>{ restaurant.name }</span>{ restaurant.city }
         </li>
       );
@@ -22,7 +22,10 @@ class RestaurantQuery extends React.Component {
 
     return (
       <ul className="query-results-section">
-        <li>Restaurants</li>
+        <li className="query-results-header">
+          <i className="fa fa-home" aria-hidden="true" />
+          &nbsp;Stables
+        </li>
         { this.restaurantListItems() }
       </ul>
     );
@@ -31,7 +34,7 @@ class RestaurantQuery extends React.Component {
   cityListItems() {
     return this.props.queryData.cities.map((city, i) => {
       return (
-        <li key={i} onClick={ this.props.setQueryData(city) }>
+        <li key={i} onClick={ this.props.setQueryData(city) } className="query-list-item">
           <span>{ city.name }</span>
         </li>
       );
@@ -43,7 +46,10 @@ class RestaurantQuery extends React.Component {
 
     return (
       <ul className="query-results-section">
-        <li>Cities</li>
+        <li className="query-results-header">
+          <i className="fa fa-map-marker" aria-hidden="true" />
+          &nbsp;Cities
+        </li>
         { this.cityListItems() }
       </ul>
     );
