@@ -21,11 +21,12 @@ const mapDispatchToProps = dispatch => ({
 class UserReviews extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { fetching: true };
     this.renderIndexItems = this.renderIndexItems.bind(this);
   }
 
   componentDidMount() {
-    this.props.requestCurrentUser(this.props.location.query);
+    this.props.requestCurrentUser(this.props.location.query).then(() => this.setState({ fetching: false }));
   }
 
   renderIndexItems() {
@@ -44,8 +45,11 @@ class UserReviews extends React.Component {
     });
   }
 
-
   render() {
+    if (this.state.fetching) {
+      return <div className="loader">Loading...</div>;
+    }
+
     return (
       <div className="user-profile-item-container">
         { this.renderIndexItems() }

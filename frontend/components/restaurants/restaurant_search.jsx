@@ -22,14 +22,14 @@ class RestaurantSearch extends React.Component {
       this.props.clearSearchErrors();
       this.props.clearQueryData();
     } else if (nextProps.location.query.type === "search" && JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
-      this.props.searchRestaurants(nextProps.location.query);
+      this.props.searchRestaurants(nextProps.location.query).then(() => this.setState({ fetching: false }));
       this.props.clearSearchErrors();
     }
   }
 
   componentWillMount() {
     if (this.props.location.query.type === "search" && Object.keys(this.props.location.query).length !== 0) {
-      this.props.searchRestaurants(this.props.location.query);
+      this.props.searchRestaurants(this.props.location.query).then(() => this.setState({ fetching: false }));
     }
   }
 
@@ -51,6 +51,10 @@ class RestaurantSearch extends React.Component {
     };
 
     return Object.assign(defaultState, this.props.location.query);
+  }
+
+  setFetching(e) {
+    this.setState({ fetching: true });
   }
 
   today() {
@@ -129,7 +133,7 @@ class RestaurantSearch extends React.Component {
 
     if (this.state.city) {
       return (
-        <Link to={{ pathname: "/restaurants", query: { type: "search", num_seats, date, time, city: this.state.city }}}>
+        <Link to={{ pathname: "/restaurants", query: { type: "search", num_seats, date, time, city: this.state.city }}} onClick={ this.setFetching }>
           Find a Stable
         </Link>
       );
@@ -137,14 +141,14 @@ class RestaurantSearch extends React.Component {
       const restaurant_id = this.props.params.restaurantId;
 
       return (
-        <Link to={{ pathname: this.props.location.pathname, query: { num_seats, date, time, restaurant_id, type: "search" } }}>
+        <Link to={{ pathname: this.props.location.pathname, query: { num_seats, date, time, restaurant_id, type: "search" } }} onClick={ this.setFetching }>
           Find a Stable
         </Link>
       );
     } else {
       const restaurant_id = this.state.restaurant_id;
       return (
-        <Link to={{ pathname: `/restaurants/${this.state.restaurant_id}`, query: { num_seats, date, time, restaurant_id, type: "search" }}}>
+        <Link to={{ pathname: `/restaurants/${this.state.restaurant_id}`, query: { num_seats, date, time, restaurant_id, type: "search" }}} onClick={ this.setFetching }>
           Find a Stable
         </Link>
       );
