@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { RestaurantDollarSigns, currentUserIsOwner } from './restaurant_helper';
+import { ReviewStars } from '../reviews/reviews_helper';
 import FavoriteButtonContainer from './restaurant_favorites';
 
 class RestaurantIndexItem extends React.Component {
@@ -33,6 +34,28 @@ class RestaurantIndexItem extends React.Component {
     }
   }
 
+  reviews() {
+    const { restaurant } = this.props;
+
+    if (restaurant.num_reviews > 0) {
+      return (
+        <div>
+          <div className="restaurant-index-stars">
+            <ReviewStars numStars={ restaurant.overall_rating } indexItem={ true }/>
+            <p>({ restaurant.num_reviews })</p>
+          </div>
+          <p className="share-recommended">{ restaurant.recommended_score }% recommend</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="restaurant-details">
+          <p>No reviews yet</p>
+        </div>
+      );
+    }
+  }
+
   render() {
     const { restaurant } = this.props;
 
@@ -47,20 +70,18 @@ class RestaurantIndexItem extends React.Component {
             <Link to={ `/restaurants/${restaurant.id}` }>
               { restaurant.name }
             </Link>
+            <RestaurantDollarSigns numDollarSigns={ restaurant.num_dollar_signs } />
             <div className="restaurant-details">
-              <RestaurantDollarSigns numDollarSigns={ restaurant.num_dollar_signs } />
-              <p>{ restaurant.overall_rating } ({ restaurant.num_reviews })</p>
-              <p>{ restaurant.recommended_score }% recommend</p>
-              <p>{ restaurant.category }</p>
-              <p>{ restaurant.city }</p>
+              { this.reviews() }
+              <p>{ restaurant.category } | { restaurant.city }</p>
               { this.editAndDeleteLinks() }
             </div>
           </div>
         </div>
 
         <div className="restaruant-reviews">
-          { this.favoriteButton(restaurant) }
           <p>{ restaurant.review_preview }</p>
+          { this.favoriteButton(restaurant) }
         </div>
       </div>
     );

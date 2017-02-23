@@ -1,0 +1,24 @@
+.booking-index-item {
+  display: flex;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid $grey;
+  border-bottom: 2px solid $grey;
+  border-radius: 5px;
+}
+
+.booking-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  width: 80%;
+}
+
+.booking-links {
+  color: $navy;
+  transition: color 0.5s;
+
+  &:hover {
+    color: $navy-hover;
+  }
+}

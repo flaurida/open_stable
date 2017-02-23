@@ -23,7 +23,7 @@ class FavoriteButton extends React.Component {
     }
 
     return (
-      <div>
+      <div className="favorite-button">
         <button onClick={ favoriteAction } className="favorite-button"><i className={ `fa ${heartType}` } aria-hidden="true"></i>
           <p>{ restaurant.favorites.favorites_count }</p>
         </button>

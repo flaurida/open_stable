@@ -26,15 +26,21 @@ class Api::UsersController < ApplicationController
       render :reviews
     elsif params[:bookings]
       if params[:bookings] == "past"
-        @user = User.includes(bookings: [:tables])
+        @bookings = Booking.includes(table: [:restaurant])
+        .where(user_id: current_user.id)
         .where("bookings.start_time < ?", DateTime.now)
-        .find(current_user.id)
-        render :bookings if @user
+        @user = current_user
+        @upcoming = false
+
+        render :bookings
       else
-        @user = User.includes(bookings: [:tables])
-        .where("bookings.start_time < ?", DateTime.now)
-        .find(current_user.id)
-        render :bookings if @user
+        @bookings = Booking.includes(table: [:restaurant])
+        .where(user_id: current_user.id)
+        .where("bookings.start_time > ?", DateTime.now)
+        @user = current_user
+        @upcoming = true
+        
+        render :bookings
       end
     else
       render json: ["That route was not found!"], status: 404

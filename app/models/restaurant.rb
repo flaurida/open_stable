@@ -57,7 +57,6 @@ class Restaurant < ActiveRecord::Base
     "Far from Water",
     "No Blood Magic",
     "Free Braiding",
-    "Good for Ceremonies",
     "Near Vaes Dothrak"
   ]
 

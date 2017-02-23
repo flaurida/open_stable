@@ -14,11 +14,10 @@ const CategoriesReducer = (oldState = defaultState, action) => {
     case ADD_SINGLE_CATEGORY:
       newState = Object.assign({}, oldState);
       newState[action.category] = true;
-      debugger
       return newState;
     case REMOVE_SINGLE_CATEGORY:
       newState = Object.assign({}, oldState);
-      newState[action.category] = false;
+      delete newState[action.category];
       return newState;
     case REMOVE_ALL_CATEGORIES:
       return defaultState;

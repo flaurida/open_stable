@@ -9,7 +9,7 @@ class ReviewsIndexItem extends React.Component {
     } else {
       return (
         <h3 className="review-name">
-          <Link to={ `/restaurants/${this.props.review.restaurant_id}` } className="reviews-link">
+          <Link to={ `/restaurants/${this.props.review.restaurant_id}` } className="reviews-links">
             { this.props.review.restaurant_name}
           </Link>
         </h3>

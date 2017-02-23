@@ -18,7 +18,7 @@ const BookingsReducer = (oldState = defaultState, action) => {
     case RECEIVE_ALL_BOOKINGS:
       return action.bookings;
     case RECEIVE_SINGLE_USER:
-    if (action.user.restaurants) {
+    if (action.user.bookings) {
       return action.user.bookings;
     } else {
       return {};

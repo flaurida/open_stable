@@ -13,7 +13,7 @@ class UserRestaurants extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.query !== this.props.location.query) {
+    if (nextProps.location.query.restaurants !== this.props.location.query.restaurants) {
       this.props.requestCurrentUser(nextProps.location.query);
     }
   }
