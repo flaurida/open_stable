@@ -13,10 +13,118 @@
   }
 }
 
+.splash-page-container {
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+.splash-video {
+  width: 100%;
+  position: relative;
+  z-index: -1;
+}
+
+
+.splash-links-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 20px auto 50px;
+}
+
+.splash-links {
+  width: 33.33%;
+  height: 250px;
+  background-size: cover;
+  position: relative;
+
+  a {
+    width: 100%;
+    height: 100%;
+
+    & p {
+      color: rgba(255,255,255,0.5);
+      font-size: 50px;
+      width: 100%;
+      position: absolute;
+      top: 5%;
+      text-align: center;
+      z-index: 1;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+      transition: color 0.5s;
+    }
+
+    &:hover {
+      p {
+        color: rgba(255,255,255,1);
+      }
+
+      img {
+        filter: grayscale(0%);
+      }
+    }
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    filter: grayscale(70%);
+    transition: filter 0.5s;
+  }
+}
+
+// .new-york {
+//   background: url("https://s3.amazonaws.com/openstable-pro/seed/new-york.jpg");
+//
+//   &:hover {
+//     opacity: 50%;
+//   }
+// }
+
+// .san-francisco {
+//   background: url("https://s3.amazonaws.com/openstable-pro/seed/san-francisco.jpg");
+// }
+//
+// .seattle {
+//   background: url("https://s3.amazonaws.com/openstable-pro/seed/seattle.jpg");
+// }
+//
+// .las-vegas {
+//   background: url("https://s3.amazonaws.com/openstable-pro/seed/las-vegas.jpg");
+// }
+//
+// .philadelphia {
+//   background: url("https://s3.amazonaws.com/openstable-pro/seed/philadelphia.jpg");
+// }
+//
+// .orlando {
+//   background: url("https://s3.amazonaws.com/openstable-pro/seed/orlando.jpg");
+// }
+
+@media screen and (max-width: $break-point-two) {
+  .splash-links {
+    width: 50%;
+    a > p {
+      font-size: 30px;
+    }
+  }
+}
+
 @media screen and (max-width: $break-point) {
   .splash-container {
     img, h1 {
       display: none;
     }
+  }
+
+  .splash-links-container {
+    width: 90%;
+  }
+
+  .splash-links {
+    width: 100%;
   }
 }

@@ -19,9 +19,8 @@ class SplashVideo extends React.Component {
     };
 
     return (
-      <YouTube
-        videoId="3XVHyhLB8Hg"
-        opts={ opts } />
+      <video className="splash-video" src="https://s3.amazonaws.com/openstable-pro/seed/dothraki-video.mp4"
+        muted autoPlay loop />
     );
   }
 }

@@ -59,7 +59,7 @@ class RestaurantQuery extends React.Component {
   render() {
     if (this.props.dropdown !== "bookingQuery") return null;
 
-    if (this.props.queryData.restaurants.length === 0 && this.props.queryData.restaurants.length === 0) {
+    if (this.props.queryData.restaurants.length === 0 && this.props.queryData.cities.length === 0) {
       return (
         <ul className="query-results-section" onClick={ e => e.stopPropagation() }>
           <li>No results found :(</li>

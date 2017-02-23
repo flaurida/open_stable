@@ -2,14 +2,21 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const cityLinksItems = () => {
-  return window.CITIES.map((city, i) => (
-    <li key={i}><Link to={{ pathname: "/restaurants", query: { city: city }}}>{ city }</Link></li>
-  ));
+  return window.CITIES.map((city, i) => {
+    const cityClass = city.toLowerCase().split(" ").join("-");
+
+    return (
+      <li className="splash-links" key={i}><Link to={{ pathname: "/restaurants", query: { city: city }}}>
+        <img src={ `https://s3.amazonaws.com/openstable-pro/seed/${cityClass}.jpg` } alt={ city } />
+        <p className="splash-city-name">{ city }</p>
+      </Link></li>
+    )
+  });
 };
 
 export const SplashCityLinks = () => {
   return (
-    <ul>
+    <ul className="splash-links-container">
       { cityLinksItems() }
     </ul>
   );

@@ -12,7 +12,7 @@ class SplashPage extends React.Component {
           <RestaurantSearchContainer title="Find a reservation for your entire horde" />
         </div>
         <SplashVideo />
-
+        <h1>Featured Areas</h1>
         <SplashCityLinks />
       </div>
     );
