@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    clearModal: () => dispatch(clearModal())
+  clearModal: () => dispatch(clearModal())
 });
 
 export default connect(

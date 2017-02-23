@@ -26,6 +26,7 @@ const Root = ({ store }) => {
           <Route path="/restaurants/:restaurantId/edit" component={ RestaurantFormContainer } />
           <Route path="/restaurants/:restaurantId" component={ RestaurantDetailContainer } />
           <Route path="/profile" component={ UserProfileContainer }>
+            <IndexRoute component={ UserBookingsContainer } />
             <Route path="/profile/bookings" component={ UserBookingsContainer } />
             <Route path="/profile/restaurants" component={ UserRestaurantsContainer } />
             <Route path="/profile/reviews" component={ UserReviewsContainer } />

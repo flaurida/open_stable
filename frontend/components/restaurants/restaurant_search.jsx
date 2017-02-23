@@ -74,6 +74,7 @@ class RestaurantSearch extends React.Component {
         this.setState({ queryData: null });
         this.props.clearQueryData();
       } else {
+        this.props.receiveDropdown("bookingQuery");
         this.props.queryRestaurants(this.state);
       }
     });
@@ -90,8 +91,8 @@ class RestaurantSearch extends React.Component {
   }
 
   restaurantQuery() {
-    if (!this.state.queryData) {
-      return <RestaurantQuery setQueryData={ this.setQueryData }/>;
+    if (this.state.query !== "") {
+      return <RestaurantQuery setQueryData={ this.setQueryData } />;
     }
 
     return null;

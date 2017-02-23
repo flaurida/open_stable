@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 const mapStateToProps = state => ({
-  queryData: state.queryData
+  queryData: state.queryData,
+  dropdown: state.dropdown
 });
 
 class RestaurantQuery extends React.Component {
@@ -56,10 +57,18 @@ class RestaurantQuery extends React.Component {
   }
 
   render() {
-    if (this.props.queryData.restaurants.length === 0 && this.props.queryData.restaurants.length === 0) return null;
+    if (this.props.dropdown !== "bookingQuery") return null;
+
+    if (this.props.queryData.restaurants.length === 0 && this.props.queryData.restaurants.length === 0) {
+      return (
+        <ul className="query-results-section" onClick={ e => e.stopPropagation() }>
+          <li>No results found :(</li>
+        </ul>
+      );
+    }
 
     return (
-      <ul className="query-results">
+      <ul className="query-results" onClick={ e => e.stopPropagation() }>
         { this.cityList() }
         { this.restaurantList() }
       </ul>

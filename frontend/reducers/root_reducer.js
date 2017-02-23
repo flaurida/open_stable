@@ -3,6 +3,7 @@ import session from './session_reducer';
 import errors from './errors_reducer';
 import notices from './notices_reducer';
 import modal from './modal_reducer';
+import dropdown from './dropdown_reducer';
 import restaurants from './restaurants_reducer';
 import restaurantDetail from './restaurant_detail_reducer';
 import userDetail from './user_detail_reducer';
@@ -21,6 +22,7 @@ export default combineReducers({
   errors,
   notices,
   modal,
+  dropdown,
   restaurants,
   restaurantDetail,
   userDetail,
