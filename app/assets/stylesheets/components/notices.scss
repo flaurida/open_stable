@@ -1,0 +1,19 @@
+.notices {
+  width: 100%;
+  background: $notice;
+  height: 40px;
+  font-size: 24px;
+  padding: 5px;
+  padding-left: 20px;
+  position: absolute;
+  top: 60px;
+  animation: fade 3s;
+  opacity: 0;
+  z-index: 2;
+}
+
+@keyframes fade {
+  0% { opacity: 1 }
+  50% { opacity: 1 }
+  100% { opacity: 0 }
+}

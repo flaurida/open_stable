@@ -17,8 +17,8 @@ const deletedBooking = booking => (
 
 export const createBooking = booking => dispatch => {
   return BookingApiUtil.createBooking(booking).then(newBooking => {
-    dispatch(receiveSingleBooking(booking));
-    dispatch(receiveNotices(newBookingMessage(booking)));
+    dispatch(receiveSingleBooking(newBooking));
+    dispatch(receiveNotices(newBookingMessage(newBooking)));
     dispatch(clearSearchData());
     dispatch(clearSearchErrors());
   }, err => {
@@ -28,8 +28,8 @@ export const createBooking = booking => dispatch => {
 
 export const deleteBooking = booking => dispatch => {
   return BookingApiUtil.deleteBooking(booking.id).then(deletedBooking => {
-    dispatch(removeBooking(booking));
-    dispatch(receiveNotices(deletedBookingMessage(booking)));
+    dispatch(removeBooking(deletedBooking));
+    dispatch(receiveNotices(deletedBookingMessage(deletedBooking)));
   });
 };
 
