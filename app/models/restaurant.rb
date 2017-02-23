@@ -270,9 +270,12 @@ class Restaurant < ActiveRecord::Base
       pretty_time: "blank"
     }
 
+    earliest_time = proposed_times.first
     proposed_times.each do |time|
 
-      if time[:start_time] > proposed_time && proposed_times_with_blanks.count < 2
+      if proposed_time > earliest_time[:start_time] &&
+        time[:start_time] > proposed_time &&
+        proposed_times_with_blanks.count < 2
         (2 - proposed_times_with_blanks.count).times do
           proposed_times_with_blanks << blank_time
         end

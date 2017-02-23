@@ -4,6 +4,7 @@ import { NumGuestsSelect } from './restaurant_helper';
 import { SingleHoursSelect } from './hours_select';
 import RestaurantDetailSearch from './restaurant_detail_search';
 import RestaurantQuery from './restaurant_query';
+import Errors from '../errors/errors';
 
 class RestaurantSearch extends React.Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class RestaurantSearch extends React.Component {
       time: "7:00 pm",
       query: "",
       queryData: null,
+      city: "",
       restaurant_id: this.props.params.restaurantId,
     };
 
@@ -74,8 +76,11 @@ class RestaurantSearch extends React.Component {
 
   setQueryData(queryData) {
     return e => {
-      this.setState({ queryData, query: queryData.name }, () => {
-      });
+      if (queryData.type === "city") {
+        this.setState({ city: queryData.name, queryData, query: queryData.name });
+      } else {
+        this.setState({ queryData, query: queryData.name, restaurant_id: queryData.id, city: "" });
+      }
     };
   }
 
@@ -111,13 +116,19 @@ class RestaurantSearch extends React.Component {
         errors={ this.props.errors }/>;
     }
 
-    return null;
+    return <Errors errors={ this.props.errors } />;
   }
 
   searchLink() {
     const { num_seats, date, time } = this.state;
 
-    if (!this.state.queryData) {
+    if (this.state.city) {
+      return (
+        <Link to={{ pathname: "/restaurants", query: { type: "search", num_seats, date, time, city: this.state.city }}}>
+          Find a Stable
+        </Link>
+      );
+    } else if (!this.state.queryData) {
       const restaurant_id = this.props.params.restaurantId;
 
       return (
@@ -125,16 +136,10 @@ class RestaurantSearch extends React.Component {
           Find a Stable
         </Link>
       );
-    } else if (this.state.queryData.type === "restaurant") {
-      const restaurant_id = this.state.queryData.id;
-      return (
-        <Link to={{ pathname: `/restaurants/${this.state.queryData.id}`, query: { num_seats, date, time, restaurant_id, type: "search" }}}>
-          Find a Stable
-        </Link>
-      );
     } else {
+      const restaurant_id = this.state.restaurant_id;
       return (
-        <Link to={{ pathname: "/restaurants", query: { city: this.state.queryData.name, type: "search", num_seats, date, time }}}>
+        <Link to={{ pathname: `/restaurants/${this.state.restaurant_id}`, query: { num_seats, date, time, restaurant_id, type: "search" }}}>
           Find a Stable
         </Link>
       );

@@ -1,6 +1,7 @@
 class Api::RestaurantsController < ApplicationController
   before_action :only_owner_can_edit_or_delete, only: [:update, :destroy]
-  before_action :search_start_time_not_in_past, :cannot_have_overlapping_bookings, only: [:search]
+  before_action :must_enter_date_and_time, :search_start_time_not_in_past,
+    :cannot_have_overlapping_bookings, only: [:search]
 
   def index
     @restaurants = Restaurant.includes(:favorites, :reviews)
@@ -29,12 +30,18 @@ class Api::RestaurantsController < ApplicationController
 
   def find_by_name
     if params[:query]
-
       queryString = "%#{params[:query]}%"
-      @restaurants = Restaurant.where("name ILIKE ?", queryString)
-      @cities = Restaurant::CITIES.select { |city| city[/.*#{params[:query]}.*/i] }
 
-      render :query
+      if !params[:city].blank?
+        @restaurants = Restaurant.where("name ILIKE ?", queryString).where(city: params[:city])
+
+        render :query
+      else
+        @restaurants = Restaurant.where("name ILIKE ?", queryString)
+        @cities = Restaurant::CITIES.select { |city| city[/.*#{params[:query]}.*/i] }
+
+        render :query
+      end
     else
       render json: {}
     end
@@ -101,15 +108,13 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def search_start_time_not_in_past
-    return unless params[:date] && params[:time]
-
     if DateTime.parse("#{params[:date]} #{params[:time]}}") < DateTime.now.change(offset: "+0000")
       render json: ["The time you requested is in the past!"], status: 422
     end
   end
 
   def cannot_have_overlapping_bookings
-    return unless logged_in? && params[:date] && params[:time]
+    return unless logged_in?
     proposed_time = DateTime.parse("#{params[:date]} #{params[:time]}}")
 
     existing_bookings = Booking.includes(table: [:restaurant])
@@ -118,6 +123,12 @@ class Api::RestaurantsController < ApplicationController
 
     unless existing_bookings.empty?
       render json: ["You already have a reservation at #{existing_bookings.first.table.restaurant.name} on #{existing_bookings.first.formatted_time}"], status: 422
+    end
+  end
+
+  def must_enter_date_and_time
+    unless params[:date] && params[:time]
+      render json: ["Please enter both a time and a date to search"], status: 422
     end
   end
 end
