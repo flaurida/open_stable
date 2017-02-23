@@ -2,6 +2,7 @@ import React from 'react';
 import RestaurantIndexItem from './restaurant_index_item';
 import SearchIndexItem from './search_index_item';
 import RestaurantSearchContainer from './restaurant_search_container';
+import CategorySelectContainer from '../categories/category_select_container';
 import { Link } from 'react-router';
 
 class RestaurantIndex extends React.Component {
@@ -42,6 +43,8 @@ class RestaurantIndex extends React.Component {
           <img src={ window.images.splashPhoto } alt="Dothraki"/>
           <RestaurantSearchContainer title="Make a reservation" splash= { true }/>
         </div>
+
+        <CategorySelectContainer />
 
         <div className="restaurant-index">
           <ul>

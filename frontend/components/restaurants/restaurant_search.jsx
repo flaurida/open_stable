@@ -27,7 +27,7 @@ class RestaurantSearch extends React.Component {
   }
 
   componentWillMount() {
-    if (Object.keys(this.props.location.query).length !== 0) {
+    if (this.props.location.query.type === "search" && Object.keys(this.props.location.query).length !== 0) {
       this.props.searchRestaurants(this.props.location.query);
     }
   }

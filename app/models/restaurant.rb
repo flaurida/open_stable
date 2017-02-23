@@ -328,7 +328,7 @@ class Restaurant < ActiveRecord::Base
   def review_preview
     return nil if reviews.empty?
     last_review = reviews.last.body
-    last_review.length > 300 ? "#{last_review[0...300]}..." : last_review
+    last_review.length > 300 ? "#{last_review[0...150]}..." : last_review
   end
 
   def average_rating(category)

@@ -13,6 +13,7 @@ import queryData from './query_data_reducer';
 import reviews from './reviews_reducer';
 import bookings from './bookings_reducer';
 import photos from './photos_reducer';
+import categories from './categories_reducer';
 
 export default combineReducers({
   session,
@@ -28,5 +29,6 @@ export default combineReducers({
   queryData,
   reviews,
   bookings,
-  photos
+  photos,
+  categories
 });
