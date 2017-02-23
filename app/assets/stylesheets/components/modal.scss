@@ -20,6 +20,34 @@
   height: 75%;
 }
 
+.modal-center-photo {
+  max-width: 600px;
+  margin: 20px auto;
+  width: 90%;
+}
+
+.modal-center-photo-container {
+  button {
+    i {
+      color: $white;
+      font-size: 36px;
+      padding: 5px;
+      transition: color 0.5s;
+
+      &:hover {
+        color: $red;
+      }
+    }
+  }
+}
+
+.modal-center-photo-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px auto;
+  width: 30%;
+}
+
 .modal-center-newReview, .modal-center-editReview {
   background: $white;
   margin: 20px auto;
@@ -33,5 +61,9 @@
     max-width: none;
     height: 100%;
     margin: 0 auto;
+  }
+
+  .modal-center-photo-buttons {
+    width: 100%;
   }
 }

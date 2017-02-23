@@ -19,7 +19,6 @@ class RestaurantPhotoForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData();
-
     if (this.state.imageFile) {
       formData.append("photo[image]", this.state.imageFile);
     }

@@ -1,8 +1,13 @@
 .restaurant-photos-container {
   form {
     border: none;
+
+    label.img-upload {
+      width: 100%;
+    }
   }
 }
+
 
 .restaurant-photos {
   display: flex;
@@ -13,6 +18,10 @@ img.restaurant-detail-photo {
   width: calc(20% - 10px);
   height: 100px;
   margin: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @media screen and (max-width: $break-point) {

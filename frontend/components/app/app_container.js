@@ -4,6 +4,7 @@ import App from './app';
 import SessionFormContainer from '../session/session_form_container';
 import RestaurantMapContainer from '../restaurants/restaurant_map_container';
 import ReviewFormContainer from '../reviews/review_form_container';
+import RestaurantPhotoDetailContainer from '../restaurants/restaurant_photo_detail_container';
 
 const SignupForm = props => {
   return <SessionFormContainer { ...props } formType="signup" />;
@@ -26,7 +27,8 @@ const modals = {
   signup: <SignupForm />,
   map: <RestaurantMapContainer />,
   newReview: <NewReviewForm />,
-  editReview: <EditReviewForm />
+  editReview: <EditReviewForm />,
+  photo: <RestaurantPhotoDetailContainer />
 };
 
 const mapStateToProps = state => ({

@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { login, signup, clearSessionErrors } from '../../actions/session_actions';
 import { receiveModal, clearModal } from '../../actions/modal_actions';
 import SessionForm from './session_form';
