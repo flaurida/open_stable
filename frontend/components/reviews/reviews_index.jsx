@@ -1,9 +1,10 @@
 import React from 'react';
 import ReviewsIndexItem from './reviews_index_item';
+import { ReviewStars } from './reviews_helper';
 
 class ReviewsIndex extends React.Component {
   reviewIndexItems() {
-    if (!Object.keys(this.props.reviews).length) {
+    if (Object.keys(this.props.reviews).length <= 1) {
       return (
         <div>
           <p>{ this.props.restaurant.name } has not been reviewed yet.
@@ -16,6 +17,36 @@ class ReviewsIndex extends React.Component {
       if (!review || typeof review !== "object") return null;
       return <ReviewsIndexItem review={ review } key={review.id} />;
     });
+  }
+
+  reviewSummary() {
+    if (Object.keys(this.props.reviews).length <= 1) return null;
+    const { restaurant } = this.props;
+
+    return (
+      <div className="review-summary">
+        <div className="review-summary-overall">
+          <h1>{ restaurant.overall_rating }</h1>
+          <div>
+            <h3>Overall Rating</h3>
+            <ReviewStars numStars={ restaurant.overall_rating } />
+          </div>
+        </div>
+
+        <ul className="review-summary-detail">
+          <li><p><span>Food</span>{ restaurant.food_rating }</p></li>
+          <li><p><span>Service</span>{ restaurant.service_rating }</p></li>
+          <li><p><span>Ambience</span>{ restaurant.ambience_rating }</p></li>
+          <li><p><span>Value</span>{ restaurant.value_rating }</p></li>
+          <li><p><span>Noise</span>{ restaurant.noise_rating }</p></li>
+        </ul>
+
+        <p className="review-recommend">
+          <i className="fa fa-thumbs-up" aria-hidden="true"></i>
+          { restaurant.recommended_score }% would recommend to another Khaleesi
+        </p>
+      </div>
+    );
   }
 
   currentUserReview() {
@@ -38,9 +69,10 @@ class ReviewsIndex extends React.Component {
       () => this.props.receiveModal("newReview");
 
     return (
-      <section>
+      <section id="reviews">
         <div className="reviews-header">
           <h2>{ this.props.restaurant.name } Ratings and Reviews</h2>
+          { this.reviewSummary() }
           <button onClick={ reviewFunction }>{ reviewMessage }</button>
           { this.deleteButton() }
         </div>

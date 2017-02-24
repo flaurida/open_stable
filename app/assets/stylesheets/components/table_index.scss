@@ -29,24 +29,21 @@
 .table-index-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 90%;
   margin: 5px auto;
   height: 60px;
 
-
   h1 {
     font-size: 20px;
-    width: 30%;
     max-width: 200px;
   }
 
   p {
-    width: 30%;
     font-size: 16px;
   }
 
   .table-index-links {
-    width: 20%;
     display: flex;
     justify-content: flex-end;
     font-size: 16px;
@@ -79,6 +76,8 @@
     width: 25%;
     margin: 0;
     font-size: 16px;
+    border-radius: 0;
+    appearance: none;
   }
 
   .table-form-submit {

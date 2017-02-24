@@ -1,4 +1,4 @@
-import { RECEIVE_SINGLE_REVIEW, REMOVE_REVIEW } from '../actions/review_actions';
+import { RECEIVE_SINGLE_REVIEW, REMOVE_REVIEW, UPDATE_SINGLE_REVIEW } from '../actions/review_actions';
 import { RECEIVE_SINGLE_RESTAURANT } from '../actions/restaurant_actions';
 import { RECEIVE_SINGLE_USER } from '../actions/user_actions';
 
@@ -12,6 +12,7 @@ const ReviewsReducer = (oldState = defaultState, action) => {
     case RECEIVE_SINGLE_RESTAURANT:
       return action.restaurant.reviews;
     case RECEIVE_SINGLE_REVIEW:
+    case UPDATE_SINGLE_REVIEW:
       newState = Object.assign({}, oldState);
       newState[action.review.id] = action.review;
       newState.current_user_review = action.review.id;

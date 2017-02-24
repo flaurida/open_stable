@@ -49,12 +49,12 @@ export const ReviewStarsInput = ({ numStars = 0, field, handleChange }) => {
   );
 };
 
-const noiseLabels = ["quiet", "modest", "moderate", "loud", "screaming"];
+export const noiseRatings = ["quiet", "modest", "moderate", "loud", "bumpin"];
 
 const noiseOption = (value, type, handleChange) => {
   return (
     <div key={ `${value}-noise` }>
-      <label htmlFor={ `${value}-noise` } className={ `noise-${type}` }>{ noiseLabels[value - 1] }</label>
+      <label htmlFor={ `${value}-noise` } className={ `noise-${type}` }>{ noiseRatings[value - 1] }</label>
       <input type="radio" id={ `${value}-noise` } key={ `${value}-noise` }
         value={ value } className="hidden" onChange={ handleChange("noise_rating") }/>
     </div>

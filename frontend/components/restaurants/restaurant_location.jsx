@@ -6,7 +6,7 @@ class RestaurantLocation extends React.Component {
     if (!this.props.restaurant.latitude) return null;
 
     return (
-      <section className="restaurant-location">
+      <section className="restaurant-location" id="location">
         <RestaurantMapContainer />
         <div className="restaurant-address">
           <p>{ this.props.restaurant.address }</p>

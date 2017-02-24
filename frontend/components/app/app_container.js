@@ -27,10 +27,14 @@ const RestaurantPhotoDetail = props => {
   return <RestaurantPhotoDetailContainer { ...props } />;
 };
 
+const RestaurantMap = props => {
+  return <RestaurantMapContainer { ...props } />;
+};
+
 const modals = {
   login: props => LoginForm(props),
   signup: props => SignupForm(props),
-  map: props => RestaurantMapContainer(props),
+  map: props => RestaurantMap(props),
   newReview: props => NewReviewForm(props),
   editReview: props => EditReviewForm(props),
   photo: props => RestaurantPhotoDetail(props)

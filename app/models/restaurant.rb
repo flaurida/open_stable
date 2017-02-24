@@ -35,6 +35,14 @@ class Restaurant < ActiveRecord::Base
     "$50 and over" => 4
   }
 
+  NOISE_RATINGS = {
+    1 => "quiet",
+    2 => "modest",
+    3 => "moderate",
+    4 => "loud",
+    5 => "bumpin"
+  }
+
   US_STATES = %w(Alaska Alabama Arkansas Arizona California Colorado Connecticut District\ of\ Columbia Delaware Florida Georgia Guam Hawaii Iowa Idaho Illinois Indiana Kansas Kentucky Louisiana Massachusetts Maryland Maine Michigan Minnesota Missouri Mississippi Montana North\ Carolina North\ Dakota Nebraska New\ Hampshire New\ Jersey New\ Mexico Nevada New\ York Ohio Oklahoma Oregon Pennsylvania Puerto\ Rico Rhode\ Island South\ Carolina South\ Dakota Tennessee Texas Utah Virginia Virgin\ Islands Vermont Washington Wisconsin West\ Virginia Wyoming)
 
   TIMES = %w(12:00\ am 12:30\ am 1:00\ am 1:30\ am 2:00\ am 2:30\ am 3:00\ am 3:30\ am 4:00\ am
@@ -318,6 +326,26 @@ class Restaurant < ActiveRecord::Base
     average_rating(:overall_rating)
   end
 
+  def food_rating
+    average_rating(:food_rating)
+  end
+
+  def service_rating
+    average_rating(:service_rating)
+  end
+
+  def ambience_rating
+    average_rating(:ambience_rating)
+  end
+
+  def value_rating
+    average_rating(:value_rating)
+  end
+
+  def noise_rating
+    NOISE_RATINGS[average_rating(:noise_rating).to_f.round]
+  end
+
   def num_reviews
     reviews.count
   end
@@ -335,7 +363,7 @@ class Restaurant < ActiveRecord::Base
 
   def average_rating(category)
     return nil if reviews.empty?
-    reviews.sum(category) / reviews.count
+    '%.1f' % [reviews.sum(category) / (1.0 * reviews.count)]
   end
 
   def image_url

@@ -58,7 +58,7 @@ class RestaurantDetail extends React.Component {
             <RestaurantSearchContainer searchType="single" title="Make a Reservation"/>
             <RestaurantLocationContainer restaurant={ restaurant } />
 
-            <section className="restaurant-description">
+            <section className="restaurant-description" id="about">
               <h2>About { restaurant.name }</h2>
               <p>{ restaurant.description }</p>
 

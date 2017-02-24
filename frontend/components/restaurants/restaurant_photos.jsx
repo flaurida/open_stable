@@ -27,7 +27,7 @@ class RestaurantPhotos extends React.Component {
     const { restaurant } = this.props;
 
     return (
-      <section className="restaurant-photos-container">
+      <section className="restaurant-photos-container" id="photos">
         <h2>{ restaurant.name } Photos</h2>
         <div className="restaurant-photos">{ this.photoIndexItems() }</div>
         <RestaurantPhotoFormContainer restaurantId={ restaurant.id } />

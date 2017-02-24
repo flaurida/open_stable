@@ -19,7 +19,6 @@ class ReviewsIndexItem extends React.Component {
 
   editAndDeleteButtons() {
     if (this.props.type === "currentUserReviews") {
-      debugger
       return (
         <div>
           <button className="reviews-links" onClick={ () => this.props.receiveModal("editReview", { reviewId: this.props.review.id }) }>Edit</button>
@@ -33,9 +32,10 @@ class ReviewsIndexItem extends React.Component {
 
   render () {
     const { review } = this.props;
+    const className = this.props.type === "currentUserReviews" ? "reviews-index-item reviews-current-user" : "reviews-index-item";
 
     return (
-      <div className="reviews-index-item">
+      <div className={ className }>
         <div className="review-content">
           <div className="review-header">
             <ReviewStars numStars={ review.overall_rating } />

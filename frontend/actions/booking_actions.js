@@ -11,7 +11,7 @@ const newBookingMessage = booking => (
   `You're all set for ${booking.num_seats} horses at ${booking.formatted_time}!`
 );
 
-const deletedBooking = booking => (
+const deletedBookingMessage = booking => (
   `Your reservation for ${booking.num_seats} horses at ${booking.formatted_time} has been cancelled`
 );
 

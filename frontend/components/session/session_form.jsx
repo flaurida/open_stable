@@ -16,6 +16,12 @@ class SessionForm extends React.Component {
     this.props.clearSessionErrors();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.formType !== nextProps.formType) {
+      this.props.clearSessionErrors();
+    }
+  }
+
   handleChange(field) {
     return e => this.setState({ [field]: e.currentTarget.value });
   }

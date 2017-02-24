@@ -4,6 +4,7 @@ import { receiveNotices, clearNotices } from './notice_actions';
 import { clearModal } from './modal_actions';
 
 export const RECEIVE_SINGLE_REVIEW = "RECEIVE_SINGLE_REVIEW";
+export const UPDATE_SINGLE_REVIEW = "UPDATE_SINGLE_REVIEW";
 export const REMOVE_REVIEW = "REMOVE_VIEW";
 
 const createReviewMessage = () => (
@@ -30,9 +31,12 @@ export const createReview = (restaurantId, review) => dispatch => {
   });
 };
 
-export const updateReview = (restaurantId, review) => dispatch => {
+export const updateReview = (restaurantId, review) => (dispatch, getState) => {
+  debugger
+  const oldReview = getState().reviews[review.id];
+
   return ReviewApiUtil.updateReview(restaurantId, review).then(updatedReview => {
-    dispatch(receiveSingleReview(updatedReview));
+    dispatch(updateSingleReview(updatedReview, oldReview));
     dispatch(clearModal());
     dispatch(clearReviewErrors());
     dispatch(receiveNotices(updateReviewMessage()));
@@ -43,8 +47,8 @@ export const updateReview = (restaurantId, review) => dispatch => {
 };
 
 export const deleteReview = review => dispatch => {
-  return ReviewApiUtil.deleteReview(review.id).then(() => {
-    dispatch(removeReview(review));
+  return ReviewApiUtil.deleteReview(review.id).then((deletedReview) => {
+    dispatch(removeReview(deletedReview));
     dispatch(clearReviewErrors());
     dispatch(receiveNotices(deleteReviewMessage()));
     return review;
@@ -56,6 +60,12 @@ export const deleteReview = review => dispatch => {
 const receiveSingleReview = review => ({
   type: RECEIVE_SINGLE_REVIEW,
   review
+});
+
+const updateSingleReview = (review, oldReview) => ({
+  type: UPDATE_SINGLE_REVIEW,
+  review,
+  oldReview
 });
 
 const removeReview = review => ({

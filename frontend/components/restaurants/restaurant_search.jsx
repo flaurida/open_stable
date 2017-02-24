@@ -87,6 +87,8 @@ class RestaurantSearch extends React.Component {
       } else {
         this.setState({ queryData, query: queryData.name, restaurant_id: queryData.id, city: "" });
       }
+
+      this.props.clearDropdown();
     };
   }
 
@@ -107,7 +109,7 @@ class RestaurantSearch extends React.Component {
 
     return (
       <div className="query-container">
-        <input type="text" onChange={ this.handleQueryString } value={ this.state.query } placeholder="Restaurant Name" />
+        <input type="text" onChange={ this.handleQueryString } value={ this.state.query } placeholder="Stable or City" />
         { this.restaurantQuery() }
       </div>
     );
@@ -162,7 +164,7 @@ class RestaurantSearch extends React.Component {
     const className = splash ? "search-form-container search-form-splash" : "search-form-container";
 
     return (
-      <section className={ className }>
+      <section className={ className } id="search">
         <h2>{ this.props.title }</h2>
         <form className="search-form">
           <NumGuestsSelect handleChange={ this.handleChange("num_seats") } value={ num_seats } />

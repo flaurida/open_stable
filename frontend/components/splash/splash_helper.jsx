@@ -34,7 +34,7 @@ export const CitySelect = ({ handleChange, value }) => {
   return (
     <div className="city-select">
       <i className="fa fa-map-marker" aria-hidden="true"></i>
-      <select value={ value } onChange={ handleChange } className="city-select">
+      <select value={ value } onChange={ handleChange } className="city-select-input">
         <option value="" disabled>Select City</option>
         { citySelectItems() }
       </select>
