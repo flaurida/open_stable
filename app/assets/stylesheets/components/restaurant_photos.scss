@@ -26,6 +26,7 @@ img.restaurant-detail-photo {
 
 @media screen and (max-width: $break-point) {
   img.restaurant-detail-photo {
-    width: 100%;
+    width: calc(50% - 4px);
+    margin: 2px;
   }
 }

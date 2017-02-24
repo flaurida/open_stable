@@ -21,14 +21,6 @@
     border: 1px solid $grey;
     z-index: 2;
 
-    // add transition group for fade out later
-    animation: fade 500ms ease-in;
-
-    @keyframes fade {
-      0% {opacity: 0;}
-      100% {opacity: 1;}
-    }
-
     button, a {
       padding: 10px 0;
 
