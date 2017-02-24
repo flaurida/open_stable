@@ -24,6 +24,8 @@ class RestaurantSearch extends React.Component {
     } else if (nextProps.location.query.type === "search" && JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
       this.props.searchRestaurants(nextProps.location.query).then(() => this.setState({ fetching: false }));
       this.props.clearSearchErrors();
+    } else if (nextProps.location.query.city !== this.state.city) {
+      this.setState({ city: nextProps.location.query.city });
     }
   }
 
@@ -164,7 +166,7 @@ class RestaurantSearch extends React.Component {
     const className = splash ? "search-form-container search-form-splash" : "search-form-container";
 
     return (
-      <section className={ className } id="search">
+      <section className={ className } id="reservation">
         <h2>{ this.props.title }</h2>
         <form className="search-form">
           <NumGuestsSelect handleChange={ this.handleChange("num_seats") } value={ num_seats } />

@@ -156,6 +156,7 @@ class Restaurant < ActiveRecord::Base
   end
 
   def analyze_individual_result(result, proposed_time, num_seats)
+
     return { id => {
             name: name,
             id: id,
@@ -163,7 +164,7 @@ class Restaurant < ActiveRecord::Base
             category: category,
             num_dollar_signs: num_dollar_signs,
             image_url: image_url,
-            closed: true } } if closed?(proposed_time)
+            closed: true } } if closed?(proposed_time) && closed?(proposed_time - 60.minutes)
     return { id => {
             name: name,
             id: id,
@@ -186,8 +187,12 @@ class Restaurant < ActiveRecord::Base
       next if bookings.count >= 2
 
       if bookings.empty?
-        fill_in_all(parsed, table)
-        golden_count = 5
+        if closed?(proposed_time)
+          fill_down_to_all(parsed, table, -60)
+        else
+          fill_in_all(parsed, table)
+          golden_count = 5
+        end
       else
         if bookings.first.start_time <= proposed_time - dining_time.minutes || bookings.first.start_time >= proposed_time + dining_time.minutes
           parsed[0] = table.id
@@ -270,7 +275,6 @@ class Restaurant < ActiveRecord::Base
       delta += 15
     end
 
-
     proposed_times_with_blanks = []
 
     blank_time = {
@@ -281,8 +285,7 @@ class Restaurant < ActiveRecord::Base
     earliest_time = proposed_times.first
     proposed_times.each do |time|
 
-      if proposed_time > earliest_time[:start_time] &&
-        time[:start_time] > proposed_time &&
+      if time[:start_time] >= proposed_time &&
         proposed_times_with_blanks.count < 2
         (2 - proposed_times_with_blanks.count).times do
           proposed_times_with_blanks << blank_time
@@ -291,6 +294,7 @@ class Restaurant < ActiveRecord::Base
 
       proposed_times_with_blanks << time unless closed?(time[:start_time])
     end
+
 
     proposed_times_with_blanks << blank_time until proposed_times_with_blanks.count >= 5
 
@@ -368,6 +372,10 @@ class Restaurant < ActiveRecord::Base
 
   def image_url
     ActionController::Base.helpers.asset_path(self.image.url)
+  end
+
+  def formatted_dining_time
+    dining_time <= 60 ? "#{dining_time / 60} hour" : "#{dining_time / 60} hours"
   end
 
   private

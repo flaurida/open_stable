@@ -1,4 +1,5 @@
 import React from 'react';
+import Scroll from 'react-scroll';
 import RestaurantNav from './restaurant_nav';
 import RestaurantLocationContainer from './restaurant_location_container';
 import RestaurantSearchContainer from './restaurant_search_container';
@@ -66,6 +67,7 @@ class RestaurantDetail extends React.Component {
               <ul>
                 { restaurant.formatted_hours.map((hour, i) => <li key={i}>{ hour }</li>) }
               </ul>
+              <p className="hours-header">Reservations at { restaurant.name } typically last { restaurant.formatted_dining_time }.</p>
             </section>
 
             <RestaurantPhotosContainer restaurant={ restaurant } />

@@ -10,6 +10,7 @@ Restaurant.destroy_all
 Review.destroy_all
 Favorite.destroy_all
 Booking.destroy_all
+Photo.destroy_all
 
 User.create(
   first_name: "Daenerys",
@@ -144,7 +145,8 @@ Restaurant.create(
   owner_id: User.first.id,
   strategy: "normal",
   category: Restaurant::CATEGORIES.sample,
-  dining_time: 60
+  dining_time: 60,
+  image: "https://s3.amazonaws.com/openstable-pro/seed/khal-tommys.png"
 )
 
 Table.create(
@@ -164,14 +166,21 @@ Table.create(
 Booking.create(
   user_id: User.first.id,
   table_id: Table.first.id,
-  start_time: "#{Date.today} 6:30 pm",
+  start_time: "#{Date.today} 6:00 pm",
   num_seats: 3
 )
 
 Booking.create(
   user_id: User.first.id,
   table_id: Table.last.id,
-  start_time: "#{Date.today} 7:30 pm",
+  start_time: "#{Date.today + 1.week} 12:30 pm",
+  num_seats: 3
+)
+
+Booking.create(
+  user_id: User.first.id,
+  table_id: Table.last.id,
+  start_time: "#{Date.today + 1.month} 3:00 pm",
   num_seats: 3
 )
 
@@ -187,7 +196,8 @@ Restaurant.create(
   owner_id: User.first.id,
   strategy: Restaurant::STRATEGIES.sample,
   category: Restaurant::CATEGORIES.sample,
-  dining_time: Restaurant::DINING_TIMES.sample
+  dining_time: Restaurant::DINING_TIMES.sample,
+  image: "https://s3.amazonaws.com/openstable-pro/seed/mother-of-dragons.png"
 )
 
 new_york = [
@@ -241,7 +251,10 @@ new_york = [
   ["6409 8th Ave", 11220]
 ]
 
+profile_pics = (1..26).to_a
+
 new_york.each do |data|
+  profile = profile_pics.sample
   Restaurant.create(
     name: GOTFaker::Character.random_name,
     address: data[0],
@@ -254,7 +267,8 @@ new_york.each do |data|
     owner_id: user_ids.sample,
     strategy: Restaurant::STRATEGIES.sample,
     category: Restaurant::CATEGORIES.sample,
-    dining_time: Restaurant::DINING_TIMES.sample
+    dining_time: Restaurant::DINING_TIMES.sample,
+    image: "https://s3.amazonaws.com/openstable-pro/seed/profile-#{profile}.png"
   )
 end
 
@@ -321,6 +335,8 @@ san_francisco = [
 ]
 
 san_francisco.each do |data|
+  profile = profile_pics.sample
+
   Restaurant.create(
     name: GOTFaker::Character.random_name,
     address: data[0],
@@ -333,7 +349,8 @@ san_francisco.each do |data|
     owner_id: user_ids.sample,
     strategy: Restaurant::STRATEGIES.sample,
     category: Restaurant::CATEGORIES.sample,
-    dining_time: Restaurant::DINING_TIMES.sample
+    dining_time: Restaurant::DINING_TIMES.sample,
+    image: "https://s3.amazonaws.com/openstable-pro/seed/profile-#{profile}.png"
   )
 end
 
@@ -395,6 +412,8 @@ seattle = [
 ]
 
 seattle.each do |data|
+  profile = profile_pics.sample
+
   Restaurant.create(
     name: GOTFaker::Character.random_name,
     address: data[0],
@@ -407,7 +426,8 @@ seattle.each do |data|
     owner_id: user_ids.sample,
     strategy: Restaurant::STRATEGIES.sample,
     category: Restaurant::CATEGORIES.sample,
-    dining_time: Restaurant::DINING_TIMES.sample
+    dining_time: Restaurant::DINING_TIMES.sample,
+    image: "https://s3.amazonaws.com/openstable-pro/seed/profile-#{profile}.png"
   )
 end
 
@@ -467,6 +487,8 @@ las_vegas = [
 ]
 
 las_vegas.each do |data|
+  profile = profile_pics.sample
+
   Restaurant.create(
     name: GOTFaker::Character.random_name,
     address: data[0],
@@ -479,7 +501,8 @@ las_vegas.each do |data|
     owner_id: user_ids.sample,
     strategy: Restaurant::STRATEGIES.sample,
     category: Restaurant::CATEGORIES.sample,
-    dining_time: Restaurant::DINING_TIMES.sample
+    dining_time: Restaurant::DINING_TIMES.sample,
+    image: "https://s3.amazonaws.com/openstable-pro/seed/profile-#{profile}.png"
   )
 end
 
@@ -536,6 +559,8 @@ philadelphia = [
 ]
 
 philadelphia.each do |data|
+  profile = profile_pics.sample
+
   Restaurant.create(
     name: GOTFaker::Character.random_name,
     address: data[0],
@@ -548,7 +573,8 @@ philadelphia.each do |data|
     owner_id: user_ids.sample,
     strategy: Restaurant::STRATEGIES.sample,
     category: Restaurant::CATEGORIES.sample,
-    dining_time: Restaurant::DINING_TIMES.sample
+    dining_time: Restaurant::DINING_TIMES.sample,
+    image: "https://s3.amazonaws.com/openstable-pro/seed/profile-#{profile}.png"
   )
 end
 
@@ -610,6 +636,8 @@ orlando = [
 ]
 
 orlando.each do |data|
+  profile = profile_pics.sample
+
   Restaurant.create(
     name: GOTFaker::Character.random_name,
     address: data[0],
@@ -622,7 +650,8 @@ orlando.each do |data|
     owner_id: user_ids.sample,
     strategy: Restaurant::STRATEGIES.sample,
     category: Restaurant::CATEGORIES.sample,
-    dining_time: Restaurant::DINING_TIMES.sample
+    dining_time: Restaurant::DINING_TIMES.sample,
+    image: "https://s3.amazonaws.com/openstable-pro/seed/profile-#{profile}.png"
   )
 end
 
@@ -647,7 +676,10 @@ scores = (1..5).to_a
 recommend = [true, false]
 
 3000.times do
-  Review.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample,
+  user_id = user_ids.sample
+  next if user_id == User.first.id
+
+  Review.create(user_id: user_id, restaurant_id: restaurant_ids.sample,
   overall_rating: scores.sample, food_rating: scores.sample, ambience_rating: scores.sample,
   value_rating: scores.sample, service_rating: scores.sample, noise_rating: scores.sample, recommended: recommend.sample,
   body: GOTFaker::Quote.bad_ass)
@@ -655,4 +687,18 @@ end
 
 3000.times do
   Favorite.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample)
+end
+
+detail_pics = (1..20).to_a
+
+restaurant_ids.each do |restaurant_id|
+  detail_ids = detail_pics.shuffle.take(10)
+
+  detail_ids.each do |detail_id|
+    Photo.create(
+      image: "https://s3.amazonaws.com/openstable-pro/seed/detail-#{detail_id}.png",
+      user_id: user_ids.sample,
+      restaurant_id: restaurant_id
+    )
+  end
 end
