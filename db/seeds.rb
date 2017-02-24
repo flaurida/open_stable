@@ -45,7 +45,20 @@ users = [
   ["Warrier", "Akho"],
   ["Khal", "Rhalko"],
   ["Khal", "Savo"],
-  ["Khaleesi", "Ornela"]
+  ["Khaleesi", "Ornela"],
+  ["Tyrion", "Lannister"],
+  ["Viserys", "Targaryen"],
+  ["Joffrey", "Baratheon"],
+  ["Margaery", "Tyrell"],
+  ["Cersei", "Lannister"],
+  ["Eddard", "Stark"],
+  ["Lyanna", "Stark"],
+  ["Khal", "Rhaego"],
+  ["Jorah", "Mormont"],
+  ["Barristan", "Selmy"],
+  ["Daario", "Naharis"],
+  ["Missandei", "(that's it)"],
+  ["Grey", "Worm"]
 ]
 
 users.each do |user|
@@ -62,12 +75,12 @@ user_ids = User.all.ids
 
 hours = [
   {
-    monday: ["9:00 am", "5:00 pm"],
-    tuesday: ["9:00 am", "5:00 pm"],
-    wednesday: ["9:00 am", "5:00 pm"],
-    thursday: ["9:00 am", "5:00 pm"],
-    friday: ["9:00 am", "5:00 pm"],
-    saturday: ["12:00 pm", "5:00 pm"],
+    monday: ["9:00 am", "9:00 pm"],
+    tuesday: ["9:00 am", "9:00 pm"],
+    wednesday: ["9:00 am", "9:00 pm"],
+    thursday: ["9:00 am", "9:00 pm"],
+    friday: ["9:00 am", "11:00 pm"],
+    saturday: ["12:00 pm", "9:00 pm"],
     sunday: ["10:00 am", "7:00 pm"]
   },
   {
@@ -105,6 +118,15 @@ hours = [
     friday: ["9:00 am", "1:00 pm", "6:00 pm", "11:30 pm"],
     saturday: [],
     sunday: ["7:00 am", "2:00 pm"]
+  },
+  {
+    monday: ["11:00 am", "10:00 pm"],
+    tuesday: ["8:00 am", "3:00 pm"],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: ["9:00 am", "12:00 am"],
+    sunday: ["9:00 am", "12:00 am"]
   }
 ]
 
@@ -118,7 +140,7 @@ Restaurant.create(
   zip_code: 10001,
   price_range: "$50 and over",
   description: "App Academy is an immersive web development and job placement program in San Francisco and New York City. You only pay us if you find a job as a developer after the program. 98% of our graduates have offers or are working in tech jobs. In 2014, SF graduates received an average salary of $105,000; in 2014, NY graduates received an average salary of $89,000.",
-  hours: hours.sample,
+  hours: hours.first,
   owner_id: User.first.id,
   strategy: "normal",
   category: Restaurant::CATEGORIES.sample,
@@ -139,7 +161,7 @@ Table.create(
   max_seats: 4
 )
 
-booking = Booking.create(
+Booking.create(
   user_id: User.first.id,
   table_id: Table.first.id,
   start_time: "#{Date.today} 6:30 pm",
@@ -606,7 +628,7 @@ end
 
 restaurant_ids = Restaurant.all.ids
 
-600.times do
+1800.times do
   min_seats = (1..20).to_a.sample
   max_seats = min_seats + (0..4).to_a.sample
 
@@ -615,16 +637,22 @@ restaurant_ids = Restaurant.all.ids
   restaurant_id: restaurant_ids.sample)
 end
 
+600.times do
+  Table.create(min_seats: 1, max_seats: 4,
+  name: GOTFaker::Character.random_name,
+  restaurant_id: restaurant_ids.sample)
+end
+
 scores = (1..5).to_a
 recommend = [true, false]
 
-600.times do
+3000.times do
   Review.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample,
   overall_rating: scores.sample, food_rating: scores.sample, ambience_rating: scores.sample,
   value_rating: scores.sample, service_rating: scores.sample, noise_rating: scores.sample, recommended: recommend.sample,
   body: GOTFaker::Quote.bad_ass)
 end
 
-600.times do
+3000.times do
   Favorite.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample)
 end
