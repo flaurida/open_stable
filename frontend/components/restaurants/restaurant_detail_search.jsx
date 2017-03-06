@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookingOptions } from './search_helper';
+import BookingOptions from './search_helper';
 import Errors from '../errors/errors';
 
 class RestaurantDetailSearch extends React.Component {

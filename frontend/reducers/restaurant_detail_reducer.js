@@ -47,7 +47,7 @@ const RestaurantDetailReducer = (oldState = defaultState, action) => {
     case UPDATE_SINGLE_REVIEW:
       newState = merge({}, oldState);
       if (!newState.name) return newState;
-      debugger
+
       newState.overall_rating = editReviewRecalculation(newState, "overall_rating", action.review.overall_rating, action.oldReview.overall_rating);
       newState.food_rating = editReviewRecalculation(newState, "food_rating", action.review.food_rating, action.oldReview.food_rating);
       newState.ambience_rating = editReviewRecalculation(newState, "ambience_rating", action.review.ambience_rating, action.oldReview.ambience_rating);
@@ -59,7 +59,7 @@ const RestaurantDetailReducer = (oldState = defaultState, action) => {
     case REMOVE_REVIEW:
       newState = merge({}, oldState);
       if (!newState.name) return newState;
-      debugger
+
       newState.overall_rating = deleteReviewRecalculation(newState, "overall_rating", action.review.overall_rating);
       newState.food_rating = deleteReviewRecalculation(newState, "food_rating", action.review.food_rating);
       newState.ambience_rating = deleteReviewRecalculation(newState, "ambience_rating", action.review.ambience_rating);
@@ -94,7 +94,7 @@ const addReviewRecalculation = (restaurant, attribute, newScore) => {
 };
 
 const editReviewRecalculation = (restaurant, attribute, newScore, oldScore) => {
-  if (newScore === oldScore) return newScore;
+  if (newScore === oldScore) return restaurant[attribute];
 
   if (attribute === "recommended_score") {
     let total = restaurant[attribute] / 100 * restaurant.num_reviews;

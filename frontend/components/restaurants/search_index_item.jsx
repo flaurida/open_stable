@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { BookingOptions } from './search_helper';
+import BookingOptions from './search_helper';
 import { RestaurantDollarSigns } from './restaurant_helper';
 
 class SearchIndexItem extends React.Component {
@@ -34,15 +34,15 @@ class SearchIndexItem extends React.Component {
 
     return (
       <div className="restaurant-index-item search-index-results">
+        <Link to={ `/restaurants/${searchData.id}` }>
+          <img src={ searchData.image_url } className="img-link" alt="restaurant"/>
+        </Link>
         <div className="search-index-header">
-          <Link to={ `/restaurants/${searchData.id}` }>
-            <img src={ searchData.image_url } className="img-link" alt="restaurant"/>
-          </Link>
-          <h1>{ searchData.name }</h1>
+          <Link to={ `/restaurants/${searchData.id}` }><h1>{ searchData.name }</h1></Link>
           { searchData.category }
           <RestaurantDollarSigns numDollarSigns={ searchData.num_dollar_signs } />
+          { this.searchIndexContent() }
         </div>
-        { this.searchIndexContent() }
       </div>
     );
   }

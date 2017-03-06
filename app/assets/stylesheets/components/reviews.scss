@@ -22,6 +22,14 @@
   margin-bottom: 20px;
 }
 
+.reviews-current-user {
+  background: $white;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid $grey;
+  border-bottom: 2px solid $grey;
+}
+
 .review-stars, .review-stars-input {
   display: flex;
   font-size: 20px;

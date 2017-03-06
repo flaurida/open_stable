@@ -1,9 +1,10 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
-const BookingOption = ({ booking, createBooking }) => {
+const BookingOption = ({ booking, createBooking, router }) => {
   if (booking.table_id) {
     return (
-      <button onClick={ () => createBooking(booking) } className="booking-button">
+      <button onClick={ () => createBooking(booking).then(() => router.push("/profile")) } className="booking-button">
         { booking.pretty_time }
       </button>
     );
@@ -15,9 +16,9 @@ const BookingOption = ({ booking, createBooking }) => {
   }
 };
 
-export const BookingOptions = ({ searchData, createBooking }) => {
+const BookingOptions = ({ searchData, createBooking, router }) => {
   const bookingOptions = searchData.map((booking, i) => (
-    <BookingOption booking={ booking } createBooking={ createBooking } key={i}/>
+    <BookingOption booking={ booking } createBooking={ createBooking } router={ router } key={i}/>
   ));
 
   return (
@@ -26,3 +27,5 @@ export const BookingOptions = ({ searchData, createBooking }) => {
     </div>
   );
 };
+
+export default withRouter(BookingOptions);
