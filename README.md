@@ -1,24 +1,7 @@
-# README
+# OpenStable
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+OpenStable is a restaurant reservation web application with an OpenTable inspired user experience. It was built using a PostgreSQL server, Ruby on Rails backend, and a React.js frontend.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To add...
