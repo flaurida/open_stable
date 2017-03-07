@@ -19,8 +19,8 @@ class UserBookings extends React.Component {
   }
 
   renderIndexItems() {
-    return Object.values(this.props.bookings).map((booking, i) => {
-      return <BookingIndexItem booking={ booking } key={ booking.id } deleteBooking={ this.props.deleteBooking }/>;
+    return Object.keys(this.props.bookings).map((booking, i) => {
+      return <BookingIndexItem booking={ this.props.bookings[booking] } key={ this.props.bookings[booking].id } deleteBooking={ this.props.deleteBooking }/>;
     });
   }
 

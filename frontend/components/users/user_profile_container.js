@@ -1,6 +1,3 @@
-//debugger
-//Laura probably delete this!
-
 import { connect } from 'react-redux';
 import { requestCurrentUser } from '../../actions/user_actions';
 import UserProfile from './user_profile';

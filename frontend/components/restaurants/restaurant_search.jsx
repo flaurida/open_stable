@@ -15,6 +15,7 @@ class RestaurantSearch extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleQueryString = this.handleQueryString.bind(this);
     this.setQueryData = this.setQueryData.bind(this);
+    this.setFetching = this.setFetching.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {

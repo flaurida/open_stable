@@ -32,7 +32,6 @@ export const createReview = (restaurantId, review) => dispatch => {
 };
 
 export const updateReview = (restaurantId, review) => (dispatch, getState) => {
-  debugger
   const oldReview = getState().reviews[review.id];
 
   return ReviewApiUtil.updateReview(restaurantId, review).then(updatedReview => {

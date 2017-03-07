@@ -1,5 +1,4 @@
 import React from 'react';
-import YouTube from 'react-youtube';
 
 class SplashVideo extends React.Component {
   render() {

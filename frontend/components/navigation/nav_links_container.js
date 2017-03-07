@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
-  receiveModal: modal => dispatch(receiveModal(modal)),
+  receiveModal: (modal, props) => dispatch(receiveModal(modal, props)),
   clearModal: () => dispatch(clearModal())
 });
 

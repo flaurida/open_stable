@@ -30,12 +30,12 @@ class UserReviews extends React.Component {
   }
 
   renderIndexItems() {
-    return Object.values(this.props.reviews).map((review, i) => {
-      if (review === null || typeof review !== "object") {
+    return Object.keys(this.props.reviews).map((review, i) => {
+      if (this.props.reviews[review] === null || typeof this.props.reviews[review] !== "object") {
         return null;
       } else {
         return (
-          <ReviewsIndexItem review={ review } key={review.id}
+          <ReviewsIndexItem review={ this.props.reviews[review] } key={this.props.reviews[review].id}
             deleteReview={ this.props.deleteReview }
             updateReview={ this.props.updateReview }
             receiveModal={ this.props.receiveModal }

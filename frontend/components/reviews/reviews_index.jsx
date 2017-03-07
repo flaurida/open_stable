@@ -13,9 +13,9 @@ class ReviewsIndex extends React.Component {
       );
     }
 
-    return Object.values(this.props.reviews).map((review, i) => {
-      if (!review || typeof review !== "object") return null;
-      return <ReviewsIndexItem review={ review } key={review.id} />;
+    return Object.keys(this.props.reviews).map((review, i) => {
+      if (!this.props.reviews[review] || typeof this.props.reviews[review] !== "object") return null;
+      return <ReviewsIndexItem review={ this.props.reviews[review] } key={this.props.reviews[review].id} />;
     });
   }
 

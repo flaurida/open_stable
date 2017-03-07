@@ -16,6 +16,12 @@ class SessionForm extends React.Component {
     this.props.clearSessionErrors();
   }
 
+  componentDidMount() {
+    if (this.props.demo) {
+      document.getElementById("guest-login").click();
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.formType !== nextProps.formType) {
       this.props.clearSessionErrors();

@@ -42,22 +42,22 @@ class TableIndex extends React.Component {
   }
 
   tableIndexItems() {
-    return Object.values(this.props.tables).map((table, i) => {
-      if (this.state.editTableId === table.id) {
-        return <TableFormContainer formType="edit" restaurantId={ this.props.params.restaurantId } table={ table }
+    return Object.keys(this.props.tables).map((table, i) => {
+      if (this.state.editTableId === this.props.tables[table].id) {
+        return <TableFormContainer formType="edit" restaurantId={ this.props.params.restaurantId } table={ this.props.tables[table] }
           updateEditState={ this.updateEditState } key={i}/>;
       } else {
-        return <TableIndexItem table={ table } deleteTable={ this.props.deleteTable } updateEditState={ this.updateEditState } key={i}/>;
+        return <TableIndexItem table={ this.props.tables[table] } deleteTable={ this.props.deleteTable } updateEditState={ this.updateEditState } key={i}/>;
       }
     });
   }
 
   render() {
-    if (Object.values(this.props.tables).length === 0) return null;
+    if (Object.keys(this.props.tables).length === 0) return null;
 
     return (
       <div className="table-index-container">
-        <h1><Link to={ `restaurants/${this.props.params.restaurantId}` }>{ Object.values(this.props.tables)[0].restaurant_name }</Link> Stalls</h1>
+        <h1><Link to={ `restaurants/${this.props.params.restaurantId}` }>{ this.props.tables[Object.keys(this.props.tables)[0]].restaurant_name }</Link> Stalls</h1>
         { this.tableIndexItems() }
 
         <h2>Create Stall</h2>

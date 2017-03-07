@@ -21,14 +21,14 @@ class UserRestaurants extends React.Component {
 
   renderIndexItems() {
     if (this.props.location.query.restaurants === "favorites") {
-      return Object.values(this.props.restaurants).map((restaurant, i) => (
-        <RestaurantIndexItem restaurant={ restaurant } key={i}
+      return Object.keys(this.props.restaurants).map((restaurant, i) => (
+        <RestaurantIndexItem restaurant={ this.props.restaurants[restaurant] } key={i}
           deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser }
           type="favoriteItem" />
       ));
     } else {
-      return Object.values(this.props.restaurants).map((restaurant, i) => (
-        <RestaurantIndexItem restaurant={ restaurant } key={i}
+      return Object.keys(this.props.restaurants).map((restaurant, i) => (
+        <RestaurantIndexItem restaurant={ this.props.restaurants[restaurant] } key={i}
           deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser } />
       ));
     }

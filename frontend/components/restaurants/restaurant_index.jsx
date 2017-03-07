@@ -37,13 +37,13 @@ class RestaurantIndex extends React.Component {
     }
 
     if (this.props.location.query.type === "search") {
-      return Object.values(this.props.searchData).map((searchData, i) => (
-        <SearchIndexItem key={i} searchData={ searchData } createBooking={ this.props.createBooking }/>
+      return Object.keys(this.props.searchData).map((searchData, i) => (
+        <SearchIndexItem key={i} searchData={ this.props.searchData[searchData] } createBooking={ this.props.createBooking }/>
       ));
     }
 
-    return Object.values(this.props.restaurants).map((restaurant, i) => (
-      <RestaurantIndexItem key={i} restaurant={ restaurant }
+    return Object.keys(this.props.restaurants).map((restaurant, i) => (
+      <RestaurantIndexItem key={i} restaurant={ this.props.restaurants[restaurant] }
         deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser }/>
     ));
   }

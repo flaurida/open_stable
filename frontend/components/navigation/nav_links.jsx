@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, withRouter } from 'react-router';
 
 class NavLinks extends React.Component {
-  receiveModal(modalType) {
-    this.props.receiveModal(modalType);
+  receiveModal(modalType, props) {
+    this.props.receiveModal(modalType, props);
     if (this.props.toggleHidden) this.props.toggleHidden();
   }
 
@@ -24,6 +24,10 @@ class NavLinks extends React.Component {
     this.props.router.push("/");
   }
 
+  demoLogIn() {
+    this.receiveModal("login", { demo: true });
+  }
+
   render() {
     if (this.props.currentUser) {
       return (
@@ -42,6 +46,9 @@ class NavLinks extends React.Component {
           </button>
           <button onClick={ () => this.receiveModal("login") } id="signin">
             Sign in
+          </button>
+          <button onClick={ this.demoLogIn.bind(this) } id="guest">
+            Demo
           </button>
         </div>
       );
