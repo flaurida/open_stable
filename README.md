@@ -130,4 +130,5 @@ As mentioned above, the styling of this site was inspired by [OpenTable](https:/
 ### Future Directions
 
 * Improve querying of restaurant review data
+* Better handle invalid search input
 * Points for using the site
