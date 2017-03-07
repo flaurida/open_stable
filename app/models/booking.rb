@@ -12,17 +12,13 @@
 #
 
 class Booking < ActiveRecord::Base
-  validates :user, :table, :date, :start_time, :num_seats, null: false
+  validates :user, :table, :start_time, :num_seats, null: false
   validates :num_seats, inclusion: { in: (1..20) }
   validate :start_time_not_in_past
   # validate :cannot_book_busy_table
 
   belongs_to :table
   belongs_to :user
-
-  # def start_time=(date_time_string)
-  #   write_attribute(:start_time, DateTime.parse(date_time_string))
-  # end
 
   def formatted_time
     start_time.strftime("%A, %b %-d at %-l:%M %P")
