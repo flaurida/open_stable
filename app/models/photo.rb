@@ -15,8 +15,8 @@
 
 class Photo < ActiveRecord::Base
   validates :user, :restaurant, presence: true
-  
-  has_attached_file :image, styles: { medium: "140x140>" }, default_url: "restaurant.jpg"
+
+  has_attached_file :image, styles: { thumb: "140x140#" }, default_url: "restaurant.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   belongs_to :user

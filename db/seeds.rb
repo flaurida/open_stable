@@ -657,7 +657,7 @@ end
 
 restaurant_ids = Restaurant.all.ids
 
-1800.times do
+600.times do
   min_seats = (1..20).to_a.sample
   max_seats = min_seats + (0..4).to_a.sample
 
@@ -675,7 +675,7 @@ end
 scores = (1..5).to_a
 recommend = [true, false]
 
-3000.times do
+2000.times do
   user_id = user_ids.sample
   next if user_id == User.first.id
 
@@ -685,7 +685,7 @@ recommend = [true, false]
   body: GOTFaker::Quote.bad_ass)
 end
 
-3000.times do
+2000.times do
   Favorite.create(user_id: user_ids.sample, restaurant_id: restaurant_ids.sample)
 end
 
