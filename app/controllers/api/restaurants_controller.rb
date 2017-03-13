@@ -4,8 +4,8 @@ class Api::RestaurantsController < ApplicationController
     :cannot_have_overlapping_bookings, only: [:search]
 
   def index
-    @restaurants = Restaurant.includes(:favorites, :reviews)
-
+    # @restaurants = Restaurant.includes(:favorites, :reviews)
+    @restaurants = Restaurant.get_with_reviews
     if params[:city]
       @restaurants = @restaurants.where(city: params[:city])
     end
@@ -58,9 +58,7 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant
-    .includes(:favorites, :photos, reviews: [:user])
-    .find(params[:id])
+    @restaurant = Restaurant.show(params[:id])
 
     if @restaurant
       render :show

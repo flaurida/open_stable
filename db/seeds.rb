@@ -673,7 +673,7 @@ end
 end
 
 scores = (1..5).to_a
-recommend = [true, false]
+recommend = [0, 1]
 
 2000.times do
   user_id = user_ids.sample

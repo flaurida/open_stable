@@ -16,7 +16,7 @@ const mapStateToProps = (state, ownProps) => {
       ambience_rating: null,
       value_rating: null,
       noise_rating: null,
-      recommended: true,
+      recommended: 1,
       body: ""
     };
   }

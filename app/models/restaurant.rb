@@ -127,6 +127,10 @@ class Restaurant < ActiveRecord::Base
     formatted_hours
   end
 
+  def formatted_noise_rating(rating)
+    NOISE_RATINGS[rating.round()]
+  end
+
   def self.restaurant_availability(proposed_time, num_seats, city)
     restaurants = Restaurant.where(city: city)
 
@@ -326,56 +330,52 @@ class Restaurant < ActiveRecord::Base
     true
   end
 
-  def overall_rating
-    average_rating(:overall_rating)
-  end
-
-  def food_rating
-    average_rating(:food_rating)
-  end
-
-  def service_rating
-    average_rating(:service_rating)
-  end
-
-  def ambience_rating
-    average_rating(:ambience_rating)
-  end
-
-  def value_rating
-    average_rating(:value_rating)
-  end
-
-  def noise_rating
-    NOISE_RATINGS[average_rating(:noise_rating).to_f.round]
-  end
-
-  def num_reviews
-    reviews.count
-  end
-
-  def recommended_score
-    return nil if reviews.empty?
-    (reviews.where(recommended: true).count / (1.0 * reviews.count) * 100).round()
-  end
-
   def review_preview
     return nil if reviews.empty?
     last_review = reviews.last.body
     last_review.length > 300 ? "#{last_review[0...150]}..." : last_review
   end
 
-  def average_rating(category)
-    return nil if reviews.empty?
-    '%.1f' % [reviews.sum(category) / (1.0 * reviews.count)]
-  end
-
-  def image_url
-    ActionController::Base.helpers.asset_path(self.image.url)
-  end
+  # def image_url
+  #   ActionController::Base.helpers.asset_path(self.image.url)
+  # end
 
   def formatted_dining_time
     dining_time <= 60 ? "#{dining_time / 60} hour" : "#{dining_time / 60} hours"
+  end
+
+  def self.get_with_reviews
+    self.select(<<-SQL)
+      restaurants.*,
+      AVG(reviews.overall_rating) AS overall_rating,
+      COUNT(reviews.id) AS num_reviews,
+      (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
+      SQL
+      .left_joins(:reviews)
+      .group("restaurants.id")
+      .includes(:reviews, :favorites)
+  end
+
+  def self.show(id)
+    self.aggregate_ratings(id)
+    .includes(:favorites, :photos, reviews: [:user])
+    .find(id)
+  end
+
+  def self.aggregate_ratings(id)
+    self.select(<<-SQL)
+      restaurants.*,
+      ROUND(AVG(reviews.overall_rating), 1) AS overall_rating,
+      ROUND(AVG(reviews.food_rating), 1) AS food_rating,
+      ROUND(AVG(reviews.service_rating), 1) AS service_rating,
+      ROUND(AVG(reviews.ambience_rating), 1) AS ambience_rating,
+      ROUND(AVG(reviews.value_rating), 1) AS value_rating,
+      ROUND(AVG(reviews.noise_rating), 1) AS noise_rating,
+      COUNT(reviews.id) AS num_reviews,
+      (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
+    SQL
+    .left_joins(:reviews)
+    .group("restaurants.id")
   end
 
   private

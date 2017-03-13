@@ -1,9 +1,11 @@
 json.partial! 'short_restaurant', restaurant: @restaurant, user: current_user
 
-json.extract! @restaurant, :hours, :formatted_hours, :strategy, :dining_time, :food_rating, :noise_rating,
+json.extract! @restaurant, :hours, :formatted_hours, :strategy, :dining_time, :food_rating,
 :service_rating, :value_rating, :ambience_rating, :formatted_dining_time
 
 user = current_user
+
+json.noise_rating @restaurant.formatted_noise_rating(@restaurant.noise_rating)
 
 json.reviews({})
 json.reviews do

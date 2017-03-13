@@ -29,7 +29,8 @@ class ReviewForm extends React.Component {
   }
 
   toggleCheckbox(e) {
-    this.setState({ recommended: !this.state.recommended });
+    const newState = this.state.recommended === 0 ? 1 : 0;
+    this.setState({ recommended: newState });
   }
 
   render() {
