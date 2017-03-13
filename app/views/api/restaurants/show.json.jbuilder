@@ -23,5 +23,5 @@ json.photos([])
 json.photos @restaurant.photos do |photo|
   json.extract! photo, :id, :user_id, :restaurant_id
   json.image_url asset_path(photo.image.url)
-  json.thumb_url asset_path(@photo.image.url(:thumb))
+  json.thumb_url asset_path(photo.image.url(:thumb))
 end
