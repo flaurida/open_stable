@@ -43,8 +43,12 @@ class RestaurantIndex extends React.Component {
     }
 
     return Object.keys(this.props.restaurants).map((restaurant, i) => (
-      <RestaurantIndexItem key={i} restaurant={ this.props.restaurants[restaurant] }
-        deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser }/>
+      <RestaurantIndexItem
+        key={i}
+        restaurant={ this.props.restaurants[restaurant] }
+        deleteRestaurant={ this.props.deleteRestaurant }
+        currentUser={ this.props.currentUser }
+      />
     ));
   }
 

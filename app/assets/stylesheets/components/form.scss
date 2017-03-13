@@ -98,10 +98,6 @@ form {
     font-size: 16px;
     transition: background 0.5s;
 
-    // &:last-child {
-    //   margin-bottom: 15px;
-    // }
-
     &:hover {
       background: $red-hover;
     }
@@ -113,6 +109,10 @@ form {
 
   label.img-upload {
     line-height: 50px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   input::-webkit-input-placeholder {

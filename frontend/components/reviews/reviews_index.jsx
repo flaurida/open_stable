@@ -65,8 +65,20 @@ class ReviewsIndex extends React.Component {
   render() {
     const currentUserReview = this.currentUserReview();
     const reviewMessage = currentUserReview ? "Edit Your Review" : "Write Review";
-    const reviewFunction = currentUserReview ? () => this.props.receiveModal("editReview", { reviewId: this.props.reviews.current_user_review }) :
-      () => this.props.receiveModal("newReview");
+
+    let reviewFunction;
+
+    if (!this.props.currentUser) {
+      reviewFunction = () => this.props.receiveModal("login");
+    }
+    else if (currentUserReview) {
+      reviewFunction = () => this.props.receiveModal(
+        "editReview",
+        { reviewId: this.props.reviews.current_user_review }
+      );
+    } else {
+      reviewFunction = () => this.props.receiveModal("newReview");
+    }
 
     return (
       <section id="reviews">
