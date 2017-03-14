@@ -118,15 +118,24 @@ class Restaurant < ActiveRecord::Base
   end
 
   def self.get_with_reviews
-    self.select(<<-SQL)
-      restaurants.*,
-      AVG(reviews.overall_rating) AS overall_rating,
-      COUNT(reviews.id) AS num_reviews,
-      (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
-      SQL
+    self.get_restaurants_with_reviews(self.all)
+  end
+
+  def self.get_restaurants_with_reviews(restaurants)
+    restaurants
+      .select(<<-SQL)
+        restaurants.*,
+        AVG(reviews.overall_rating) AS overall_rating,
+        COUNT(reviews.id) AS num_reviews,
+        (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
+        SQL
       .left_joins(:reviews)
       .group("restaurants.id")
       .includes(:reviews, :favorites)
+  end
+
+  def self.get_favorites_with_reviews(user)
+    self.get_restaurants_with_reviews(user.favorited_restaurants)
   end
 
   def self.show(id)

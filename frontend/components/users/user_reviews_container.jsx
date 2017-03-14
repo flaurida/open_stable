@@ -50,6 +50,14 @@ class UserReviews extends React.Component {
       return <div className="loader">Loading...</div>;
     }
 
+    if (Object.keys(this.props.reviews).length <= 0) {
+      return (
+        <div className="user-profile-item-container">
+          <p>You have not left any reviews yet :(</p>
+        </div>
+      );
+    }
+
     return (
       <div className="user-profile-item-container">
         { this.renderIndexItems() }

@@ -1,1 +1,1 @@
-json.partial! 'show', restaurants: @user.favorited_restaurants, user: @user
+json.partial! 'show', restaurants: @restaurants, user: @user

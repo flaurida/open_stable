@@ -15,11 +15,16 @@ class Api::UsersController < ApplicationController
   def show
     if params[:restaurants]
       if params[:restaurants] == "mine"
-        @user = User.includes(restaurants: [:favorites]).find(current_user.id)
-        render :restaurants if @user
+        @user = current_user
+        @restaurants = Restaurant.get_with_reviews
+          .where(owner_id: current_user.id)
+
+        render :restaurants
       else
-        @user = User.includes(:favorited_restaurants).find(current_user.id)
-        render :favorites if @user
+        @user = current_user
+        @restaurants = Restaurant.get_favorites_with_reviews(@user)
+
+        render :favorites
       end
     elsif params[:reviews]
       @user = User.includes(reviews: [:restaurant]).find(current_user.id)
