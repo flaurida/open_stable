@@ -6,16 +6,26 @@ import { currentUserIsOwner } from './restaurant_helper';
 const Link = Scroll.Link;
 
 class RestaurantNav extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.linkToEdit = this.linkToEdit.bind(this);
+  }
+
   editLink() {
     if (currentUserIsOwner(this.props.currentUser, this.props.restaurant)) {
       return (
-        <li><Link to={ `/restaurants/${this.props.restaurant.id}/edit`}>
+        <li><button onClick={ this.linkToEdit }>
           Edit
-        </Link></li>
+        </button></li>
       );
     } else {
       return null;
     }
+  }
+
+  linkToEdit() {
+    this.props.router.push(`/restaurants/${this.props.restaurant.id}/edit`);
   }
 
   locationLink() {

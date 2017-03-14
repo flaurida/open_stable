@@ -100,14 +100,17 @@
   }
 
   li {
-    padding: 15px 0;
+    padding: 0;
+    margin: 0;
 
-    a {
+    a, button {
+      display: block;
       transition: color 0.5s;
       padding: 15px 15px 15px 0;
 
       &:hover {
         color: $red;
+        cursor: pointer;
       }
     }
   }
@@ -152,10 +155,11 @@
     }
 
     li {
-      text-transform: uppercase;
       margin: 0;
+      padding: 0;
 
-      a {
+      a, button {
+        text-transform: uppercase;
         padding: 15px 0;
         margin-right: 15px;
         border-bottom: 1px solid transparent;
@@ -164,6 +168,7 @@
         &:hover {
           color: $navy;
           border-bottom: 1px solid $navy;
+          cursor: pointer;
         }
       }
     }

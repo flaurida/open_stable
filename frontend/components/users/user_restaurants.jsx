@@ -10,27 +10,44 @@ class UserRestaurants extends React.Component {
   }
 
   componentDidMount() {
-    this.props.requestCurrentUser(this.props.location.query).then(() => this.setState({ fetching: false}));
+    this.props.requestCurrentUser(this.props.location.query).then(() => this.setState({ fetching: false }));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location.query.restaurants !== this.props.location.query.restaurants) {
-      this.props.requestCurrentUser(nextProps.location.query).then(() => this.setState({ fetching: false}));
+      this.setState({ fetching: true });
+      this.props.requestCurrentUser(nextProps.location.query).then(() => this.setState({ fetching: false }));
     }
+  }
+
+  favoriteRestaurants() {
+    if (Object.keys(this.props.restaurants).length <= 0) {
+      return <p>No favorites yet!</p>;
+    }
+
+    return Object.keys(this.props.restaurants).map((restaurant, i) => (
+      <RestaurantIndexItem restaurant={ this.props.restaurants[restaurant] } key={i}
+        deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser }
+        type="favoriteItem" />
+    ));
+  }
+
+  ownedRestaurants() {
+    if (Object.keys(this.props.restaurants).length <= 0) {
+      return <p>You don't own any stables yet!</p>;
+    }
+
+    return Object.keys(this.props.restaurants).map((restaurant, i) => (
+      <RestaurantIndexItem restaurant={ this.props.restaurants[restaurant] } key={i}
+        deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser } />
+    ));
   }
 
   renderIndexItems() {
     if (this.props.location.query.restaurants === "favorites") {
-      return Object.keys(this.props.restaurants).map((restaurant, i) => (
-        <RestaurantIndexItem restaurant={ this.props.restaurants[restaurant] } key={i}
-          deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser }
-          type="favoriteItem" />
-      ));
+      return this.favoriteRestaurants();
     } else {
-      return Object.keys(this.props.restaurants).map((restaurant, i) => (
-        <RestaurantIndexItem restaurant={ this.props.restaurants[restaurant] } key={i}
-          deleteRestaurant={ this.props.deleteRestaurant } currentUser={ this.props.currentUser } />
-      ));
+      return this.ownedRestaurants();
     }
   }
 
