@@ -130,12 +130,12 @@ class Restaurant < ActiveRecord::Base
   end
 
   def self.show(id)
-    self.aggregate_ratings(id)
+    self.aggregate_ratings
     .includes(:favorites, :photos, reviews: [:user])
     .find(id)
   end
 
-  def self.aggregate_ratings(id)
+  def self.aggregate_ratings
     self.select(<<-SQL)
       restaurants.*,
       ROUND(AVG(reviews.overall_rating), 1) AS overall_rating,
@@ -205,7 +205,7 @@ class Restaurant < ActiveRecord::Base
             category: category,
             num_dollar_signs: num_dollar_signs,
             image_url: image_url,
-            closed: true } } if closed?(proposed_time) && closed?(proposed_time - 60.minutes)
+            closed: true } } if closed?(proposed_time) && closed?(proposed_time - 60.minutes) && closed?(proposed_time + 60.minutes)
     return { id => {
             name: name,
             id: id,
@@ -213,7 +213,7 @@ class Restaurant < ActiveRecord::Base
             category: category,
             num_dollar_signs: num_dollar_signs,
             image_url: image_url,
-            booked: true } } if result.empty? || (strategy == "hipster" && [true, false].sample)
+            booked: true }} if result.empty? || (strategy == "hipster" && [true, false].sample)
 
     golden_count = 0
     parsed = {}
@@ -227,13 +227,18 @@ class Restaurant < ActiveRecord::Base
 
       if bookings.empty?
         if closed?(proposed_time)
-          fill_down_to_all(parsed, table, -60)
+          lower_delta = best_lower_delta_when_closed(proposed_time)
+          upper_delta = best_upper_delta_when_closed(proposed_time)
+
+          fill_down_to_all(parsed, table, lower_delta) if lower_delta
+          fill_up_to_all(parsed, table, upper_delta) if upper_delta
         else
           fill_in_all(parsed, table)
           golden_count = 5
         end
       else
-        if bookings.first.start_time <= proposed_time - dining_time.minutes || bookings.first.start_time >= proposed_time + dining_time.minutes
+        if bookings.first.start_time <= proposed_time - dining_time.minutes ||
+            bookings.first.start_time >= proposed_time + dining_time.minutes
           parsed[0] = table.id
         else
           end_time = bookings.first.start_time + dining_time.minutes
@@ -280,7 +285,6 @@ class Restaurant < ActiveRecord::Base
     return { id => { booked: true } } if parsed.empty?
 
     delta = 0
-
     proposed_times = []
 
     until proposed_times.count >= 5 || delta > 60
@@ -307,7 +311,7 @@ class Restaurant < ActiveRecord::Base
             table_id: parsed[-delta],
             num_seats: num_seats,
             start_time: (proposed_time - delta.minutes)
-          })
+          }) unless in_past?(proposed_time + delta.minutes)
         end
       end
 
@@ -365,6 +369,34 @@ class Restaurant < ActiveRecord::Base
     true
   end
 
+  def best_lower_delta_when_closed(proposed_time)
+    delta = -15
+
+    while delta >= -60
+      if !closed?(proposed_time - (dining_time - delta).minutes)
+        return delta
+      end
+
+      delta -= 15
+    end
+
+    return false
+  end
+
+  def best_upper_delta_when_closed(proposed_time)
+    delta = 15
+
+    while delta <= 60
+      if !closed?(proposed_time + delta.minutes)
+        return delta
+      end
+
+      delta += 15
+    end
+
+    return false
+  end
+
   def review_preview
     return nil if reviews.empty?
     last_review = reviews.last.body
@@ -373,6 +405,10 @@ class Restaurant < ActiveRecord::Base
 
   def formatted_dining_time
     dining_time <= 60 ? "#{dining_time / 60} hour" : "#{dining_time / 60} hours"
+  end
+
+  def in_past?(proposed_time)
+    return proposed_time < DateTime.now.change(offset: "+0000")
   end
 
   private

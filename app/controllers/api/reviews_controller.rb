@@ -8,6 +8,9 @@ class Api::ReviewsController < ApplicationController
     @review.restaurant_id = params[:restaurant_id]
 
     if @review.save
+      @restaurant = Restaurant
+        .aggregate_ratings
+        .find(@review.restaurant_id)
       render :show
     else
       render json: @review.errors.messages, status: 422
@@ -16,8 +19,10 @@ class Api::ReviewsController < ApplicationController
 
   def update
     @review = Review.includes(:restaurant, :user).find(params[:id])
-
     if @review.update(review_params)
+      @restaurant = Restaurant
+        .aggregate_ratings
+        .find(@review.restaurant_id)
       render :show
     else
       render json: @review.errors.messages, status: 422
@@ -28,6 +33,9 @@ class Api::ReviewsController < ApplicationController
     @review = Review.find(params[:id])
 
     if @review.destroy
+      @restaurant = Restaurant
+        .aggregate_ratings
+        .find(@review.restaurant_id)
       render :show
     else
       render json: @review.errors.messages, status: 422

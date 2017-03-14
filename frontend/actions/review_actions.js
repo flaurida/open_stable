@@ -32,10 +32,8 @@ export const createReview = (restaurantId, review) => dispatch => {
 };
 
 export const updateReview = (restaurantId, review) => (dispatch, getState) => {
-  const oldReview = getState().reviews[review.id];
-
   return ReviewApiUtil.updateReview(restaurantId, review).then(updatedReview => {
-    dispatch(updateSingleReview(updatedReview, oldReview));
+    dispatch(receiveSingleReview(updatedReview));
     dispatch(clearModal());
     dispatch(clearReviewErrors());
     dispatch(receiveNotices(updateReviewMessage()));

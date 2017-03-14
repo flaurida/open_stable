@@ -12,7 +12,6 @@ const ReviewsReducer = (oldState = defaultState, action) => {
     case RECEIVE_SINGLE_RESTAURANT:
       return action.restaurant.reviews;
     case RECEIVE_SINGLE_REVIEW:
-    case UPDATE_SINGLE_REVIEW:
       newState = Object.assign({}, oldState);
       newState[action.review.id] = action.review;
       newState.current_user_review = action.review.id;
