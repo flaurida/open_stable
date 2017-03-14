@@ -4,8 +4,8 @@ class Api::RestaurantsController < ApplicationController
     :cannot_have_overlapping_bookings, only: [:search]
 
   def index
-    # @restaurants = Restaurant.includes(:favorites, :reviews)
     @restaurants = Restaurant.get_with_reviews
+
     if params[:city]
       @restaurants = @restaurants.where(city: params[:city])
     end
@@ -18,13 +18,14 @@ class Api::RestaurantsController < ApplicationController
     num_seats = params[:num_seats]
 
     if params[:restaurant_id]
-      @result = Restaurant.find(params[:restaurant_id]).table_availability(proposed_time, num_seats)
+      @result = Restaurant.find(params[:restaurant_id])
+      .table_availability(proposed_time, num_seats)
       render :search
     elsif params[:city]
       @result = Restaurant.restaurant_availability(proposed_time, num_seats, params[:city])
       render :search
     else
-      render json: {}
+      render json: ["Please select a stable or city"], status: 422
     end
   end
 

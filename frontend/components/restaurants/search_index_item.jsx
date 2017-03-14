@@ -5,7 +5,7 @@ import { RestaurantDollarSigns } from './restaurant_helper';
 
 class SearchIndexItem extends React.Component {
   searchIndexContent() {
-    const { searchData, createBooking } = this.props;
+    const { searchData, createBooking, currentUser, receiveModal } = this.props;
 
     if (searchData.closed) {
       return (
@@ -24,7 +24,12 @@ class SearchIndexItem extends React.Component {
     }
 
     return (
-      <BookingOptions searchData={ searchData.proposed_times } createBooking={ createBooking } />
+      <BookingOptions
+        searchData={ searchData.proposed_times }
+        createBooking={ createBooking }
+        currentUser={ currentUser }
+        receiveModal={ receiveModal }
+      />
     );
   }
 

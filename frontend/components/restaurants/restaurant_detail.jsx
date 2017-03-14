@@ -56,7 +56,11 @@ class RestaurantDetail extends React.Component {
         <div className="restaurant-body">
           <RestaurantNav restaurant={ restaurant } currentUser={ currentUser }/>
           <section className="restaurant-body-detail">
-            <RestaurantSearchContainer searchType="single" title="Make a Reservation"/>
+            <RestaurantSearchContainer
+              searchType="single"
+              title="Make a Reservation"
+              currentUser={ currentUser }
+            />
             <RestaurantLocationContainer restaurant={ restaurant } />
 
             <section className="restaurant-description" id="about">

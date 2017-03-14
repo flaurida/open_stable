@@ -117,6 +117,40 @@ class Restaurant < ActiveRecord::Base
     PRICE_RANGES[price_range]
   end
 
+  def self.get_with_reviews
+    self.select(<<-SQL)
+      restaurants.*,
+      AVG(reviews.overall_rating) AS overall_rating,
+      COUNT(reviews.id) AS num_reviews,
+      (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
+      SQL
+      .left_joins(:reviews)
+      .group("restaurants.id")
+      .includes(:reviews, :favorites)
+  end
+
+  def self.show(id)
+    self.aggregate_ratings(id)
+    .includes(:favorites, :photos, reviews: [:user])
+    .find(id)
+  end
+
+  def self.aggregate_ratings(id)
+    self.select(<<-SQL)
+      restaurants.*,
+      ROUND(AVG(reviews.overall_rating), 1) AS overall_rating,
+      ROUND(AVG(reviews.food_rating), 1) AS food_rating,
+      ROUND(AVG(reviews.service_rating), 1) AS service_rating,
+      ROUND(AVG(reviews.ambience_rating), 1) AS ambience_rating,
+      ROUND(AVG(reviews.value_rating), 1) AS value_rating,
+      ROUND(AVG(reviews.noise_rating), 1) AS noise_rating,
+      COUNT(reviews.id) AS num_reviews,
+      (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
+    SQL
+    .left_joins(:reviews)
+    .group("restaurants.id")
+  end
+
   def formatted_hours
     formatted_hours = []
 
@@ -129,6 +163,10 @@ class Restaurant < ActiveRecord::Base
 
   def formatted_noise_rating(rating)
     NOISE_RATINGS[rating.round()]
+  end
+
+  def image_url
+    ActionController::Base.helpers.asset_path(self.image.url)
   end
 
   def self.restaurant_availability(proposed_time, num_seats, city)
@@ -160,7 +198,6 @@ class Restaurant < ActiveRecord::Base
   end
 
   def analyze_individual_result(result, proposed_time, num_seats)
-
     return { id => {
             name: name,
             id: id,
@@ -182,8 +219,6 @@ class Restaurant < ActiveRecord::Base
     parsed = {}
 
     result.first.tables.each do |table|
-      # bookings = table.bookings.where(start_time: ((proposed_time - dining_time.minutes + 1.minute)..(proposed_time + dining_time.minutes - 1.minute)))
-
       bookings = table.bookings.select do |booking|
         booking.start_time.between?((proposed_time - dining_time.minutes + 1.minute), (proposed_time + dining_time.minutes - 1.minute))
       end
@@ -336,46 +371,8 @@ class Restaurant < ActiveRecord::Base
     last_review.length > 300 ? "#{last_review[0...150]}..." : last_review
   end
 
-  # def image_url
-  #   ActionController::Base.helpers.asset_path(self.image.url)
-  # end
-
   def formatted_dining_time
     dining_time <= 60 ? "#{dining_time / 60} hour" : "#{dining_time / 60} hours"
-  end
-
-  def self.get_with_reviews
-    self.select(<<-SQL)
-      restaurants.*,
-      AVG(reviews.overall_rating) AS overall_rating,
-      COUNT(reviews.id) AS num_reviews,
-      (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
-      SQL
-      .left_joins(:reviews)
-      .group("restaurants.id")
-      .includes(:reviews, :favorites)
-  end
-
-  def self.show(id)
-    self.aggregate_ratings(id)
-    .includes(:favorites, :photos, reviews: [:user])
-    .find(id)
-  end
-
-  def self.aggregate_ratings(id)
-    self.select(<<-SQL)
-      restaurants.*,
-      ROUND(AVG(reviews.overall_rating), 1) AS overall_rating,
-      ROUND(AVG(reviews.food_rating), 1) AS food_rating,
-      ROUND(AVG(reviews.service_rating), 1) AS service_rating,
-      ROUND(AVG(reviews.ambience_rating), 1) AS ambience_rating,
-      ROUND(AVG(reviews.value_rating), 1) AS value_rating,
-      ROUND(AVG(reviews.noise_rating), 1) AS noise_rating,
-      COUNT(reviews.id) AS num_reviews,
-      (CAST(AVG(reviews.recommended * 100) AS INTEGER)) AS recommended_score
-    SQL
-    .left_joins(:reviews)
-    .group("restaurants.id")
   end
 
   private

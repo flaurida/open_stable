@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { searchRestaurants, clearSearchErrors, queryRestaurants, clearQueryData } from '../../actions/restaurant_actions';
 import { createBooking } from '../../actions/booking_actions';
 import { receiveDropdown, clearDropdown } from '../../actions/dropdown_actions';
+import { receiveModal } from '../../actions/modal_actions';
 import RestaurantSearch from './restaurant_search';
 
 const mapStateToProps = state => ({
@@ -17,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
   clearSearchErrors: () => dispatch(clearSearchErrors()),
   clearQueryData: () =>  dispatch(clearQueryData()),
   receiveDropdown: (dropdown, props) => dispatch(receiveDropdown(dropdown, props)),
+  receiveModal: modalType => dispatch(receiveModal(modalType)),
   clearDropdown: () => dispatch(clearDropdown())
 });
 

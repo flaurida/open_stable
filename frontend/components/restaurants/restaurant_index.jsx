@@ -38,7 +38,13 @@ class RestaurantIndex extends React.Component {
 
     if (this.props.location.query.type === "search") {
       return Object.keys(this.props.searchData).map((searchData, i) => (
-        <SearchIndexItem key={i} searchData={ this.props.searchData[searchData] } createBooking={ this.props.createBooking }/>
+        <SearchIndexItem
+          key={i}
+          searchData={ this.props.searchData[searchData] }
+          createBooking={ this.props.createBooking }
+          currentUser={ this.props.currentUser }
+          receiveModal={ this.props.receiveModal }
+        />
       ));
     }
 

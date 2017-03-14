@@ -11,8 +11,16 @@ class RestaurantDetailSearch extends React.Component {
     this.props.clearSearchErrors();
   }
 
+  errorRender() {
+    if (this.props.errors) {
+      return <Errors errors={ this.props.errors } />;
+    }
+
+    return null;
+  }
+
   render() {
-    const { searchData, createBooking, errors } = this.props;
+    const { searchData, createBooking, errors, currentUser, receiveModal } = this.props;
     const restaurantId = parseInt(this.props.restaurantId);
 
     if (!searchData[restaurantId]) {
@@ -35,18 +43,15 @@ class RestaurantDetailSearch extends React.Component {
       );
     }
 
-    const errorRender = () => {
-      if (errors) {
-        return <Errors errors={ errors } />;
-      }
-
-      return null;
-    };
-
     return (
       <div>
-        { errorRender() }
-        <BookingOptions searchData={ searchData[restaurantId].proposed_times } createBooking={ createBooking } />
+        { this.errorRender() }
+        <BookingOptions
+          searchData={ searchData[restaurantId].proposed_times }
+          createBooking={ createBooking }
+          currentUser={ currentUser }
+          receiveModal={ receiveModal }
+        />
       </div>
     );
   }

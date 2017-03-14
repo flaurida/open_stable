@@ -19,20 +19,29 @@ class RestaurantSearch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.query === "" && (this.props.queryData.restaurants.length !== 0 || this.props.queryData.cities.length !== 0)) {
+    this.setState({ fetching: false });
+
+    if (this.state.query === "" &&
+    (this.props.queryData.restaurants.length !== 0 ||
+      this.props.queryData.cities.length !== 0)) {
       this.props.clearSearchErrors();
       this.props.clearQueryData();
-    } else if (nextProps.location.query.type === "search" && JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
-      this.props.searchRestaurants(nextProps.location.query).then(() => this.setState({ fetching: false }));
+    } else if (nextProps.location.query.type === "search" &&
+    JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
+      this.props.searchRestaurants(nextProps.location.query);
       this.props.clearSearchErrors();
-    } else if (nextProps.location.query.city !== this.state.city) {
+    } else if (nextProps.location.query.city &&
+      nextProps.location.query.city !== this.state.city) {
       this.setState({ city: nextProps.location.query.city });
     }
   }
 
   componentWillMount() {
     if (this.props.location.query.type === "search" && Object.keys(this.props.location.query).length !== 0) {
-      this.props.searchRestaurants(this.props.location.query).then(() => this.setState({ fetching: false }));
+      this.props.searchRestaurants(this.props.location.query).then(
+        () => this.setState({ fetching: false }),
+        () => this.setState({ fetching: false })
+      );
     }
   }
 
@@ -47,7 +56,6 @@ class RestaurantSearch extends React.Component {
       date: this.today,
       time: "7:00 pm",
       query: "",
-      queryData: null,
       city: "",
       restaurant_id: this.props.params.restaurantId,
       fetching: false
@@ -72,9 +80,10 @@ class RestaurantSearch extends React.Component {
   }
 
   handleQueryString(e) {
+    e.preventDefault();
+
     this.setState({ query: e.currentTarget.value }, () => {
       if (this.state.query === "") {
-        this.setState({ queryData: null });
         this.props.clearQueryData();
       } else {
         this.props.receiveDropdown("bookingQuery");
@@ -86,9 +95,17 @@ class RestaurantSearch extends React.Component {
   setQueryData(queryData) {
     return e => {
       if (queryData.type === "city") {
-        this.setState({ city: queryData.name, queryData, query: queryData.name });
+        this.setState({
+          city: queryData.name,
+          query: queryData.name,
+          restaurant_id: null
+        });
       } else {
-        this.setState({ queryData, query: queryData.name, restaurant_id: queryData.id, city: "" });
+        this.setState({
+          query: queryData.name,
+          restaurant_id: queryData.id,
+          city: ""
+        });
       }
 
       this.props.clearDropdown();
@@ -128,37 +145,43 @@ class RestaurantSearch extends React.Component {
         restaurantId={ this.props.params.restaurantId }
         createBooking= { this.props.createBooking }
         clearSearchErrors={ this.props.clearSearchErrors }
-        errors={ this.props.errors }/>;
+        currentUser={ this.props.currentUser }
+        receiveModal={ this.props.receiveModal }
+        errors={ this.props.errors }
+        />;
     }
 
     return <Errors errors={ this.props.errors } />;
   }
 
   searchLink() {
-    const { num_seats, date, time } = this.state;
+    const { num_seats, date, time, city, restaurant_id } = this.state;
+    let query = {
+      type: "search",
+      num_seats,
+      date,
+      time
+    };
 
-    if (this.state.city) {
-      return (
-        <Link to={{ pathname: "/restaurants", query: { type: "search", num_seats, date, time, city: this.state.city }}} onClick={ this.setFetching }>
-          Find a Stable
-        </Link>
-      );
-    } else if (!this.state.queryData) {
-      const restaurant_id = this.props.params.restaurantId;
+    let pathname = this.props.location.pathname;
 
-      return (
-        <Link to={{ pathname: this.props.location.pathname, query: { num_seats, date, time, restaurant_id, type: "search" } }} onClick={ this.setFetching }>
-          Find a Stable
-        </Link>
-      );
-    } else {
-      const restaurant_id = this.state.restaurant_id;
-      return (
-        <Link to={{ pathname: `/restaurants/${this.state.restaurant_id}`, query: { num_seats, date, time, restaurant_id, type: "search" }}} onClick={ this.setFetching }>
-          Find a Stable
-        </Link>
-      );
+    if (city) {
+      pathname = "/restaurants";
+      query.city = city;
+    } else if (restaurant_id) {
+      pathname = `/restaurants/${this.state.restaurant_id}`;
+      query.restaurant_id = restaurant_id;
     }
+
+    return (
+      <Link to={{
+          pathname: pathname,
+          query: query
+        }}
+        onClick={ this.setFetching }>
+        Find a Stable
+      </Link>
+    );
   }
 
   render() {
