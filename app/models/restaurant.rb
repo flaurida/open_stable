@@ -409,11 +409,17 @@ class Restaurant < ActiveRecord::Base
   def review_preview
     return nil if reviews.empty?
     last_review = reviews.last.body
-    last_review.length > 300 ? "#{last_review[0...150]}..." : last_review
+    last_review.length > 150 ? "#{last_review[0...150]}..." : last_review
   end
 
   def formatted_dining_time
-    dining_time <= 60 ? "#{dining_time / 60} hour" : "#{dining_time / 60} hours"
+    if dining_time == 60
+      "#{dining_time / 60} hour"
+    else
+      pretty_time = dining_time * 1.0 / 60
+      pretty_time = pretty_time.to_i if pretty_time % 1 == 0
+      "#{pretty_time} hours"
+    end
   end
 
   def in_past?(proposed_time)

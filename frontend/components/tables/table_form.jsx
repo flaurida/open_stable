@@ -43,7 +43,10 @@ class TableForm extends React.Component {
     e.preventDefault();
     let that = this;
     this.props.handleForm(this.props.restaurantId, this.state).then(() => {
-      this.props.updateEditState(null);
+      this.resetForm();
+      if (this.props.updateEditState) {
+        this.props.updateEditState(null);
+      }
     });
   }
 

@@ -6,6 +6,14 @@
   border-bottom: 2px solid $grey;
   border-radius: 5px;
   background: $white;
+
+  a {
+    transition: color 0.5s;
+    
+    &:hover {
+      color: $black-hover;
+    }
+  }
 }
 
 .booking-details {
