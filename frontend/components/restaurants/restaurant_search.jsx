@@ -22,10 +22,10 @@ class RestaurantSearch extends React.Component {
     this.setState({ fetching: false });
 
     if (this.state.query === "" &&
-    (this.props.queryData.restaurants.length !== 0 ||
-      this.props.queryData.cities.length !== 0)) {
-      this.props.clearSearchErrors();
-      this.props.clearQueryData();
+      (this.props.queryData.restaurants.length !== 0 ||
+        this.props.queryData.cities.length !== 0)) {
+        this.props.clearSearchErrors();
+        this.props.clearQueryData();
     } else if (nextProps.location.query.type === "search" &&
     JSON.stringify(this.props.location.query) !== JSON.stringify(nextProps.location.query)) {
       this.props.searchRestaurants(nextProps.location.query).then(
@@ -61,7 +61,8 @@ class RestaurantSearch extends React.Component {
       query: "",
       city: "",
       restaurant_id: this.props.params.restaurantId,
-      fetching: false
+      fetching: false,
+      querying: true
     };
 
     return Object.assign(defaultState, this.props.location.query);
@@ -90,7 +91,10 @@ class RestaurantSearch extends React.Component {
         this.props.clearQueryData();
       } else {
         this.props.receiveDropdown("bookingQuery");
-        this.props.queryRestaurants(this.state);
+        this.props.queryRestaurants(this.state).then(
+          () => this.setState({ querying: false })
+        );
+        this.setState({ querying: true });
       }
     });
   }
@@ -117,7 +121,10 @@ class RestaurantSearch extends React.Component {
 
   restaurantQuery() {
     if (this.state.query !== "") {
-      return <RestaurantQuery setQueryData={ this.setQueryData } />;
+      return <RestaurantQuery
+        setQueryData={ this.setQueryData }
+        querying={ this.state.querying }
+        />;
     }
 
     return null;
