@@ -223,3 +223,13 @@
     overflow: hidden;
   }
 }
+
+@media screen and (max-width: $break-point-mobile) {
+  .restaurant-header-wrapper {
+    background: $navy;
+  }
+
+  .img-restaurant-banner {
+    display: none;
+  }
+}
