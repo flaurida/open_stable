@@ -214,8 +214,12 @@
 }
 
 @media screen and (max-width: 1270px) {
+  .restaurant-banner-photo {
+    width: 100%;
+    overflow: hidden;
+  }
+  
   .img-restaurant-banner {
     width: 1270px;
-    overflow: hidden;
   }
 }

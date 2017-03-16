@@ -39,8 +39,9 @@ class RestaurantDetail extends React.Component {
     return (
       <div className="restaurant-detail">
         <div className="restaurant-header-wrapper">
-          <img src={ window.images.dothrakiBanner } className="img-restaurant-banner" alt="dothraki-banner" />
-
+          <div className="restaurant-banner-photo">
+            <img src={ window.images.dothrakiBanner } className="img-restaurant-banner" alt="dothraki-banner" />
+          </div>
           <div className="restaurant-header">
             <img src={ restaurant.image_url } className="img-restaurant-detail" alt="restaurant"/>
               <div className="restaurant-header-notes">
