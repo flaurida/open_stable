@@ -2,7 +2,7 @@
 
 [Live Version](http://www.openstable.site/)
 
-OpenStable is a restaurant reservation web application with an [OpenTable](https://www.opentable.com/start/home) inspired user experience. It was built using a PostgreSQL server, Ruby on Rails backend, and a React.js frontend.
+OpenStable is a restaurant reservation web application with an [OpenTable](https://www.opentable.com/start/home) inspired user experience. It was built using a PostgreSQL server, Ruby on Rails backend, and a React.js frontend :)
 
 ## Features
 
@@ -46,10 +46,10 @@ A restaurant has many tables, each with a name and a minimum and maximum number 
 
 Each table has many bookings with an associated user, number of guest, and start time and date (the combination of which is stored as a DateTime). Users can search a particular restaurant or city for bookings on the home page, restaurant index page, or restaurant show page. Each restaurant can also choose their booking strategy from among four options:
 
-* normal: offer the smallest table that accommodates the party
-* generous: offer the largest table that accommodates the party
-* greedy: offer only tables that are completely full
-* hipster: report they are full 50% of the time, normal otherwise
+- normal: offer the smallest table that accommodates the party
+- generous: offer the largest table that accommodates the party
+- greedy: offer only tables that are completely full
+- hipster: report they are full 50% of the time, normal otherwise
 
 Depending on the strategy, the associated tables of a given restaurant are searched and ordered accordingly, before examining the tables to determine which times +/- 1 hour around a desired time are available at the restaurant.
 
@@ -129,6 +129,6 @@ As mentioned above, the styling of this site was inspired by [OpenTable](https:/
 
 ### Future Directions
 
-* Improve querying of restaurant review data
-* Better handle invalid search input
-* Points for using the site
+- Improve querying of restaurant review data
+- Better handle invalid search input
+- Points for using the site
